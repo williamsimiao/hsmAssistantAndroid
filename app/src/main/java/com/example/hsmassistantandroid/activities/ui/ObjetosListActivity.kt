@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import com.example.hsmassistantandroid.R
+import kotlinx.android.synthetic.main.activity_objetos_list.*
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class ObjetosListActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -18,8 +22,12 @@ class ObjetosListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_objetos_list)
-        objetosStrings = intent.getStringArrayExtra("LISTS")
+        objetosStrings = intent.getStringArrayExtra("LIST")
         viewManager = LinearLayoutManager(this)
+        objetosList.layoutManager = LinearLayoutManager(this)
+        runOnUiThread {
+            objetosList.adapter = ObjetosListAdapter(objetosStrings)
+        }
 
 
 //

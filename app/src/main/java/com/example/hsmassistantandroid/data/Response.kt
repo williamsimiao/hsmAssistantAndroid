@@ -6,4 +6,4 @@ data class ResponseBody1 (
     val pwd_expired: String)
 
 data class ResponseBody2 (
-    val objs: List<String>)
+    val obj: List<String>)

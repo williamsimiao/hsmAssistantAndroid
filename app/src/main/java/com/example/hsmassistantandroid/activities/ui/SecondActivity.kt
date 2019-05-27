@@ -37,7 +37,7 @@ class SecondActivity : AppCompatActivity() {
                     response?.isSuccessful.let {
                         Log.e("SecondActivity", "Deu certo "+tokenString)
                         val intent = Intent(context, ObjetosListActivity::class.java)
-                        val objetosStringList = response?.body()?.objs
+                        val objetosStringList = response?.body()?.obj
                         intent.putExtra("LIST", objetosStringList?.toTypedArray())
                         startActivity(intent)
                     }
