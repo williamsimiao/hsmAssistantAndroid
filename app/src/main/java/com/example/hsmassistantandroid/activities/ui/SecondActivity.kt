@@ -28,17 +28,17 @@ class SecondActivity : AppCompatActivity() {
 
         listObjsButton.setOnClickListener {
             val context = baseContext
-            val callbackList = object : Callback<ResponseBody1> {
-                override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                    Log.e("MainActivity", "Problem calling the API", t)
+            val callbackList = object : Callback<ResponseBody2> {
+                override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
+                    Log.e("SecondsActivity", "Problem calling the API", t)
                 }
 
-                override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody2>?) {
+                override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                     response?.isSuccessful.let {
-                        val objetosStringList = response?.body()?.objs
                         Log.e("SecondActivity", "Deu certo "+tokenString)
                         val intent = Intent(context, ObjetosListActivity::class.java)
-                        intent.putExtra("LISTS", objetosStringList?.toTypedArray())
+                        val objetosStringList = response?.body()?.objs
+                        intent.putExtra("LIST", objetosStringList?.toTypedArray())
                         startActivity(intent)
                     }
                 }
@@ -61,8 +61,7 @@ class SecondActivity : AppCompatActivity() {
 
                             }
 
-                        tokenString = "HSM " + response?.body()?.token
-                        Log.e("SecondActivity", "Deu certo " + tokenString)
+                        Log.e("SecondActivity", "Deu certo ")
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }

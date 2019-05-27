@@ -11,8 +11,8 @@ import retrofit2.http.POST
 interface sessaoEndPoint {
 
     @POST("close")
-    @Headers("Content-type:application/json", "Authorization:{token}")
-    fun close(@Header("token") token: String?): Call<ResponseBody1>
+    @Headers("Content-type:application/json")
+    fun close(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody1>
 
     @POST("auth")
     @Headers("Content-type:application/json")

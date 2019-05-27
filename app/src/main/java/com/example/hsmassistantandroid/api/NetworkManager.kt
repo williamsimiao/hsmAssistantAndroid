@@ -2,6 +2,7 @@ package com.example.hsmassistantandroid.api
 
 import android.util.Log
 import com.example.hsmassistantandroid.data.ResponseBody1
+import com.example.hsmassistantandroid.data.ResponseBody2
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -74,10 +75,9 @@ class NetworkManager {
 
     }
 
-    fun runListObjetcs(token: String, callback: Callback<ResponseBody1>) {
+    fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
         val json = JSONObject()
         Log.e("JSON", json.toString())
-
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = objetosRouter?.listObjs(token)
         if (call != null) {
@@ -88,9 +88,8 @@ class NetworkManager {
     fun runClose(token: String, callback: Callback<ResponseBody1>) {
         val json = JSONObject()
         Log.e("JSON", json.toString())
-
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-        val call = sessaoRouter.close(token)
+        val call = sessaoRouter.close(requestBody, token)
         call.enqueue(callback)
     }
 
