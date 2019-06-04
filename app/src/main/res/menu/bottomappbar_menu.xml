@@ -6,14 +6,12 @@
     <item
             android:id="@+id/app_bar_fav"
             android:icon="@drawable/ic_menu"
-            android:title="teste1"
-            app:showAsAction="ifRoom"/>
+            android:title="teste1"/>
 
     <item
             android:id="@+id/app_bar_search"
             android:icon="@drawable/ic_menu"
-            android:title="teste2"
-            app:showAsAction="ifRoom"/>
+            android:title="teste2"/>
     <item
             android:id="@+id/app_bar_settings"
             android:title="teste3"

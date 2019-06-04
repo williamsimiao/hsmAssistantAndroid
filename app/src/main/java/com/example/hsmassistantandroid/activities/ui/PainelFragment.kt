@@ -19,6 +19,9 @@ import kotlinx.android.synthetic.main.fragment_painel.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.widget.Toast
+
+
 
 
 
@@ -45,59 +48,57 @@ class PainelFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-        tokenTextView.text = tokenString
+        listObjsButton.setOnClickListener { didTaplistObjsButton() }
+        closeButton.setOnClickListener { didTapcloseButton() }
+    }
 
-        bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
-        bottomAppBar.setNavigationOnClickListener {
-            // do something interesting on navigation click
-        }
 
-        listObjsButton.setOnClickListener {
-            val context = context
-            val callbackList = object : Callback<ResponseBody2> {
-                override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-                    Log.e("SecondsActivity", "Problem calling the API", t)
-                }
 
-                override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-                    response?.isSuccessful.let {
-                        Log.e("SecondActivity", "Deu certo "+tokenString)
-                        val intent = Intent(context, ObjetosListActivity::class.java)
-                        val objetosStringList = response?.body()?.obj
-                        intent.putExtra("LIST", objetosStringList?.toTypedArray())
-                        startActivity(intent)
-                    }
+    fun didTaplistObjsButton() {
+        val context = context
+        val callbackList = object : Callback<ResponseBody2> {
+            override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
+                Log.e("SecondsActivity", "Problem calling the API", t)
+            }
+
+            override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
+                response?.isSuccessful.let {
+                    Log.e("SecondActivity", "Deu certo "+tokenString)
+                    val intent = Intent(context, ObjetosListActivity::class.java)
+                    val objetosStringList = response?.body()?.obj
+                    intent.putExtra("LIST", objetosStringList?.toTypedArray())
+                    startActivity(intent)
                 }
             }
-            networkManager.runListObjetcs(tokenString!!, callbackList)
         }
-        closeButton.setOnClickListener {
-            val callbackClose = object : Callback<ResponseBody1> {
-                override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                    Log.e("SecondActivity", "Problem calling the API", t)
-                }
+        networkManager.runListObjetcs(tokenString!!, callbackList)
+    }
 
-                override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                    response?.isSuccessful.let {
+    fun didTapcloseButton() {
+        val callbackClose = object : Callback<ResponseBody1> {
+            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+                Log.e("SecondActivity", "Problem calling the API", t)
+            }
 
-                        AlertDialog.Builder(context!!).setTitle("Sessão encerrada")
-                            .setMessage("Sessão encerrada com sucesso")
-                            .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+                response?.isSuccessful.let {
 
-                            }
+                    AlertDialog.Builder(context!!).setTitle("Sessão encerrada")
+                        .setMessage("Sessão encerrada com sucesso")
+                        .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
 
-                        Log.e("SecondActivity", "Deu certo ")
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                    }
+                        }
+
+                    Log.e("SecondActivity", "Deu certo ")
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
                 }
             }
-            networkManager.runClose(tokenString!!, callbackClose)
         }
+        networkManager.runClose(tokenString!!, callbackClose)
     }
 
     override fun onCreateView(

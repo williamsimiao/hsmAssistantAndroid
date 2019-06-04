@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         tokenString = sharedPreferences.getString("TOKEN", null)
         probeRequest()
         autenticarButton.setOnClickListener { didTapAutenticar() }
-
     }
 
     fun didTapAutenticar() {
@@ -62,10 +61,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun probeRequest() {
-        if (tokenString == null) {
-            Log.e("Probe", "Token Null ")
-            return
-        }
         if (isNetworkConnected() == false ) {
             Log.d("MainActivity", "Sem NET nao da neh")
             AlertDialog.Builder(this).setTitle("No Internet Connection")
@@ -86,6 +81,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+        }
+        if (tokenString == null) {
+            Log.e("Probe", "Token Null ")
+            return
         }
         networkManager.runClose(tokenString!!, callbackClose)
 

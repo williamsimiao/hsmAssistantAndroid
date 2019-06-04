@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
@@ -15,12 +17,41 @@ import kotlinx.android.synthetic.main.activity_second.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+
 
 class SecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_painel)
+        setUpBottomAppBar()
 
+    }
+
+    fun setUpBottomAppBar() {
+        setSupportActionBar(bottomAppBar)
+
+        //click event over Bottom bar menu item
+        bottomAppBar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem): Boolean {
+                when (item.getItemId()) {
+                    R.id.app_bar_search -> Log.d("XIXI", "Clicou no search")
+                    else -> Log.d("XIXI", "Outro")
+                }
+                return false
+            }
+        })
+
+        //click event over navigation menu like back arrow or hamburger icon
+        bottomAppBar.setNavigationOnClickListener { coisa() }
+    }
+
+    fun coisa() {
+        Log.d("XIXI", "Navigation Click")
+        val bottomSheetDialogFragment = BottomSheetDialogFragment()
+        bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
     }
 }
