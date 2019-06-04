@@ -3,10 +3,7 @@ package com.example.hsmassistantandroid.api
 import com.example.hsmassistantandroid.data.ResponseBody1
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface sessaoEndPoint {
 
@@ -17,4 +14,7 @@ interface sessaoEndPoint {
     @POST("auth")
     @Headers("Content-type:application/json")
     fun auth(@Body request: RequestBody): Call<ResponseBody1>
+
+    @GET("probe")
+    fun probe(@Header("Authorization") token: String?): Call<ResponseBody1>
 }

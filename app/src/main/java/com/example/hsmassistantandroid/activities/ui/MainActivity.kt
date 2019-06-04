@@ -14,43 +14,84 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.R.id.edit
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+
+
+
+
 
 class MainActivity : AppCompatActivity() {
-    private val networkManager = NetworkManager() // 1
+    private val networkManager = NetworkManager()
     private var tokenString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(com.example.hsmassistantandroid.R.layout.activity_main)
 
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
+        tokenString = sharedPreferences.getString("TOKEN", null)
+        probeRequest()
+        autenticarButton.setOnClickListener { didTapAutenticar() }
+
+    }
+
+    fun didTapAutenticar() {
+        val context = baseContext
+        val callback = object : Callback<ResponseBody1> {
+            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+                Log.e("MainActivity", "Problem calling the API", t)
+            }
+
+            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+                response?.isSuccessful.let {
+                    tokenString = "HSM " + response?.body()?.token
+                    Log.e("MainActivity", "Deu certo "+tokenString)
+                    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                    val editor = sharedPreferences.edit()
+                    editor.putString("TOKEN", tokenString)
+                    editor.apply()
+
+                    val intent = Intent(context, SecondActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
+        networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
+    }
+
+    fun probeRequest() {
+        if (tokenString == null) {
+            Log.e("Probe", "Token Null ")
+            return
+        }
         if (isNetworkConnected() == false ) {
             Log.d("MainActivity", "Sem NET nao da neh")
             AlertDialog.Builder(this).setTitle("No Internet Connection")
                 .setMessage("Please check your internet connection and try again")
                 .setPositiveButton(android.R.string.ok) { _, _ -> }
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
+            return
         }
+        val callbackClose = object : Callback<ResponseBody1> {
+            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+                Log.e("Probe", "Problem calling the API", t)
+            }
 
-        autenticarButton.setOnClickListener {
-            val context = baseContext
-            val callback = object : Callback<ResponseBody1> {
-                override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                    Log.e("MainActivity", "Problem calling the API", t)
-                }
-
-                override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                    response?.isSuccessful.let {
-                        tokenString = "HSM " + response?.body()?.token
-                        Log.e("MainActivity", "Deu certo "+tokenString)
-                        val intent = Intent(context, SecondActivity::class.java)
-                        intent.putExtra("TOKEN", tokenString)
-                        startActivity(intent)
-                    }
+            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+                response?.isSuccessful.let {
+                    Log.e("Probe", "Deu certo ")
+                    val intent = Intent(baseContext, SecondActivity::class.java)
+                    startActivity(intent)
                 }
             }
-            networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
         }
+        networkManager.runClose(tokenString!!, callbackClose)
+
     }
+
+
 
     private fun isNetworkConnected(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

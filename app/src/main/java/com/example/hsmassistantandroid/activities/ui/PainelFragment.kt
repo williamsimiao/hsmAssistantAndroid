@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 
 import com.example.hsmassistantandroid.R
@@ -16,9 +15,13 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody2
 import kotlinx.android.synthetic.main.activity_second.*
+import kotlinx.android.synthetic.main.fragment_painel.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,8 +45,16 @@ class PainelFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        tokenString = intent.getStringExtra("TOKEN")
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        tokenString = sharedPreferences.getString("TOKEN", null)
+
         tokenTextView.text = tokenString
+
+        bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
+        bottomAppBar.setNavigationOnClickListener {
+            // do something interesting on navigation click
+        }
 
         listObjsButton.setOnClickListener {
             val context = context
@@ -94,7 +105,7 @@ class PainelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_painel, container, false)
+        return inflater.inflate(com.example.hsmassistantandroid.R.layout.fragment_painel, container, false)
     }
 
     override fun onAttach(context: Context) {

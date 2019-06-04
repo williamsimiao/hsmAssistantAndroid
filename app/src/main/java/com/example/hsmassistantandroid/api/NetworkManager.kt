@@ -93,6 +93,11 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
+    fun runProbe(token: String, callback: Callback<ResponseBody1>) {
+        val call = sessaoRouter.probe(token)
+        call.enqueue(callback)
+    }
+
     fun runAuth(usr: String, pwd: String, otp: String, callback: Callback<ResponseBody1>) {
         val json = JSONObject()
         json.put("usr", usr)
