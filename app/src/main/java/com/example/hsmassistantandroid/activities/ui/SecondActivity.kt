@@ -1,9 +1,9 @@
 package com.example.hsmassistantandroid.activities.ui
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager

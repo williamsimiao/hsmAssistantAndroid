@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">HsmAssistantAndroid</string>
+    <string name="user_textfield_label">Usuário</string>
+    <string name="password_textfield_label">Usuário</string>
+
 </resources>

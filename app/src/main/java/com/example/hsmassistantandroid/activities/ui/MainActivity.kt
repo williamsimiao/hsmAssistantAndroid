@@ -3,9 +3,9 @@ package com.example.hsmassistantandroid.activities.ui
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            networkManager.runAuth(usrEditText.text.toString(), pwdEditText.text.toString(), "", callback)
+            networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
         }
     }
 
