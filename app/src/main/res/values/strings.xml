@@ -2,5 +2,9 @@
     <string name="app_name">HsmAssistantAndroid</string>
     <string name="user_textfield_label">Usuário</string>
     <string name="password_textfield_label">Usuário</string>
+    <string name="shr_logo_content_description">"Logo Dinamo"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.hsmassistantandroid.activities.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
@@ -22,52 +23,50 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
-        tokenString = intent.getStringExtra("TOKEN")
-        tokenTextView.text = tokenString
+        setContentView(R.layout.fragment_painel)
 
-        listObjsButton.setOnClickListener {
-            val context = baseContext
-            val callbackList = object : Callback<ResponseBody2> {
-                override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-                    Log.e("SecondsActivity", "Problem calling the API", t)
-                }
-
-                override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-                    response?.isSuccessful.let {
-                        Log.e("SecondActivity", "Deu certo "+tokenString)
-                        val intent = Intent(context, ObjetosListActivity::class.java)
-                        val objetosStringList = response?.body()?.obj
-                        intent.putExtra("LIST", objetosStringList?.toTypedArray())
-                        startActivity(intent)
-                    }
-                }
-            }
-            networkManager.runListObjetcs(tokenString!!, callbackList)
-        }
-        closeButton.setOnClickListener {
-            val context = baseContext
-            val callbackClose = object : Callback<ResponseBody1> {
-                override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                    Log.e("SecondActivity", "Problem calling the API", t)
-                }
-
-                override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                    response?.isSuccessful.let {
-
-                        AlertDialog.Builder(context).setTitle("Sessão encerrada")
-                            .setMessage("Sessão encerrada com sucesso")
-                            .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-
-                            }
-
-                        Log.e("SecondActivity", "Deu certo ")
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
-            networkManager.runClose(tokenString!!, callbackClose)
-        }
+//        listObjsButton.setOnClickListener {
+//            val context = baseContext
+//            val callbackList = object : Callback<ResponseBody2> {
+//                override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
+//                    Log.e("SecondsActivity", "Problem calling the API", t)
+//                }
+//
+//                override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
+//                    response?.isSuccessful.let {
+//                        Log.e("SecondActivity", "Deu certo "+tokenString)
+//                        val intent = Intent(context, ObjetosListActivity::class.java)
+//                        val objetosStringList = response?.body()?.obj
+//                        intent.putExtra("LIST", objetosStringList?.toTypedArray())
+//                        startActivity(intent)
+//                    }
+//                }
+//            }
+//            networkManager.runListObjetcs(tokenString!!, callbackList)
+//        }
+//        closeButton.setOnClickListener {
+//            val context = baseContext
+//            val callbackClose = object : Callback<ResponseBody1> {
+//                override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+//                    Log.e("SecondActivity", "Problem calling the API", t)
+//                }
+//
+//                override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+//                    response?.isSuccessful.let {
+//
+//                        AlertDialog.Builder(context).setTitle("Sessão encerrada")
+//                            .setMessage("Sessão encerrada com sucesso")
+//                            .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+//
+//                            }
+//
+//                        Log.e("SecondActivity", "Deu certo ")
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        startActivity(intent)
+//                    }
+//                }
+//            }
+//            networkManager.runClose(tokenString!!, callbackClose)
+//        }
     }
 }
