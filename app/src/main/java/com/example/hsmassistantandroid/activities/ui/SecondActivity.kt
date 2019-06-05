@@ -54,8 +54,8 @@ class SecondActivity : AppCompatActivity() {
     fun coisa() {
         Log.d("XIXI", "Navigation Click")
 //        val bottomSheetDialogFragment = BottomSheetNavigationFragment()
-        val bottomSheetDialogFragment = BottomSheetDialogFragment()
-        bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+        val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+        bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -65,7 +65,7 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_fav -> Log.d("XIXI", "Clicou no search 2")
+            R.id.app_bar_user -> Log.d("XIXI", "Clicou no search 2")
             else -> Log.d("XIXI", "Outro2")
         }
         return super.onOptionsItemSelected(item)

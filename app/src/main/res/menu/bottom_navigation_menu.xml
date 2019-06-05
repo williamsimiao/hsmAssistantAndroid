@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--particao-->
+
+    <item android:title="Partição">
+        <menu>
+            <group
+                    android:id="@+id/menu_top"
+                    android:checkableBehavior="single">
+                <item
+                        android:id="@+id/drawer_item_obejtos"
+                        android:icon="@drawable/ic_action_key"
+                        android:title="Objetos/Chaves"/>
+                <item
+                        android:id="@+id/drawer_item_relacao"
+                        android:icon="@drawable/ic_thumbs_up_down"
+                        android:title="Relação de confiança"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Usuário">
+        <menu>
+            <group
+                    android:id="@+id/menu_bottom"
+                    android:checkableBehavior="none">
+
+                <item
+                        android:id="@+id/drawer_item_gestao"
+                        android:icon="@drawable/ic_people"
+                        android:title="Gestão" >
+                </item>
+            </group>
+        </menu>
+    </item>
+
+
+
+
+
+</menu>
