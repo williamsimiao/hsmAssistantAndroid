@@ -3,6 +3,7 @@ package com.example.hsmassistantandroid.activities.ui
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,6 +42,8 @@ class ObjetosListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        tokenString = sharedPreferences.getString("TOKEN", null)
         objetosRequest()
 
 
@@ -55,7 +58,7 @@ class ObjetosListFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 response?.isSuccessful.let {
                     Log.e("SecondActivity", "Deu certo ")
-                    objetosStrings = response?.body()?.obj
+                    objetosStrings = response?.body()?.obj!!.toTypedArray()
                     val viewManager = LinearLayoutManager(context)
                     objetosList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
