@@ -14,13 +14,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.R.id.edit
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-
-
-
+interface myCallback {
+    fun onFailure(call: Call<ResponseBody1>?)
+    fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?)
+}
 
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.hsmassistantandroid.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
         tokenString = sharedPreferences.getString("TOKEN", null)
@@ -69,9 +68,29 @@ class MainActivity : AppCompatActivity() {
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
             return
         }
-        val callbackClose = object : Callback<ResponseBody1> {
-            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                Log.e("Probe", "Problem calling the API", t)
+
+//        val callback = object : Callback<ResponseBody1> {
+//            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+//                Log.e("Probe", "Problem calling the API", t)
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+//                response?.isSuccessful.let {
+//                    Log.e("Probe", "Deu certo ")
+//                    val intent = Intent(baseContext, SecondActivity::class.java)
+//                    startActivity(intent)
+//                }
+//            }
+//        }
+        if (tokenString == null) {
+            Log.e("Probe", "Token Null ")
+            return
+        }
+
+        val callback = object : myCallback {
+            override fun onFailure(call: Call<ResponseBody1>?) {
+                Log.e("Probe", "Problem calling the API")
+
             }
 
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
@@ -82,11 +101,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        if (tokenString == null) {
-            Log.e("Probe", "Token Null ")
-            return
-        }
-        networkManager.runClose(tokenString!!, callbackClose)
+
+
+        networkManager.runProbeSyncronous(tokenString!!, callback)
 
     }
 

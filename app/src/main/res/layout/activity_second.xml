@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorPrimary"
             app:navigationIcon="@drawable/ic_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

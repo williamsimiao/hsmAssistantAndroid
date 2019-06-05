@@ -1,6 +1,7 @@
 package com.example.hsmassistantandroid.api
 
 import android.util.Log
+import com.example.hsmassistantandroid.activities.ui.myCallback
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody2
 import okhttp3.MediaType
@@ -93,9 +94,16 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runProbe(token: String, callback: Callback<ResponseBody1>) {
+    fun runProbeSyncronous(token: String, callback: myCallback) {
         val call = sessaoRouter.probe(token)
-        call.enqueue(callback)
+        val response = call.execute()
+        if(response.isSuccessful) {
+            callback.onFailure(call)
+        }
+        else {
+            callback.onResponse(call, response)
+        }
+
     }
 
     fun runAuth(usr: String, pwd: String, otp: String, callback: Callback<ResponseBody1>) {
