@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.view.MenuItem
@@ -35,27 +36,10 @@ class SecondActivity : AppCompatActivity() {
     fun setUpBottomAppBar() {
         setSupportActionBar(bottomAppBar)
 
-        //click event over Bottom bar menu item
         bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
-//        bottomAppBar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
-//            override fun onMenuItemClick(item: MenuItem): Boolean {
-//                when (item.getItemId()) {
-//                    R.id.app_bar_fav -> Log.d("XIXI", "Clicou no search")
-//                    else -> Log.d("XIXI", "Outro")
-//                }
-//                return false
-//            }
-//        })
 
         //click event over navigation menu like back arrow or hamburger icon
-        bottomAppBar.setNavigationOnClickListener { coisa() }
-    }
-
-    fun coisa() {
-        Log.d("XIXI", "Navigation Click")
-//        val bottomSheetDialogFragment = BottomSheetNavigationFragment()
-        val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-        bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+        bottomAppBar.setNavigationOnClickListener { didTapNavigationButton() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,8 +50,15 @@ class SecondActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_user -> Log.d("XIXI", "Clicou no search 2")
-            else -> Log.d("XIXI", "Outro2")
+
+            else -> Log.d("XIXI", "Estranho isso, não existe outro")
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //ACTIONS
+    fun didTapNavigationButton() {
+        val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+        bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
     }
 }
