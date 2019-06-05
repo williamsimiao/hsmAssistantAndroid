@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
-import kotlinx.android.synthetic.main.activity_objetos_list.*
+import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,7 +59,6 @@ class ObjetosListFragment : Fragment() {
                 response?.isSuccessful.let {
                     Log.e("SecondActivity", "Deu certo ")
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
-                    val viewManager = LinearLayoutManager(context)
                     objetosList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         objetosList.adapter = ObjetosListAdapter(objetosStrings)

@@ -15,8 +15,6 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.ui.ObjetosListActivity">
-        </activity>
         <activity android:name=".activities.ui.SecondActivity">
         </activity>
         <activity android:name=".activities.ui.MainActivity">
