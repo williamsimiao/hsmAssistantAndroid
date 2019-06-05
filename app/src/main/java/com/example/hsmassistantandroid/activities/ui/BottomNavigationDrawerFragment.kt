@@ -45,30 +45,21 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
                 R.id.drawer_item_gestao -> context!!.toast("DOIDERA 3")
 
             }
-            // Add code here to update the UI based on the item selected
-            // For example, swap UI fragments here
             true
         }
 
     }
 
     fun didTaplistObjsButton() {
-        val callbackList = object : Callback<ResponseBody2> {
-            override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
-            }
+        val objetosListFragment = ObjetosListFragment()
+        val transaction = fragmentManager!!.beginTransaction()
+        transaction.add(R.id.activity_second, objetosListFragment)
+        transaction.commit()
 
-            override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-                response?.isSuccessful.let {
-                    Log.e("SecondActivity", "Deu certo "+tokenString)
-                    val intent = Intent(context, ObjetosListActivity::class.java)
-                    val objetosStringList = response?.body()?.obj
-                    intent.putExtra("LIST", objetosStringList?.toTypedArray())
-                    startActivity(intent)
-                }
-            }
-        }
-        networkManager.runListObjetcs(tokenString!!, callbackList)
+//        val intent = Intent(context, ObjetosListActivity::class.java)
+//        val objetosStringList = response?.body()?.obj
+//        intent.putExtra("LIST", objetosStringList?.toTypedArray())
+//        startActivity(intent)
     }
 
     fun didTapcloseButton() {

@@ -15,11 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.preference.PreferenceManager
-
-interface myCallback {
-    fun onFailure(call: Call<ResponseBody1>?)
-    fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?)
-}
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
@@ -31,8 +27,15 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        probeRequest()
         autenticarButton.setOnClickListener { didTapAutenticar() }
+
+        loadingProgressBar.show()
+        usrEditText.visibility = View.INVISIBLE
+        pwdEditText.visibility = View.INVISIBLE
+        otpEditText.visibility = View.INVISIBLE
+        autenticarButton.visibility = View.INVISIBLE
+
+        probeRequest()
     }
 
     fun didTapAutenticar() {
@@ -59,6 +62,28 @@ class MainActivity : AppCompatActivity() {
         networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
     }
 
+    fun handleNetworkResponse(responseCode: Int?): String {
+        if(responseCode == null) {
+            return "failed null"
+        }
+        when(responseCode) {
+            in 200..299 -> return "sucess"
+            in 401..500 -> return "authenticationError"
+            in 501..599 -> return "badRequest"
+            600 -> return "outdated"
+            else -> return "failed"
+        }
+    }
+
+    fun showLoginFields() {
+        loadingProgressBar.hide()
+
+        usrEditText.visibility = View.VISIBLE
+        pwdEditText.visibility = View.VISIBLE
+        otpEditText.visibility = View.VISIBLE
+        autenticarButton.visibility = View.VISIBLE
+    }
+
     fun probeRequest() {
         if (isNetworkConnected() == false ) {
             Log.d("MainActivity", "Sem NET nao da neh")
@@ -69,42 +94,28 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-//        val callback = object : Callback<ResponseBody1> {
-//            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-//                Log.e("Probe", "Problem calling the API", t)
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-//                response?.isSuccessful.let {
-//                    Log.e("Probe", "Deu certo ")
-//                    val intent = Intent(baseContext, SecondActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-        if (tokenString == null) {
-            Log.e("Probe", "Token Null ")
-            return
-        }
-
-        val callback = object : myCallback {
-            override fun onFailure(call: Call<ResponseBody1>?) {
-                Log.e("Probe", "Problem calling the API")
-
+        val callback = object : Callback<ResponseBody1> {
+            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+                Log.e("Probe", "Problem calling the API", t)
+                showLoginFields()
             }
 
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                response?.isSuccessful.let {
-                    Log.e("Probe", "Deu certo ")
+                val codeMeaning = handleNetworkResponse(response?.code())
+                if(codeMeaning == "sucess") {
                     val intent = Intent(baseContext, SecondActivity::class.java)
                     startActivity(intent)
                 }
+                showLoginFields()
+                Log.d("probe", codeMeaning)
             }
         }
 
-
-        networkManager.runProbeSyncronous(tokenString!!, callback)
-
+        if(tokenString == null) {
+            showLoginFields()
+            return
+        }
+        networkManager.runProbe(tokenString!!, callback)
     }
 
 

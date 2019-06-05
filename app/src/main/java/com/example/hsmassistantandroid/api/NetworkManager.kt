@@ -1,7 +1,6 @@
 package com.example.hsmassistantandroid.api
 
 import android.util.Log
-import com.example.hsmassistantandroid.activities.ui.myCallback
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody2
 import okhttp3.MediaType
@@ -75,7 +74,7 @@ class NetworkManager {
 
 
     }
-
+    //OBJETOS
     fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
         val json = JSONObject()
         Log.e("JSON", json.toString())
@@ -86,6 +85,7 @@ class NetworkManager {
         }
     }
 
+    //AUTH
     fun runClose(token: String, callback: Callback<ResponseBody1>) {
         val json = JSONObject()
         Log.e("JSON", json.toString())
@@ -94,16 +94,9 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runProbeSyncronous(token: String, callback: myCallback) {
+    fun runProbe(token: String, callback: Callback<ResponseBody1>) {
         val call = sessaoRouter.probe(token)
-        val response = call.execute()
-        if(response.isSuccessful) {
-            callback.onFailure(call)
-        }
-        else {
-            callback.onResponse(call, response)
-        }
-
+        call.enqueue(callback)
     }
 
     fun runAuth(usr: String, pwd: String, otp: String, callback: Callback<ResponseBody1>) {

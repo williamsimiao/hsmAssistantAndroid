@@ -1,6 +1,7 @@
 package com.example.hsmassistantandroid.activities.ui
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -24,7 +25,11 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 
 
-class SecondActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentInteractionListener {
+    override fun onFragmentInteraction(uri: Uri) {
+        Log.e("AQUI", "Houcve interacao ")
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_user -> Log.d("XIXI", "Clicou no search 2")
+            R.id.app_bar_user -> Log.d("XIXI", "Clicou no user")
 
             else -> Log.d("XIXI", "Estranho isso, não existe outro")
         }
