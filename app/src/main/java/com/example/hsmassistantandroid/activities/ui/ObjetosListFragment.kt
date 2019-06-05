@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
+import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,6 +59,7 @@ class ObjetosListFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 response?.isSuccessful.let {
                     Log.e("SecondActivity", "Deu certo ")
+                    val codeMeaning = handleNetworkResponse(response?.code())
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
                     objetosList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {

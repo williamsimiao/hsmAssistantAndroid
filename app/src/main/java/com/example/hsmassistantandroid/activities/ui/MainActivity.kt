@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.preference.PreferenceManager
 import android.view.View
+import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
@@ -60,19 +61,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
-    }
-
-    fun handleNetworkResponse(responseCode: Int?): String {
-        if(responseCode == null) {
-            return "failed null"
-        }
-        when(responseCode) {
-            in 200..299 -> return "sucess"
-            in 401..500 -> return "authenticationError"
-            in 501..599 -> return "badRequest"
-            600 -> return "outdated"
-            else -> return "failed"
-        }
     }
 
     fun showLoginFields() {
