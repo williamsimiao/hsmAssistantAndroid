@@ -51,8 +51,8 @@ class PainelFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-        listObjsButton.setOnClickListener { didTaplistObjsButton() }
-        closeButton.setOnClickListener { didTapcloseButton() }
+//        listObjsButton.setOnClickListener { didTaplistObjsButton() }
+//        closeButton.setOnClickListener { didTapcloseButton() }
     }
 
 
