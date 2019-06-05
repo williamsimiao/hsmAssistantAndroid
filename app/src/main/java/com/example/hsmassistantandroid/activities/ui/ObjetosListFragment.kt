@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
 import kotlinx.android.synthetic.main.activity_objetos_list.*
 import retrofit2.Call
@@ -32,12 +33,15 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class ObjetosListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    private val networkManager = NetworkManager()
+    private var tokenString: String? = null
+    private lateinit var objetosStrings: Array<String>
 
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        objetosRequest()
 
 
     }
@@ -51,16 +55,16 @@ class ObjetosListFragment : Fragment() {
 //            override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
 //                response?.isSuccessful.let {
 //                    Log.e("SecondActivity", "Deu certo ")
-//                    objetosStrings = intent.getStringArrayExtra("LIST")
-//                    viewManager = LinearLayoutManager(baseContext)
-//                    objetosList.layoutManager = LinearLayoutManager(baseContext)
+//                    objetosStrings = response.body()
+//                    val viewManager = LinearLayoutManager(context)
+//                    objetosList.layoutManager = LinearLayoutManager(context)
 //                    runOnUiThread {
 //                        objetosList.adapter = ObjetosListAdapter(objetosStrings)
 //                    }
 //                }
 //            }
 //        }
-////        networkManager.runListObjetcs(tokenString!!, callbackList)
+//        networkManager.runListObjetcs(tokenString!!, callbackList)
 //    }
 
     override fun onCreateView(
