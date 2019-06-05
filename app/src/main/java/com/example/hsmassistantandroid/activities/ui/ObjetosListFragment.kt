@@ -41,31 +41,31 @@ class ObjetosListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        objetosRequest()
+        objetosRequest()
 
 
     }
 
-//    fun objetosRequest() {
-//        val callbackList = object : Callback<ResponseBody2> {
-//            override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-//                Log.e("SecondsActivity", "Problem calling the API", t)
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-//                response?.isSuccessful.let {
-//                    Log.e("SecondActivity", "Deu certo ")
-//                    objetosStrings = response.body()
-//                    val viewManager = LinearLayoutManager(context)
-//                    objetosList.layoutManager = LinearLayoutManager(context)
-//                    runOnUiThread {
-//                        objetosList.adapter = ObjetosListAdapter(objetosStrings)
-//                    }
-//                }
-//            }
-//        }
-//        networkManager.runListObjetcs(tokenString!!, callbackList)
-//    }
+    fun objetosRequest() {
+        val callbackList = object : Callback<ResponseBody2> {
+            override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
+                Log.e("SecondsActivity", "Problem calling the API", t)
+            }
+
+            override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
+                response?.isSuccessful.let {
+                    Log.e("SecondActivity", "Deu certo ")
+                    objetosStrings = response?.body()?.obj
+                    val viewManager = LinearLayoutManager(context)
+                    objetosList.layoutManager = LinearLayoutManager(context)
+                    getActivity()?.runOnUiThread {
+                        objetosList.adapter = ObjetosListAdapter(objetosStrings)
+                    }
+                }
+            }
+        }
+        networkManager. runListObjetcs(tokenString!!, callbackList)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
