@@ -21,16 +21,16 @@
             android:visibility="visible" />
 
     <ImageView
-            android:layout_width="156dp"
-            android:layout_height="156dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="56dp"
             app:srcCompat="@drawable/dinamo_logo"
             android:contentDescription="@string/shr_logo_content_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginStart="64dp"
             android:id="@+id/logo_image"/>
 
     <com.google.android.material.textfield.TextInputLayout
