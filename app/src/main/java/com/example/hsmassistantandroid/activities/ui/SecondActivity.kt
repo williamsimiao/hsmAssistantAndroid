@@ -23,9 +23,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_bottomsheet.*
 
 
-class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentInteractionListener {
+class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentInteractionListener,
+    PainelFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
         Log.e("AQUI", "Houcve interacao ")
 
@@ -54,7 +58,10 @@ class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentIntera
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_user -> Log.d("XIXI", "Clicou no user")
+            R.id.app_bar_user -> {
+                Log.d("XIXI", "Clicou no user")
+
+            }
 
             else -> Log.d("XIXI", "Estranho isso, não existe outro")
         }

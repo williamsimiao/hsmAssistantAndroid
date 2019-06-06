@@ -5,21 +5,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/activity_second">
-
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar"
-            style="@style/Widget.MaterialComponents.BottomAppBar"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:navigationIcon="@drawable/ic_menu" />
-    <TextView
-            android:text="Painel de controle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:id="@+id/textView"/>
+            android:layout_height="wrap_content">
+        <fragment android:name="com.example.hsmassistantandroid.activities.ui.hostFragment"
+                  android:id="@+id/host_fragment"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_alignParentTop="true"
+                  android:layout_above="@+id/bottomAppBar"
+                  app:defaultNavHost="true"
+                  app:navGraph="@navigation/nav_graph"/>
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar"
+                style="@style/Widget.MaterialComponents.BottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                app:navigationIcon="@drawable/ic_menu" />
+
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
