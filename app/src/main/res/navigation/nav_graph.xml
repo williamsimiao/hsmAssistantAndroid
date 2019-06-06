@@ -9,6 +9,7 @@
               android:label="fragment_user_settings" tools:layout="@layout/fragment_user_settings">
         <action android:id="@+id/action_userSettingsFragment_to_mainActivity2" app:destination="@id/mainActivity"/>
     </fragment>
+
     <activity android:id="@+id/mainActivity" android:name="com.example.hsmassistantandroid.activities.ui.MainActivity"
               android:label="activity_main" tools:layout="@layout/activity_main"/>
     <fragment android:id="@+id/painelFragment"

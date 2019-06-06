@@ -16,6 +16,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".activities.ui.SecondActivity">
+            android:parentActivityName=".MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.ui.MainActivity" />
         </activity>
         <activity android:name=".activities.ui.MainActivity">
             <intent-filter>

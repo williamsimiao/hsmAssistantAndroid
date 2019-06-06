@@ -32,11 +32,6 @@ class PainelFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        button.setOnClickListener {
-//            view!!.findNavController().navigate(R.id.action_painelFragment_to_userSettingsFragment)
-            findNavController().navigate(R.id.action_painelFragment_to_userSettingsFragment)
-
-        }
     }
 
 
@@ -47,8 +42,15 @@ class PainelFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_painel, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        button.setOnClickListener {
+            findNavController().navigate(R.id.action_painelFragment_to_userSettingsFragment)
+
+        }
     }
 
     override fun onAttach(context: Context) {
