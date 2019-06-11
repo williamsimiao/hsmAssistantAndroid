@@ -24,7 +24,7 @@
     <!--</RelativeLayout>-->
 
     <fragment
-            android:id="@+id/nav_host_fragment"
+            android:id="@+id/navHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,6 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_alignParentBottom="true"
-            app:navigationIcon="@drawable/ic_menu" />
+            app:navigationIcon="@drawable/ic_menu" app:backgroundTint="@android:color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

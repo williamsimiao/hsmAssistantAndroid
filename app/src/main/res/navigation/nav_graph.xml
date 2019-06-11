@@ -5,17 +5,31 @@
             android:id="@+id/nav_graph"
             app:startDestination="@id/painelFragment">
 
-    <fragment android:id="@+id/userSettingsFragment" android:name="com.example.hsmassistantandroid.activities.ui.userSettingsFragment"
-              android:label="fragment_user_settings" tools:layout="@layout/fragment_user_settings">
-        <action android:id="@+id/action_userSettingsFragment_to_mainActivity2" app:destination="@id/mainActivity"/>
+    <fragment android:id="@+id/userSettingsFragment"
+              android:name="com.example.hsmassistantandroid.activities.ui.userSettingsFragment"
+              android:label="fragment_user_settings"
+              tools:layout="@layout/fragment_user_settings">
+        <action
+                android:id="@+id/action_userSettingsFragment_to_mainActivity2"
+                app:destination="@id/mainActivity"/>
     </fragment>
 
-    <activity android:id="@+id/mainActivity" android:name="com.example.hsmassistantandroid.activities.ui.MainActivity"
-              android:label="activity_main" tools:layout="@layout/activity_main"/>
+    <activity android:id="@+id/mainActivity"
+              android:name="com.example.hsmassistantandroid.activities.ui.MainActivity"
+              android:label="activity_main"
+              tools:layout="@layout/activity_main"/>
+
     <fragment android:id="@+id/painelFragment"
               android:name="com.example.hsmassistantandroid.activities.ui.PainelFragment"
-              android:label="fragment_painel" tools:layout="@layout/fragment_painel">
+              android:label="fragment_painel"
+              tools:layout="@layout/fragment_painel">
         <action android:id="@+id/action_painelFragment_to_userSettingsFragment"
                 app:destination="@id/userSettingsFragment"/>
+        <action android:id="@+id/action_painelFragment_to_objetosListFragment"
+                app:destination="@id/objetosListFragment"/>
     </fragment>
+
+    <fragment android:id="@+id/objetosListFragment"
+              android:name="com.example.hsmassistantandroid.activities.ui.ObjetosListFragment"
+              android:label="fragment_objetos_list" tools:layout="@layout/fragment_objetos_list"/>
 </navigation>

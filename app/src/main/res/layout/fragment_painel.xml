@@ -9,14 +9,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
-    </RelativeLayout>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/activity_second">
-
         <TextView
                 android:text="Painel de controle AQUI"
                 android:layout_width="wrap_content"
@@ -33,6 +25,13 @@
                 android:layout_gravity="center"
                 android:id="@+id/button"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
+    <!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/activity_second">-->
+
+        <!---->
+    <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 </FrameLayout>

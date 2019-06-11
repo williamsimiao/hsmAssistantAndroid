@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
@@ -38,11 +40,15 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
             // Bottom Navigation Drawer menu item clicks
             when (menuItem.itemId) {
                 R.id.drawer_item_obejtos -> {
-                    context!!.toast("DOIDERA 1")
+                    context!!.toast("Objetos")
                     didTaplistObjsButton()
                 }
-                R.id.drawer_item_relacao -> context!!.toast("DOIDERA 2")
-                R.id.drawer_item_gestao -> context!!.toast("DOIDERA 3")
+                R.id.drawer_item_relacao -> {
+                    context!!.toast("Relação de confiança")
+                }
+                R.id.drawer_item_gestao -> {
+                    context!!.toast("Gestão")
+                }
 
             }
             true
@@ -51,15 +57,11 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
     }
 
     fun didTaplistObjsButton() {
-        val objetosListFragment = ObjetosListFragment()
-        val transaction = fragmentManager!!.beginTransaction()
-        transaction.add(R.id.activity_second, objetosListFragment)
-        transaction.commit()
-
-//        val intent = Intent(context, ObjetosListActivity::class.java)
-//        val objetosStringList = response?.body()?.obj
-//        intent.putExtra("LIST", objetosStringList?.toTypedArray())
-//        startActivity(intent)
+        findNavController().navigate(R.id.action_painelFragment_to_objetosListFragment)
+//        val objetosListFragment = ObjetosListFragment()
+//        val transaction = fragmentManager!!.beginTransaction()
+//        transaction.replace(R.id.activity_second, objetosListFragment)
+//        transaction.commit()
     }
 
     fun didTapcloseButton() {

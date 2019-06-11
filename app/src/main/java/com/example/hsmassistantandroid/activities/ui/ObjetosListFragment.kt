@@ -50,6 +50,15 @@ class ObjetosListFragment : Fragment() {
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+//        objetosList.adapter. = {
+//
+//        }
+    }
+
+
+
     fun objetosRequest() {
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {

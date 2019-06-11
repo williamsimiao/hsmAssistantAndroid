@@ -58,7 +58,6 @@ class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentIntera
         when (item.itemId) {
             R.id.app_bar_user -> {
                 Log.d("XIXI", "Clicou no user")
-
             }
 
             else -> Log.d("XIXI", "Estranho isso, não existe outro")
@@ -67,6 +66,9 @@ class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentIntera
     }
 
     //ACTIONS
+    override fun onSupportNavigateUp() =
+        findNavController(this, R.id.navHostFragment).navigateUp()
+
     fun didTapNavigationButton() {
         val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
         bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)

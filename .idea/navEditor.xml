@@ -20,17 +20,34 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="objetosListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="37" />
+                            <option name="y" value="-272" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="painelFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-47" />
-                            <option name="y" value="-34" />
+                            <option name="x" value="-273" />
+                            <option name="y" value="-50" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_painelFragment_to_objetosListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_painelFragment_to_userSettingsFragment">
                               <value>
                                 <LayoutPositions />
@@ -52,7 +69,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_userSettingsFragment_to_mainActivity">
+                            <entry key="action_userSettingsFragment_to_mainActivity2">
                               <value>
                                 <LayoutPositions />
                               </value>
