@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.preference.PreferenceManager
 import android.view.View
+import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 
 class MainActivity : AppCompatActivity() {
@@ -82,13 +83,13 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val callback = object : Callback<ResponseBody1> {
-            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+        val callback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 Log.e("Probe", "Problem calling the API", t)
                 showLoginFields()
             }
 
-            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
                 val codeMeaning = handleNetworkResponse(response?.code())
                 if(codeMeaning == "sucess") {
                     val intent = Intent(baseContext, SecondActivity::class.java)

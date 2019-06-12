@@ -36,7 +36,7 @@ class ObjetosListAdapter(private val objetosStringList: Array<String>) : Recycle
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindRepo(objeto: String) {
             with(objeto) {
-                itemView.identificador.text = objeto
+                itemView.title_label.text = objeto
             }
         }
     }

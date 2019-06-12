@@ -12,6 +12,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody2
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -58,18 +59,15 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
 
     fun didTaplistObjsButton() {
         findNavController().navigate(R.id.action_painelFragment_to_objetosListFragment)
-//        val objetosListFragment = ObjetosListFragment()
-//        val transaction = fragmentManager!!.beginTransaction()
-//        transaction.replace(R.id.activity_second, objetosListFragment)
-//        transaction.commit()
+
     }
 
     fun didTapcloseButton() {
-        val callbackClose = object : Callback<ResponseBody1> {
-            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+        val callbackClose = object : Callback<ResponseBody0> {
+            override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
                 Log.e("SecondActivity", "Problem calling the API", t)
             }
-            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 response?.isSuccessful.let {
 
                     AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")

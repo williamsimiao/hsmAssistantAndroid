@@ -1,8 +1,10 @@
 package com.example.hsmassistantandroid.api
 
 import android.util.Log
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody2
+import com.example.hsmassistantandroid.data.ResponseBody3
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -56,6 +58,8 @@ class UnsafeOkHttpClient {
 class NetworkManager {
     private val sessaoRouter: sessaoEndPoint
     private val objetosRouter: objetosEndPoint
+    private val usuarioRouter: usuarioEndPoint
+
 
     companion object {
         const val BASE_URL = "https://hsmlab63.dinamonetworks.com/api/"
@@ -71,30 +75,41 @@ class NetworkManager {
             .build()
         sessaoRouter = retrofit.create(sessaoEndPoint::class.java)
         objetosRouter = retrofit.create(objetosEndPoint::class.java)
-
+        usuarioRouter = retrofit.create(usuarioEndPoint::class.java)
 
     }
+    //USUARIO
+
+    //NO Body
+//    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, completion: @escaping (_ error: String?)->()) {
+//
+//    }
+
+
+    //NO Body
+    fun runChangePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
+        val json = JSONObject()
+        json.put("pwd", newPwd)
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.changePwd(requestBody, token)
+        call.enqueue(callback)
+    }
+
     //OBJETOS
     fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
-        val json = JSONObject()
-        Log.e("JSON", json.toString())
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = objetosRouter?.listObjs(token)
         if (call != null) {
             call.enqueue(callback)
         }
     }
 
-    //AUTH
-    fun runClose(token: String, callback: Callback<ResponseBody1>) {
-        val json = JSONObject()
-        Log.e("JSON", json.toString())
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-        val call = sessaoRouter.close(requestBody, token)
+    //SESSAO
+    fun runClose(token: String, callback: Callback<ResponseBody0>) {
+        val call = sessaoRouter.close(token)
         call.enqueue(callback)
     }
 
-    fun runProbe(token: String, callback: Callback<ResponseBody1>) {
+    fun runProbe(token: String, callback: Callback<ResponseBody3>) {
         val call = sessaoRouter.probe(token)
         call.enqueue(callback)
     }
@@ -104,7 +119,6 @@ class NetworkManager {
         json.put("usr", usr)
         json.put("pwd", pwd)
 
-        Log.e("JSON", json.toString())
 
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = sessaoRouter.auth(requestBody)
