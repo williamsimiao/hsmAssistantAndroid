@@ -15,7 +15,6 @@ interface usuarioEndPoint {
     fun createUsr(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody0>
 
     @GET("list_usrs")
-    @Headers("Content-type:application/json")
     fun listUsrs(@Header("Authorization") token: String?): Call<ResponseBody4>
 
     @POST("list_usr_trust")

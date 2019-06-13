@@ -28,7 +28,11 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_bottomsheet.*
 
 
-class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentInteractionListener, PainelFragment.OnFragmentInteractionListener , userSettingsFragment.OnFragmentInteractionListener {
+class SecondActivity : AppCompatActivity(), ObjetosListFragment.OnFragmentInteractionListener,
+                       PainelFragment.OnFragmentInteractionListener ,
+                       userSettingsFragment.OnFragmentInteractionListener,
+                       gestaoUsuarioFragment.OnFragmentInteractionListener {
+
     override fun onFragmentInteraction(uri: Uri) {
         Log.e("AQUI", "Houve interacao ")
     }

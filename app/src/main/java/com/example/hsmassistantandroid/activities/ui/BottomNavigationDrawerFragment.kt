@@ -41,14 +41,13 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
             // Bottom Navigation Drawer menu item clicks
             when (menuItem.itemId) {
                 R.id.drawer_item_obejtos -> {
-                    context!!.toast("Objetos")
-                    didTaplistObjsButton()
+                    findNavController().navigate(R.id.action_painelFragment_to_objetosListFragment)
                 }
                 R.id.drawer_item_relacao -> {
-                    context!!.toast("Relação de confiança")
+                    context!!.toast("Relacao")
                 }
                 R.id.drawer_item_gestao -> {
-                    context!!.toast("Gestão")
+                    findNavController().navigate(R.id.action_painelFragment_to_gestaoUsuarioFragment)
                 }
 
             }
@@ -57,10 +56,6 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
 
     }
 
-    fun didTaplistObjsButton() {
-        findNavController().navigate(R.id.action_painelFragment_to_objetosListFragment)
-
-    }
 
     fun didTapcloseButton() {
         val callbackClose = object : Callback<ResponseBody0> {

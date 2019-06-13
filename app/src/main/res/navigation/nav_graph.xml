@@ -27,9 +27,14 @@
                 app:destination="@id/userSettingsFragment"/>
         <action android:id="@+id/action_painelFragment_to_objetosListFragment"
                 app:destination="@id/objetosListFragment"/>
+        <action android:id="@+id/action_painelFragment_to_gestaoUsuarioFragment"
+                app:destination="@id/gestaoUsuarioFragment"/>
     </fragment>
 
     <fragment android:id="@+id/objetosListFragment"
               android:name="com.example.hsmassistantandroid.activities.ui.ObjetosListFragment"
               android:label="fragment_objetos_list" tools:layout="@layout/fragment_objetos_list"/>
+    <fragment android:id="@+id/gestaoUsuarioFragment"
+              android:name="com.example.hsmassistantandroid.activities.ui.gestaoUsuarioFragment"
+              android:label="fragment_gestao_usuario_list" tools:layout="@layout/fragment_gestao_usuario_list"/>
 </navigation>
