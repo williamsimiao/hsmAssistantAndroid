@@ -1,10 +1,7 @@
 package com.example.hsmassistantandroid.api
 
 import android.util.Log
-import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.ResponseBody1
-import com.example.hsmassistantandroid.data.ResponseBody2
-import com.example.hsmassistantandroid.data.ResponseBody3
+import com.example.hsmassistantandroid.data.*
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -80,13 +77,52 @@ class NetworkManager {
     }
     //USUARIO
 
-    //NO Body
-//    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, completion: @escaping (_ error: String?)->()) {
-//
-//    }
+    fun runGetAcl(token: String, usr: String, callback: Callback<ResponseBody6>){
+        val json = JSONObject()
+        json.put("usr", usr)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.getAcl(requestBody, token)
+        call.enqueue(callback)
+    }
+
+    fun runUpdateAcl(token: String, usr: String, acl: Int, callback: Callback<ResponseBody0>) {
+        val json = JSONObject()
+        json.put("usr", usr)
+        json.put("acl", acl)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.updateAcl(requestBody, token)
+        call.enqueue(callback)
+    }
+
+    fun runListUsrsTrust(token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
+        val json = JSONObject()
+        json.put("op", op)
+        json.put("usr", usr)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.listUsersTrust(requestBody, token)
+        call.enqueue(callback)
+    }
+
+    fun runListUsrs(token: String, callback: Callback<ResponseBody4>) {
+        val call = usuarioRouter.listUsrs(token)
+        call.enqueue(callback)
+    }
+
+    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody0>) {
+        val json = JSONObject()
+        json.put("usr", usr)
+        json.put("pwd", pwd)
+        json.put("acl", acl)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.createUsr(requestBody, token)
+        call.enqueue(callback)
+    }
 
 
-    //NO Body
     fun runChangePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
         val json = JSONObject()
         json.put("pwd", newPwd)
@@ -118,7 +154,6 @@ class NetworkManager {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)
-
 
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = sessaoRouter.auth(requestBody)

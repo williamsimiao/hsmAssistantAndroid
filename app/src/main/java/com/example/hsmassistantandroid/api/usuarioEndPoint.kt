@@ -1,7 +1,6 @@
 package com.example.hsmassistantandroid.api
 
-import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.ResponseBody2
+import com.example.hsmassistantandroid.data.*
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -13,23 +12,23 @@ interface usuarioEndPoint {
 
     @POST("create_usr")
     @Headers("Content-type:application/json")
-    fun createUsr(@Header("Authorization") token: String?): Call<ResponseBody2>
+    fun createUsr(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody0>
 
     @GET("list_usrs")
     @Headers("Content-type:application/json")
-    fun listUsrs(@Header("Authorization") token: String?): Call<ResponseBody2>
+    fun listUsrs(@Header("Authorization") token: String?): Call<ResponseBody4>
 
     @POST("list_usr_trust")
     @Headers("Content-type:application/json")
-    fun listUsersTrust(@Header("Authorization") token: String?): Call<ResponseBody2>
+    fun listUsersTrust(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody5>
 
     @POST("update_acl")
     @Headers("Content-type:application/json")
-    fun updateAcl(@Header("Authorization") token: String?): Call<ResponseBody2>
+    fun updateAcl(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody0>
 
     @POST("get_acl")
     @Headers("Content-type:application/json")
-    fun getAcl(@Header("Authorization") token: String?): Call<ResponseBody2>
+    fun getAcl(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody6>
 }
 
 //switch self {
