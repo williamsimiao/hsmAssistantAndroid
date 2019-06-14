@@ -14,7 +14,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_bottomsheet.*
+import kotlinx.android.synthetic.main.fragment_bottom_navigation_drawer.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,7 +29,7 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-        return inflater.inflate(R.layout.fragment_bottomsheet , container, false)
+        return inflater.inflate(R.layout.fragment_bottom_navigation_drawer , container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
