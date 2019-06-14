@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.activities.ui
+package com.example.hsmassistantandroid.ui.fragments
 
 import android.content.Context
 import android.net.Uri
@@ -72,7 +72,8 @@ class ObjetosListFragment : Fragment() {
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
                     objetosList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
-                        objetosList.adapter = ObjetosListAdapter(objetosStrings)
+                        objetosList.adapter =
+                            ObjetosListAdapter(objetosStrings)
                     }
                 }
             }

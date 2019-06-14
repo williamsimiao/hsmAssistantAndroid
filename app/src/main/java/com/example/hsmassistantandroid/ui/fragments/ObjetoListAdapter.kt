@@ -1,17 +1,13 @@
-package com.example.hsmassistantandroid.activities.ui
+package com.example.hsmassistantandroid.ui.fragments
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.data.ResponseBody2
 import com.example.hsmassistantandroid.extensions.ctx
 import kotlinx.android.synthetic.main.item_objetos.view.*
-import android.widget.Toast
 import android.util.Log
-import org.jetbrains.anko.toast
 
 
 class ObjetosListAdapter(private val objetosStringList: Array<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {

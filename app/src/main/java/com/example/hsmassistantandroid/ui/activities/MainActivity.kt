@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.activities.ui
+package com.example.hsmassistantandroid.ui.activities
 
 import android.content.Context
 import android.content.Intent

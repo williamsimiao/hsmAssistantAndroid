@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.activities.ui
+package com.example.hsmassistantandroid.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.ResponseBody1
-import com.example.hsmassistantandroid.data.ResponseBody2
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_navigation_drawer.*
 import org.jetbrains.anko.toast

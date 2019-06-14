@@ -55,6 +55,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_painelFragment_to_gestaoUsuarioFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_painelFragment_to_objetosListFragment">
                               <value>
                                 <LayoutPositions />
