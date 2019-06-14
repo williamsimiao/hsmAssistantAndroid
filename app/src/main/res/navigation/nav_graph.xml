@@ -29,6 +29,7 @@
                 app:destination="@id/objetosListFragment"/>
         <action android:id="@+id/action_painelFragment_to_gestaoUsuarioFragment"
                 app:destination="@id/gestaoUsuarioFragment"/>
+        <action android:id="@+id/action_painelFragment_to_relacaoFragment" app:destination="@id/relacaoFragment"/>
     </fragment>
 
     <fragment android:id="@+id/objetosListFragment"
@@ -37,4 +38,7 @@
     <fragment android:id="@+id/gestaoUsuarioFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment"
               android:label="fragment_gestao_usuario_list" tools:layout="@layout/fragment_gestao_usuario_list"/>
+    <fragment android:id="@+id/relacaoFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.relacaoFragment"
+              android:label="relacao_fragment" tools:layout="@layout/relacao_fragment"/>
 </navigation>

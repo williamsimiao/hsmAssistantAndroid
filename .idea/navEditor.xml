@@ -65,12 +65,29 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_painelFragment_to_relacaoFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_painelFragment_to_userSettingsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="relacaoFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-122" />
+                            <option name="y" value="784" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

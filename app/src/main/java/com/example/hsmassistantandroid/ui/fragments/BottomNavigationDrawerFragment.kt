@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -42,38 +43,15 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
                     findNavController().navigate(R.id.action_painelFragment_to_objetosListFragment)
                 }
                 R.id.drawer_item_relacao -> {
-                    context!!.toast("Relacao")
+                    findNavController().navigate(R.id.action_painelFragment_to_relacaoFragment)
                 }
                 R.id.drawer_item_gestao -> {
-                    findNavController().navigate(R.id.action_painelFragment_to_gestaoUsuarioFragment)
+                    findNavController().navigate(R.id.action_painelFragment_to_relacaoFragment)
                 }
 
             }
             true
         }
 
-    }
-
-
-    fun didTapcloseButton() {
-        val callbackClose = object : Callback<ResponseBody0> {
-            override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                Log.e("SecondActivity", "Problem calling the API", t)
-            }
-            override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                response?.isSuccessful.let {
-
-                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
-                        .setMessage("Sessão encerrada com sucesso")
-                        .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-
-                        }
-
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        }
-        networkManager.runClose(tokenString!!, callbackClose)
     }
 }
