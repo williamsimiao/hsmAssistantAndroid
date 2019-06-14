@@ -20,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
+class userOptionsBottomSheetFragment: BottomSheetDialogFragment() {
     private val networkManager = NetworkManager() // 1
     private var tokenString: String? = null
 

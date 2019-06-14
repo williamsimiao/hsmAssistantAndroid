@@ -37,10 +37,10 @@ class PainelFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        button.setOnClickListener {
-            findNavController().navigate(R.id.action_painelFragment_to_userSettingsFragment)
-
-        }
+//        button.setOnClickListener {
+//            findNavController().navigate(R.id.action_painelFragment_to_userSettingsFragment)
+//
+//        }
     }
 
     override fun onAttach(context: Context) {

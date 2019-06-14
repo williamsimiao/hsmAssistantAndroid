@@ -11,11 +11,12 @@ import android.view.Menu
 import androidx.navigation.Navigation.findNavController
 import com.example.hsmassistantandroid.ui.fragments.*
 
+private val TAG: String = SecondActivity::class.java.simpleName
+
 
 class SecondActivity : AppCompatActivity(),
     ObjetosListFragment.OnFragmentInteractionListener,
     PainelFragment.OnFragmentInteractionListener,
-    userSettingsFragment.OnFragmentInteractionListener,
     gestaoUsuarioFragment.OnFragmentInteractionListener {
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -46,10 +47,14 @@ class SecondActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_user -> {
-                Log.d("XIXI", "Clicou no user")
+
+                val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
+                bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+
+                Log.d(TAG, "Click on user")
             }
 
-            else -> Log.d("XIXI", "Estranho isso, não existe outro")
+            else -> Log.d(TAG, "Estranho isso, não existe outro")
         }
         return super.onOptionsItemSelected(item)
     }
