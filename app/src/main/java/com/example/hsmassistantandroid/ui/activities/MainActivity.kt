@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
                 response?.isSuccessful.let {
                     tokenString = "HSM " + response?.body()?.token
-                    Log.e("MainActivity", "Deu certo "+tokenString)
+                    Log.e("MainActivity", "Autenticado "+tokenString)
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
                     val editor = sharedPreferences.edit()
                     editor.putString("TOKEN", tokenString)

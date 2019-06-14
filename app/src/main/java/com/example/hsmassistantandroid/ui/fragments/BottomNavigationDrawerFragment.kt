@@ -69,7 +69,6 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
 
                         }
 
-                    Log.e("SecondActivity", "Deu certo ")
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                 }

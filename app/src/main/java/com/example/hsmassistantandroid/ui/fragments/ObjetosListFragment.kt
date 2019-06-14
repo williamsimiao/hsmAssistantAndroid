@@ -67,7 +67,6 @@ class ObjetosListFragment : Fragment() {
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 response?.isSuccessful.let {
-                    Log.e("SecondActivity", "Deu certo ")
                     val codeMeaning = handleNetworkResponse(response?.code())
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
                     objetosList.layoutManager = LinearLayoutManager(context)

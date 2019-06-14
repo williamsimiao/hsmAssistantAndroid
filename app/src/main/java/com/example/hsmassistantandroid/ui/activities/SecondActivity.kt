@@ -48,8 +48,8 @@ class SecondActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.app_bar_user -> {
 
-                val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-                bottomNavDrawerFragment.show(supportFragmentManager, bottomNavDrawerFragment.tag)
+                val userOptionsFragment = UserOptionsBottomSheetFragment()
+                userOptionsFragment.show(supportFragmentManager, userOptionsFragment.tag)
 
                 Log.d(TAG, "Click on user")
             }

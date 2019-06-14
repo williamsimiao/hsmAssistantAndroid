@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--particao-->
+
+    <item
+            android:id="@+id/user_options_fechar"
+            android:title="Fechar sessão"/>
+    <item
+            android:id="@+id/user_options_mudar_senha"
+            android:title="Trocar senha"/>
+
+</menu>

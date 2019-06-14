@@ -66,7 +66,6 @@ class gestaoUsuarioFragment : Fragment() {
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
                 response?.isSuccessful.let {
-                    Log.e("SecondActivity", "Deu certo ")
                     usrNamesStrings = response?.body()?.usr!!.toTypedArray()
                     gestaousuarioList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
