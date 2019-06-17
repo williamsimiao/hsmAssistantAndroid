@@ -13,7 +13,7 @@
             app:tabMode="fixed"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.viewpager.widget.ViewPager
+    <com.example.hsmassistantandroid.ui.SwipeLockableViewPager
             android:id="@+id/relacaoViewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
