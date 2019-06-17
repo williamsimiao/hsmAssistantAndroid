@@ -46,7 +46,7 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
                     findNavController().navigate(R.id.action_painelFragment_to_relacaoFragment)
                 }
                 R.id.drawer_item_gestao -> {
-                    findNavController().navigate(R.id.action_painelFragment_to_relacaoFragment)
+                    findNavController().navigate(R.id.action_painelFragment_to_gestaoUsuarioFragment)
                 }
 
             }
