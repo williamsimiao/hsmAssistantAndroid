@@ -21,8 +21,8 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.InputStream
 import javax.security.cert.X509Certificate
+
 
 
 
@@ -69,10 +69,13 @@ class ObjetosListFragment : Fragment() {
                 val codeMeaning = handleNetworkResponse(response?.code())
                 Log.e("CODIGO", codeMeaning)
                 response?.isSuccessful.let {
-                    val certificateData = response?.body()
-//                    val cert = X509Certificate.getInstance(certificateData)
-//                    val certificateName = cert.subjectDN.name
-//                    certificateNameArray.add(certificateName)
+                    val certificateData =
+                        response?.body()?.bytes()
+                    val cert = X509Certificate.getInstance(certificateData)
+
+                    val certificateName = cert.subjectDN.name
+                    val result = certificateName.substringAfter("CN=").substringBefore(',')
+                    certificateNameArray.add(result)
                     exportedCertificateCounter += 1
                 }
                 if(certificateCounter == exportedCertificateCounter) {
