@@ -4,34 +4,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class gestaoPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class gestaoPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+
+    private val mFragmentList: ArrayList<Fragment> = ArrayList()
+    private val mFragmentTitleList: ArrayList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> {
-                val trusteesFragment = TrustFragment()
-                trusteesFragment.isTrustees = true
-                return trusteesFragment
-            }
-
-            else -> {
-                val trusterFragment = TrustFragment()
-                trusterFragment.isTrustees = false
-                return trusterFragment
-            }
-        }
+        return mFragmentList.get(position)
     }
 
     override fun getCount(): Int {
-        return 2
+        return mFragmentList.size
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        return when (position) {
-            0 -> "Trustees"
-            else -> {
-                return "Trusters"
-            }
-        }
+    fun addFragment(fragment: Fragment, title: String) {
+        mFragmentList.add(fragment)
+        mFragmentTitleList.add(title)
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        return mFragmentTitleList.get(position)
     }
 }
