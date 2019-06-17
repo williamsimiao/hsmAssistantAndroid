@@ -9,10 +9,15 @@ import org.json.JSONObject
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.InputStream
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import javax.security.cert.CertificateException
+import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+import okhttp3.ResponseBody
+
 
 class UnsafeOkHttpClient {
     companion object {
@@ -65,10 +70,15 @@ class NetworkManager {
     init {
         val unsafeClient = UnsafeOkHttpClient.getUnsafeOkHttpClient().build()
 
+        // setLenient : to acpect malformed JSONs
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(unsafeClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         sessaoRouter = retrofit.create(sessaoEndPoint::class.java)
         objetosRouter = retrofit.create(objetosEndPoint::class.java)
@@ -132,6 +142,25 @@ class NetworkManager {
     }
 
     //OBJETOS
+
+    fun runObjExp(objId: String, token: String, callback: Callback<ResponseBody>) {
+        val json = JSONObject()
+        json.put("obj", objId)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = objetosRouter.objExp(requestBody, token)
+        call.enqueue(callback)
+    }
+
+    fun runGetObjInfo(objId: String, token: String, callback: Callback<ResponseBody7>) {
+        val json = JSONObject()
+        json.put("obj", objId)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = objetosRouter.getObjInfo(requestBody, token)
+        call.enqueue(callback)
+    }
+
     fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
         val call = objetosRouter?.listObjs(token)
         if (call != null) {

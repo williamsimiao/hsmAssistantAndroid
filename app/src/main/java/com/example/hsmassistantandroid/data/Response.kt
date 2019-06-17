@@ -28,3 +28,8 @@ data class ResponseBody5 (
 
 data class ResponseBody6 (
     val acl: Int)
+
+data class ResponseBody7 (
+    val version: Int,
+    val type: Int,
+    val attr: Int)

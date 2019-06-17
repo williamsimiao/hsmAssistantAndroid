@@ -14,11 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
+import com.example.hsmassistantandroid.data.ResponseBody7
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import kotlinx.android.synthetic.main.fragment_objetos_list.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.InputStream
+import javax.security.cert.X509Certificate
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,11 +40,15 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
+
 class ObjetosListFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private lateinit var objetosStrings: Array<String>
-
+    private var certificateCounter: Int = 0
+    private var exportedCertificateCounter: Int = 0
+    private val certificateTypeInteger = 13
+    private var certificateNameArray = arrayListOf<String>()
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,20 +56,59 @@ class ObjetosListFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         objetosRequest()
+    }
 
+    fun expoRequest(objId: String) {
+        val callbackList = object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                Log.e("SecondsActivity", "Problem EXPO", t)
+//                Log.e("CALL", call.toString())
+            }
+
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                val codeMeaning = handleNetworkResponse(response?.code())
+                Log.e("CODIGO", codeMeaning)
+                response?.isSuccessful.let {
+                    val certificateData = response?.body()
+//                    val cert = X509Certificate.getInstance(certificateData)
+//                    val certificateName = cert.subjectDN.name
+//                    certificateNameArray.add(certificateName)
+                    exportedCertificateCounter += 1
+                }
+                if(certificateCounter == exportedCertificateCounter) {
+                    objetosList.layoutManager = LinearLayoutManager(context)
+                    getActivity()?.runOnUiThread {
+                        objetosList.adapter = ObjetosListAdapter(certificateNameArray.toTypedArray())
+                    }
+                }
+            }
+        }
+        networkManager.runObjExp(objId, tokenString!!, callbackList)
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        objetosList.adapter. = {
-//
-//        }
+    fun detailsRequest(objId: String) {
+        val callbackList = object : Callback<ResponseBody7> {
+            override fun onFailure(call: Call<ResponseBody7>?, t: Throwable?) {
+                Log.e("SecondsActivity", "Problem INFO", t)
+            }
+
+            override fun onResponse(call: Call<ResponseBody7>?, response: Response<ResponseBody7>?) {
+                response?.isSuccessful.let {
+                    if(response?.body()?.type == certificateTypeInteger) {
+                        certificateCounter += 1
+                        expoRequest(objId)
+                    }
+                }
+            }
+        }
+        networkManager.runGetObjInfo(objId, tokenString!!, callbackList)
+
     }
-
-
 
     fun objetosRequest() {
+        certificateCounter = 0
+        exportedCertificateCounter = 0
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
                 Log.e("SecondsActivity", "Problem calling the API", t)
@@ -67,12 +116,9 @@ class ObjetosListFragment : Fragment() {
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 response?.isSuccessful.let {
-                    val codeMeaning = handleNetworkResponse(response?.code())
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
-                    objetosList.layoutManager = LinearLayoutManager(context)
-                    getActivity()?.runOnUiThread {
-                        objetosList.adapter =
-                            ObjetosListAdapter(objetosStrings)
+                    for(objId: String in objetosStrings) {
+                        detailsRequest(objId)
                     }
                 }
             }
