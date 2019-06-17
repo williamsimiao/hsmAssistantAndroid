@@ -16,6 +16,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
 import com.example.hsmassistantandroid.data.ResponseBody7
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
+import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -62,7 +63,8 @@ class ObjetosListFragment : Fragment() {
                 if(certificateCounter == exportedCertificateCounter) {
                     objetosList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
-                        objetosList.adapter = ObjetosListAdapter(certificateNameArray.toTypedArray())
+                        objetosList.adapter =
+                            ObjetosListAdapter(certificateNameArray.toTypedArray())
                     }
                 }
             }

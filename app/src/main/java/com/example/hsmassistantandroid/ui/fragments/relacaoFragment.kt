@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.ui.adapters.myPagerAdapter
 import kotlinx.android.synthetic.main.relacao_fragment.*
 
 class relacaoFragment : Fragment() {
@@ -20,7 +21,7 @@ class relacaoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        val fragmentAdapter = gestaoPagerAdapter(childFragmentManager)
+//        val fragmentAdapter = myPagerAdapter(childFragmentManager)
 //        relacaoViewpager.se
 //
 //        tabs_main.setupWithViewPager(viewpager_main)
@@ -35,7 +36,7 @@ class relacaoFragment : Fragment() {
 
     private fun setupViewPager() {
 
-        val adapter = gestaoPagerAdapter(childFragmentManager)
+        val adapter = myPagerAdapter(childFragmentManager)
 
         var trustees = TrustFragment()
         trustees.isTrustees = true

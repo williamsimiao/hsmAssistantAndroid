@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import retrofit2.Call
 import retrofit2.Callback

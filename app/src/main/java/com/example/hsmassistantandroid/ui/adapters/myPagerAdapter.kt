@@ -1,10 +1,10 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class gestaoPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+class myPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
     private val mFragmentList: ArrayList<Fragment> = ArrayList()
     private val mFragmentTitleList: ArrayList<String> = ArrayList()
