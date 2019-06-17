@@ -23,6 +23,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.security.cert.X509Certificate
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
+import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
+
 
 class ObjetosListFragment : Fragment() {
     private val networkManager = NetworkManager()
@@ -38,6 +42,7 @@ class ObjetosListFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+
         objetosRequest()
     }
 
@@ -116,11 +121,22 @@ class ObjetosListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_objetos_list, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+
+    }
+
+    fun setUpViews() {
+        val itemDecor = DividerItemDecoration(context, VERTICAL)
+        objetosList.addItemDecoration(itemDecor)
+    }
+
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
