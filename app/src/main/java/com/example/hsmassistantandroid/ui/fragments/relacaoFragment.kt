@@ -19,4 +19,8 @@ class relacaoFragment : Fragment() {
 //
 //        tabs_main.setupWithViewPager(viewpager_main)
 //    }
+
+    companion object {
+        fun newInstance(): relacaoFragment = relacaoFragment()
+    }
 }

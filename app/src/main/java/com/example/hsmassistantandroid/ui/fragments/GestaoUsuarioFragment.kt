@@ -109,4 +109,8 @@ class gestaoUsuarioFragment : Fragment() {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
+
+    companion object {
+        fun newInstance(): gestaoUsuarioFragment = gestaoUsuarioFragment()
+    }
 }

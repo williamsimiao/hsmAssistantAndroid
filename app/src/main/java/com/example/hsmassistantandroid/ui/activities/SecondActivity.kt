@@ -8,10 +8,14 @@ import android.view.MenuItem
 import com.example.hsmassistantandroid.R
 import kotlinx.android.synthetic.main.activity_second.*
 import android.view.Menu
+import androidx.appcompat.app.ActionBar
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.example.hsmassistantandroid.ui.fragments.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private val TAG: String = SecondActivity::class.java.simpleName
+lateinit var toolbar: ActionBar
 
 
 class SecondActivity : AppCompatActivity(),
@@ -26,18 +30,60 @@ class SecondActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-        setUpBottomAppBar()
 
+        setSupportActionBar(toolbar)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        if (savedInstanceState == null) {
+            val fragment = ObjetosListFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                .commit()
+        }
     }
 
-    fun setUpBottomAppBar() {
-        setSupportActionBar(bottomAppBar)
-
-        bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
-
-        //click event over navigation menu like back arrow or hamburger icon
-        bottomAppBar.setNavigationOnClickListener { didTapNavigationButton() }
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_objetos -> {
+                toolbar.title = "Certificados"
+                val fragment = ObjetosListFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_relacao -> {
+                toolbar.title = "Relacoes"
+                val fragment = relacaoFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_gestao -> {
+                toolbar.title = "Gestão"
+                val fragment = gestaoUsuarioFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    .commit()
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
     }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+//    fun setUpBottomAppBar() {
+//        setSupportActionBar(bottomAppBar)
+//
+//        bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
+//
+//        //click event over navigation menu like back arrow or hamburger icon
+//        bottomAppBar.setNavigationOnClickListener { didTapNavigationButton() }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.bottomappbar_menu, menu)
@@ -60,8 +106,8 @@ class SecondActivity : AppCompatActivity(),
     }
 
     //ACTIONS
-    override fun onSupportNavigateUp() =
-        findNavController(this, R.id.navHostFragment).navigateUp()
+//    override fun onSupportNavigateUp() =
+//        findNavController(this, R.id.navHostFragment).navigateUp()
 
     fun didTapNavigationButton() {
         val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
