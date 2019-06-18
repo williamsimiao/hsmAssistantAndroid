@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_gestao" app:startDestination="@id/gestaoUsuarioFragment2">
+
+
+    <fragment android:id="@+id/gestaoUsuarioFragment2"
+              android:name="com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment"
+              android:label="gestaoUsuarioFragment">
+        <action android:id="@+id/action_gestaoUsuarioFragment2_to_newUserFragment"
+                app:destination="@id/newUserFragment"/>
+    </fragment>
+    <fragment android:id="@+id/newUserFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"
+              android:label="NewUserFragment"/>
+</navigation>

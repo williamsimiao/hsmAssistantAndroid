@@ -5,15 +5,6 @@
             android:id="@+id/nav_graph"
             app:startDestination="@id/painelFragment">
 
-    <fragment android:id="@+id/userSettingsFragment"
-              android:name="com.example.hsmassistantandroid.ui.fragments.userSettingsFragment"
-              android:label="fragment_user_settings"
-              tools:layout="@layout/fragment_user_settings">
-        <action
-                android:id="@+id/action_userSettingsFragment_to_mainActivity2"
-                app:destination="@id/mainActivity"/>
-    </fragment>
-
     <activity android:id="@+id/mainActivity"
               android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
               android:label="activity_main"
@@ -23,8 +14,7 @@
               android:name="com.example.hsmassistantandroid.ui.fragments.PainelFragment"
               android:label="fragment_painel"
               tools:layout="@layout/fragment_painel">
-        <action android:id="@+id/action_painelFragment_to_userSettingsFragment"
-                app:destination="@id/userSettingsFragment"/>
+
         <action android:id="@+id/action_painelFragment_to_objetosListFragment"
                 app:destination="@id/objetosListFragment"/>
         <action android:id="@+id/action_painelFragment_to_gestaoUsuarioFragment"
