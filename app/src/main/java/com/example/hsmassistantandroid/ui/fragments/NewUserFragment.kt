@@ -14,8 +14,11 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.extensions.onChange
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import kotlinx.android.synthetic.main.fragment_new_user.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -37,6 +40,8 @@ class NewUserFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
+        newUsrEditText.editText!!.onChange { usrEditText.error = null }
+        newPwdEditText.editText!!.onChange { pwdEditText.error = null }
     }
 
     fun createUserRequest() {

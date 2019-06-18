@@ -18,8 +18,10 @@ import android.preference.PreferenceManager
 import android.text.TextWatcher
 import android.view.View
 import com.example.hsmassistantandroid.data.ResponseBody3
+import com.example.hsmassistantandroid.extensions.fieldsAreValid
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import com.example.hsmassistantandroid.extensions.onChange
+import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
@@ -45,23 +47,8 @@ class MainActivity : AppCompatActivity() {
         probeRequest()
     }
 
-    fun fieldsAreValid(): Boolean {
-        val usrInput = usrEditText.editText!!.text.toString()
-        val pwdInput = pwdEditText.editText!!.text.toString()
-        var isValid = true
-        if(usrInput == "") {
-            usrEditText.error = getString(R.string.required_field)
-            isValid = false
-        }
-        if(pwdInput == "") {
-            pwdEditText.error = getString(R.string.required_field)
-            isValid = false
-        }
-        return isValid
-    }
-
     fun didTapAutenticar() {
-        if(fieldsAreValid() == false) {
+        if(fieldsAreValid(baseContext, arrayOf(usrEditText, pwdEditText)) == false) {
             return
         }
 
