@@ -15,9 +15,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.preference.PreferenceManager
+import android.text.TextWatcher
 import android.view.View
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
+import com.example.hsmassistantandroid.extensions.onChange
 
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
@@ -37,11 +39,32 @@ class MainActivity : AppCompatActivity() {
         otpEditText.visibility = View.INVISIBLE
         autenticarButton.visibility = View.INVISIBLE
 
+        usrEditText.editText!!.onChange { usrEditText.error = null }
+        pwdEditText.editText!!.onChange { pwdEditText.error = null }
+
         probeRequest()
     }
 
+    fun fieldsAreValid(): Boolean {
+        val usrInput = usrEditText.editText!!.text.toString()
+        val pwdInput = pwdEditText.editText!!.text.toString()
+        var isValid = true
+        if(usrInput == "") {
+            usrEditText.error = getString(R.string.required_field)
+            isValid = false
+        }
+        if(pwdInput == "") {
+            pwdEditText.error = getString(R.string.required_field)
+            isValid = false
+        }
+        return isValid
+    }
+
     fun didTapAutenticar() {
-        val context = baseContext
+        if(fieldsAreValid() == false) {
+            return
+        }
+
         val callback = object : Callback<ResponseBody1> {
             override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
                 Log.e("MainActivity", "Problem calling the API", t)
@@ -56,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("TOKEN", tokenString)
                     editor.apply()
 
-                    val intent = Intent(context, SecondActivity::class.java)
+                    val intent = Intent(applicationContext, SecondActivity::class.java)
                     startActivity(intent)
                 }
             }

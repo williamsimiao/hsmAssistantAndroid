@@ -1,8 +1,3 @@
-//package com.example.hsmassistantandroid.activities.ui
-//
-//class gestaoUsuarioFragment {
-//}
-
 package com.example.hsmassistantandroid.ui.fragments
 
 import android.content.Context
@@ -15,21 +10,21 @@ import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
-import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
-import kotlinx.android.synthetic.main.fragment_objetos_list.*
+import okhttp3.ResponseBody
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
-class gestaoUsuarioFragment : Fragment() {
+class NewUserFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private lateinit var usrNamesStrings: Array<String>
@@ -41,28 +36,22 @@ class gestaoUsuarioFragment : Fragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        listUsrsRequest()
 
     }
 
-    fun listUsrsRequest() {
-        val callbackList = object : Callback<ResponseBody4> {
-            override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
+    fun createUserRequest() {
+        val callbackList = object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
                 Log.e("SecondsActivity", "Problem calling the API", t)
             }
 
-            override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 response?.isSuccessful.let {
-                    usrNamesStrings = response?.body()?.usr!!.toTypedArray()
-                    gestaousuarioList.layoutManager = LinearLayoutManager(context)
-                    getActivity()?.runOnUiThread {
-                        gestaousuarioList.adapter =
-                            ObjetosListAdapter(usrNamesStrings)
-                    }
+                    context!!.toast("Usuário criado com sucesso")
                 }
             }
         }
-        networkManager.runListUsrs(tokenString!!, callbackList)
+//        networkManager.runCreateUsr()
     }
 
     override fun onCreateView(
@@ -70,7 +59,7 @@ class gestaoUsuarioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gestao_usuario_list, container, false)
+        return inflater.inflate(R.layout.fragment_new_user, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

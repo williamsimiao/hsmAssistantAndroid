@@ -4,6 +4,9 @@
     <string name="password_textfield_label">Senha</string>
     <string name="otp_textfield_label">OTP</string>
 
+    <!--Input error messages-->
+    <string name="required_field">Campo Obrigatório</string>
+
     <string name="shr_logo_content_description">"Logo Dinamo"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
