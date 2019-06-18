@@ -16,19 +16,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private val TAG: String = SecondActivity::class.java.simpleName
 
-enum class TabBarFragmentsNames {
-    USUARIO,
-    CERTIFICADOS,
-    RELACAO,
-    GESTAO,
-}
-
 class SecondActivity : AppCompatActivity(),
     ObjetosListFragment.OnFragmentInteractionListener,
     PainelFragment.OnFragmentInteractionListener,
     gestaoUsuarioFragment.OnFragmentInteractionListener {
 
-    val mFragmentMap = mutableMapOf<TabBarFragmentsNames, Fragment?>()
     lateinit var activeFragment: Fragment
 
     val fragmentUsuario = ObjetosListFragment.newInstance()

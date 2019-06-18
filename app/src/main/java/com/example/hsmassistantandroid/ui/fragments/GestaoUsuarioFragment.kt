@@ -10,20 +10,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +49,7 @@ class gestaoUsuarioFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         listUsrsRequest()
@@ -90,6 +92,29 @@ class gestaoUsuarioFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.gestao, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.options_add_user -> onOptionAddUserClick()
+            R.id.options_reload -> onOptionReloadClick()
+            else -> Log.d(TAG, "Estranho isso, não existe outro")
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun onOptionReloadClick() {
+
+    }
+
+    fun onOptionAddUserClick() {
+
     }
 
     override fun onAttach(context: Context) {
