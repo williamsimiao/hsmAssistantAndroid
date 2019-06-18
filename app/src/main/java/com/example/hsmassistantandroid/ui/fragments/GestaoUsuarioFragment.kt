@@ -11,7 +11,9 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
+import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
@@ -20,16 +22,12 @@ import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -87,6 +85,16 @@ class gestaoUsuarioFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gestao_usuario_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+    }
+
+    fun setUpViews() {
+        val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
+        gestaousuarioList.addItemDecoration(itemDecor)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
