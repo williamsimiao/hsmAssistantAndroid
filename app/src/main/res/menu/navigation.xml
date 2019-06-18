@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--particao-->
 
     <item
             android:id="@+id/navigation_objetos"
@@ -11,12 +10,17 @@
     <item
             android:id="@+id/navigation_relacao"
             android:icon="@drawable/ic_thumbs_up_down"
-            android:title="Relação de confiança"
+            android:title="Relações"
             app:showAsAction="always"/>
     <item
             android:id="@+id/navigation_gestao"
             android:icon="@drawable/ic_people"
             android:title="Gestão"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/navigation_usuario"
+            android:icon="@drawable/ic_person"
+            android:title="Usuário"
             app:showAsAction="always"/>
 
 
