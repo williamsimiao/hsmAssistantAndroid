@@ -1,111 +1,62 @@
 package com.example.hsmassistantandroid.ui.activities
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.hsmassistantandroid.R
-import kotlinx.android.synthetic.main.activity_second.*
-import android.view.Menu
-import androidx.appcompat.app.ActionBar
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import com.example.hsmassistantandroid.ui.fragments.*
+import com.example.hsmassistantandroid.extensions.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private val TAG: String = SecondActivity::class.java.simpleName
 
-class SecondActivity : AppCompatActivity(),
-    ObjetosListFragment.OnFragmentInteractionListener,
-    PainelFragment.OnFragmentInteractionListener,
-    gestaoUsuarioFragment.OnFragmentInteractionListener {
+class SecondActivity : AppCompatActivity() {
 
-    lateinit var activeFragment: Fragment
-
-    val fragmentUsuario = ObjetosListFragment.newInstance()
-    val fragmentGestao = gestaoUsuarioFragment.newInstance()
-    val fragmentRelacao = relacaoFragment.newInstance()
-    val fragmentCertificados = ObjetosListFragment.newInstance()
-
-    override fun onFragmentInteraction(uri: Uri) {
-        Log.e("AQUI", "Houve interacao ")
-    }
+    private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-
-        setSupportActionBar(toolbar)
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentUsuario, "4").hide(fragmentUsuario).commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentGestao, "3").hide(fragmentGestao).commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentRelacao, "2").hide(fragmentRelacao).commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentCertificados, "1").commit()
-        activeFragment = fragmentCertificados
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        } // Else, need to wait for onRestoreInstanceState
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_objetos -> {
-                toolbar.title = "Certificados"
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(fragmentCertificados).commit()
-                activeFragment = fragmentCertificados
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_relacao -> {
-                toolbar.title = "Relacoes"
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(fragmentRelacao).commit()
-                activeFragment = fragmentRelacao
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_gestao -> {
-                toolbar.title = "Gestão"
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(fragmentGestao).commit()
-                activeFragment = fragmentGestao
-//                supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName()).commit()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_usuario -> {
-                toolbar.title = "Usuário"
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(fragmentUsuario).commit()
-                activeFragment = fragmentUsuario
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // Now that BottomNavigationBar has restored its instance state
+        // and its selectedItemId, we can proceed with setting up the
+        // BottomNavigationBar with Navigation
+        setupBottomNavigationBar()
     }
 
+    /**
+     * Called on first creation and when restoring state.
+     */
+    private fun setupBottomNavigationBar() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
+        val navGraphIds = listOf(R.navigation.nav_objetos, R.navigation.nav_relacao, R.navigation.nav_gestao,
+            R.navigation.nav_usuario)
 
-//    fun setUpBottomAppBar() {
-//        setSupportActionBar(bottomAppBar)
-//
-//        bottomAppBar.replaceMenu(R.menu.bottomappbar_menu)
-//
-//        //click event over navigation menu like back arrow or hamburger icon
-//        bottomAppBar.setNavigationOnClickListener { didTapNavigationButton() }
-//    }
+        // Setup the bottom navigation view with a list of navigation graphs
+        val controller = bottomNavigationView.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_container,
+            intent = intent
+        )
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.bottomappbar_menu, menu)
-        return true
+        // Whenever the selected controller changes, setup the action bar.
+        controller.observe(this, Observer { navController ->
+            setupActionBarWithNavController(navController)
+        })
+        currentNavController = controller
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.app_bar_user -> {
-//
-//                val userOptionsFragment = UserOptionsBottomSheetFragment()
-//                userOptionsFragment.show(supportFragmentManager, userOptionsFragment.tag)
-//
-//                Log.d(TAG, "Click on user")
-//            }
-//
-//            else -> Log.d(TAG, "Estranho isso, não existe outro")
-//        }
-        return super.onOptionsItemSelected(item)
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
     }
 }

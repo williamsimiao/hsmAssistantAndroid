@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 
+private val TAG: String = ObjetosListFragment::class.java.simpleName
 
 class ObjetosListFragment : Fragment() {
     private val networkManager = NetworkManager()
@@ -43,7 +44,6 @@ class ObjetosListFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-        objetosRequest()
     }
 
     fun expoRequest(objId: String) {
@@ -128,6 +128,8 @@ class ObjetosListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        objetosRequest()
+
         setUpViews()
 
     }
@@ -146,7 +148,8 @@ class ObjetosListFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            Log.d(TAG, " must implement OnFragmentInteractionListener")
+//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
 

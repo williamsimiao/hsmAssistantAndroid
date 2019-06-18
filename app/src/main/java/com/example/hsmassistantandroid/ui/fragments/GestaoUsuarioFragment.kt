@@ -41,7 +41,6 @@ class gestaoUsuarioFragment : Fragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        listUsrsRequest()
 
     }
 
@@ -75,6 +74,8 @@ class gestaoUsuarioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listUsrsRequest()
+
         setUpViews()
     }
 
@@ -116,7 +117,8 @@ class gestaoUsuarioFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            Log.d(TAG, " must implement OnFragmentInteractionListener")
+//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
 
