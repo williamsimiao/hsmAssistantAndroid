@@ -80,6 +80,7 @@ class SecondActivity : AppCompatActivity(),
                 toolbar.title = "Usuário"
                 supportFragmentManager.beginTransaction().hide(activeFragment).show(fragmentUsuario).commit()
                 activeFragment = fragmentUsuario
+                return@OnNavigationItemSelectedListener true
             }
         }
         false
