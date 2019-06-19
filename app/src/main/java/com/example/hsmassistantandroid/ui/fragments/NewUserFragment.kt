@@ -11,10 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.extensions.fieldsAreValid
 import com.example.hsmassistantandroid.extensions.onChange
+import com.example.hsmassistantandroid.extensions.validPwd
+import com.example.hsmassistantandroid.extensions.validPwdConfirmation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_new_user.*
+import kotlinx.android.synthetic.main.fragment_user_options.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -22,22 +26,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
+private val newUserDefaultACL = 80
 
 class NewUserFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    private lateinit var usrNamesStrings: Array<String>
-
-    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-
-        newUsrEditText.editText!!.onChange { usrEditText.error = null }
-        newPwdEditText.editText!!.onChange { pwdEditText.error = null }
     }
 
     fun createUserRequest() {
@@ -52,13 +51,16 @@ class NewUserFragment : Fragment() {
                 }
             }
         }
-//        networkManager.runCreateUsr()
+        val newUserName = newUsrEditText.editText!!.text.toString()
+        val newPassword = newPwdEditText.editText!!.text.toString()
+        networkManager.runCreateUsr(tokenString!!, newUserName, newPassword, newUserDefaultACL, callbackList)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_user, container, false)
     }
@@ -68,59 +70,47 @@ class NewUserFragment : Fragment() {
         setUpViews()
     }
 
+    fun didtapCreateUser() {
+        if(fieldsAreValid(context, arrayOf(newUsrEditText, newPwdEditText,
+                newRepeatPwdEditText)) == false) {
+            return
+        }
+
+        if(validPwd(context, newPwdEditText) ==  false) return
+
+        if(validPwdConfirmation(context, newPwdEditText.editText!!.text.toString(),
+                newRepeatPwdEditText) == false) {
+            return
+        }
+
+        createUserRequest()
+    }
+
     fun setUpViews() {
-        val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
-        gestaousuarioList.addItemDecoration(itemDecor)
-    }
+        newUsrEditText.editText!!.onChange { newUsrEditText.error = null }
+        newPwdEditText.editText!!.onChange { newPwdEditText.error = null }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_user_and_reload, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.options_add_user -> onOptionAddUserClick()
-            R.id.options_reload -> onOptionReloadClick()
-            else -> Log.d(TAG, "Estranho isso, não existe outro")
+        val fieldNewPwd = newPwdEditText.editText
+        fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus && fieldNewPwd.text.toString().isNotEmpty()) {
+                validPwd(context, newPwdEditText)
+            }
         }
-        return super.onOptionsItemSelected(item)
-    }
 
-    fun onOptionReloadClick() {
-
-    }
-
-    fun onOptionAddUserClick() {
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        val fieldNewPwdConfirmation =  newRepeatPwdEditText.editText
+        fieldNewPwdConfirmation!!.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus && fieldNewPwdConfirmation.text.toString().isNotEmpty()) {
+                validPwdConfirmation(context, newPwdEditText.editText!!.text.toString(),
+                    newRepeatPwdEditText)
+            }
         }
-    }
+        
+        newRepeatPwdEditText.editText!!.onChange { newRepeatPwdEditText.error = null }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        createUserButton.setOnClickListener { didtapCreateUser() }
     }
 
     companion object {
-        fun newInstance(): gestaoUsuarioFragment = gestaoUsuarioFragment()
+        fun newInstance(): NewUserFragment = NewUserFragment()
     }
 }

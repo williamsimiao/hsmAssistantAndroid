@@ -15,5 +15,9 @@
     <string name="atualizar">Atualizar</string>
     <string name="fechar_sessao">Fechar sessão</string>
     <string name="change_pwd">Trocar senha</string>
+    <string name="criar_usuario">Criar usuário</string>
+    <string name="confirm_pwd">Confirme a senha</string>
+    <string name="wrong_confirmation">Confirmacão difere da senha</string>
+    <string name="pwd_too_short">Senha deve conter pelo menos 8 caracteres</string>
 
 </resources>

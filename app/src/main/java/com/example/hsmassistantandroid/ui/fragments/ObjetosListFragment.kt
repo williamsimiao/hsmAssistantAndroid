@@ -100,6 +100,7 @@ class ObjetosListFragment : Fragment() {
     fun objetosRequest() {
         certificateCounter = 0
         exportedCertificateCounter = 0
+        certificateNameArray = arrayListOf<String>()
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
                 Log.e("SecondsActivity", "Problem calling the API", t)

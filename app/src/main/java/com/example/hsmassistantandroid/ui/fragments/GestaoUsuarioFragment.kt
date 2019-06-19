@@ -101,7 +101,10 @@ class gestaoUsuarioFragment : Fragment() {
     }
 
     fun onOptionAddUserClick() {
-
+//        val fragmentNewUser = NewUserFragment.newInstance()
+//        val manager = fragmentManager
+//        manager!!.beginTransaction().add(R.id.container, fragmentNewUser, "69")
+//        manager!!.beginTransaction().hide(this).show(fragmentNewUser).commit()
     }
 
     override fun onAttach(context: Context) {

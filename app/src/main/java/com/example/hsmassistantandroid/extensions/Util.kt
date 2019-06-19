@@ -8,6 +8,8 @@ import com.example.hsmassistantandroid.R
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
+private val minPwdLenght = 8
+
 fun handleNetworkResponse(responseCode: Int?): String {
     if(responseCode == null) {
         return "failed null"
@@ -29,13 +31,35 @@ fun EditText.onChange(cb: (String) -> Unit) {
     })
 }
 
-fun fieldsAreValid(contex: Context, mTextInputLayoutArray: Array<TextInputLayout>): Boolean {
+fun validPwdConfirmation(context: Context?, pwd: String, pwdConfirmationField: TextInputLayout): Boolean {
+    val input = pwdConfirmationField.editText!!.text.toString()
+    if(input == pwd) {
+        return true
+    }
+    else {
+        pwdConfirmationField.error = context!!.getString(R.string.wrong_confirmation)
+        return false
+    }
+}
+
+fun validPwd(context: Context?, pwdField: TextInputLayout): Boolean {
+    val input = pwdField.editText!!.text.toString()
+    if(input.length >= minPwdLenght) {
+        return true
+    }
+    else {
+        pwdField.error = context!!.getString(R.string.pwd_too_short)
+        return false
+    }
+}
+
+fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayout>): Boolean {
     var isValid = true
 
     for(mTextInputlayout: TextInputLayout in mTextInputLayoutArray) {
         val input = mTextInputlayout.editText!!.text.toString()
         if(input == "") {
-            mTextInputlayout.error = contex.getString(R.string.required_field)
+            mTextInputlayout.error = context!!.getString(R.string.required_field)
             isValid = false
         }
     }

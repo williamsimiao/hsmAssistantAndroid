@@ -121,7 +121,7 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody0>) {
+    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)

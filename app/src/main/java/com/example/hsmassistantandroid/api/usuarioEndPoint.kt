@@ -2,6 +2,7 @@ package com.example.hsmassistantandroid.api
 
 import com.example.hsmassistantandroid.data.*
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -12,7 +13,7 @@ interface usuarioEndPoint {
 
     @POST("create_usr")
     @Headers("Content-type:application/json")
-    fun createUsr(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody0>
+    fun createUsr(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody>
 
     @GET("list_usrs")
     fun listUsrs(@Header("Authorization") token: String?): Call<ResponseBody4>

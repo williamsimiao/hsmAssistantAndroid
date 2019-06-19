@@ -105,6 +105,6 @@ class UserOptions : Fragment() {
 
     fun setUpViews() {
         closeButton.setOnClickListener { didTapcloseButton() }
-        changePwd.setOnClickListener {  }
+        changePwd.setOnClickListener { didTapChangePwd() }
     }
 }
