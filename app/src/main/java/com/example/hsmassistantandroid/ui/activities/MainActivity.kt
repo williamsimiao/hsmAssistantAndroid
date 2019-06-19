@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
                     val editor = sharedPreferences.edit()
                     editor.putString("TOKEN", tokenString)
                     editor.putString("USER", submitedUser)
-
                     editor.apply()
 
                     val intent = Intent(applicationContext, SecondActivity::class.java)

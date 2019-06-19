@@ -1,8 +1,3 @@
-//package com.example.hsmassistantandroid.activities.ui
-//
-//class gestaoUsuarioFragment {
-//}
-
 package com.example.hsmassistantandroid.ui.fragments
 
 import android.content.Context
@@ -102,7 +97,7 @@ class gestaoUsuarioFragment : Fragment() {
     }
 
     fun onOptionReloadClick() {
-
+        listUsrsRequest()
     }
 
     fun onOptionAddUserClick() {

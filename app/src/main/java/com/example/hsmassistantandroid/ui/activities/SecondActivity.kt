@@ -18,12 +18,11 @@ private val TAG: String = SecondActivity::class.java.simpleName
 
 class SecondActivity : AppCompatActivity(),
     ObjetosListFragment.OnFragmentInteractionListener,
-    PainelFragment.OnFragmentInteractionListener,
     gestaoUsuarioFragment.OnFragmentInteractionListener {
 
     lateinit var activeFragment: Fragment
 
-    val fragmentUsuario = ObjetosListFragment.newInstance()
+    val fragmentUsuario = UserOptions()
     val fragmentGestao = gestaoUsuarioFragment.newInstance()
     val fragmentRelacao = relacaoFragment.newInstance()
     val fragmentCertificados = ObjetosListFragment.newInstance()
