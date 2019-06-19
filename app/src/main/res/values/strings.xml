@@ -11,5 +11,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_title_certificados">Certificados</string>
+    <string name="nav_title_relacoes">Relações</string>
+    <string name="nav_title_gestao">Gestão</string>
+    <string name="nav_title_usuario">Usuário</string>
 
 </resources>

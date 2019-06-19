@@ -38,8 +38,8 @@ class SecondActivity : AppCompatActivity() {
     private fun setupBottomNavigationBar() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
-        val navGraphIds = listOf(R.navigation.nav_objetos, R.navigation.nav_relacao, R.navigation.nav_gestao,
-            R.navigation.nav_usuario)
+        val navGraphIds = listOf(R.navigation.navigation_objetos, R.navigation.navigation_relacao, R.navigation.navigation_gestao,
+            R.navigation.navigation_usuario)
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottomNavigationView.setupWithNavController(

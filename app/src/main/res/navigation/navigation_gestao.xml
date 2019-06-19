@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_gestao" app:startDestination="@id/gestaoUsuarioFragment2">
+            android:id="@+id/navigation_gestao"
+            app:startDestination="@id/gestaoUsuarioFragment2">
 
 
     <fragment android:id="@+id/gestaoUsuarioFragment2"
