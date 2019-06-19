@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
 
+    private var submitedUser: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -64,14 +66,19 @@ class MainActivity : AppCompatActivity() {
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
                     val editor = sharedPreferences.edit()
                     editor.putString("TOKEN", tokenString)
+                    editor.putString("USER", submitedUser)
+
                     editor.apply()
 
                     val intent = Intent(applicationContext, SecondActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
-        networkManager.runAuth(usrEditText.editText!!.text.toString(), pwdEditText.editText!!.text.toString(), "", callback)
+
+        submitedUser = usrEditText.editText!!.text.toString()
+        networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }
 
     fun showLoginFields() {
@@ -104,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                 if(codeMeaning == "sucess") {
                     val intent = Intent(baseContext, SecondActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
                 showLoginFields()
                 Log.d("probe", codeMeaning)
@@ -116,8 +124,6 @@ class MainActivity : AppCompatActivity() {
         }
         networkManager.runProbe(tokenString!!, callback)
     }
-
-
 
     private fun isNetworkConnected(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

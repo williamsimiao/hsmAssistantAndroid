@@ -9,13 +9,9 @@ import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
-import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.onChange
-import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_new_user.*
@@ -83,7 +79,7 @@ class NewUserFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.gestao, menu)
+        inflater.inflate(R.menu.add_user_and_reload, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }

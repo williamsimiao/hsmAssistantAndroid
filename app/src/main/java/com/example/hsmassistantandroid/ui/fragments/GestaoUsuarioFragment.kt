@@ -19,10 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
-import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
-import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -89,7 +87,7 @@ class gestaoUsuarioFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.gestao, menu)
+        inflater.inflate(R.menu.add_user_and_reload, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
