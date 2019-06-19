@@ -22,6 +22,7 @@ import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,6 +66,8 @@ class UserOptions : Fragment() {
     }
 
     fun didTapChangePwd() {
+        context!!.toast("Não implementado")
+
 //        val callbackClose = object : Callback<ResponseBody0> {
 //            override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
 //                Log.e("SecondActivity", "Problem calling the API", t)

@@ -138,7 +138,7 @@ class ObjetosListFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.add_user_and_reload, menu)
+        inflater.inflate(R.menu.reload, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
