@@ -12,6 +12,7 @@ import android.widget.Switch
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
+import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import kotlinx.android.synthetic.main.fragment_new_permission.*
@@ -21,37 +22,40 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private val TAG: String = NewPermissionFragment::class.java.simpleName
+private val newUserDefaultACL = 80
 
 class NewPermissionFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     var userName: String? = null
     var userAcl: Int? = null
+    var systemACL: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+        getSystemAclRequest()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+        //TODO: mudar userACl de acordo com o parametro recebido
+        if(userAcl == null) {
+            //caso em que clicou em de nova permissao
+            userAcl = 0
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_permission, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(userAcl == null) {
-            //TODO: colocar 0
-            userAcl = 15
-        }
-        //TODO: Apagar
-        if(userName == null) {
-            userName = "queiroz"
-        }
+
         setUpSwitches(userAcl!!)
         setUpViews()
     }
@@ -80,12 +84,27 @@ class NewPermissionFragment : Fragment() {
                     Lerswitch.isChecked = true
                 }
             }
+        }
+    }
 
+    fun makeSwitchesHideOrNot(shouldHide: Boolean) {
+        if(shouldHide) {
+            Lerswitch.visibility = View.INVISIBLE
+            Criarswitch.visibility = View.INVISIBLE
+            Deleteswitch.visibility = View.INVISIBLE
+            Atualizarswitch.visibility = View.INVISIBLE
+        }
+        else {
+            Lerswitch.visibility = View.VISIBLE
+            Criarswitch.visibility = View.VISIBLE
+            Deleteswitch.visibility = View.VISIBLE
+            Atualizarswitch.visibility = View.VISIBLE
         }
     }
 
     fun didTapSave() {
         val newAcl = getIntFromSwitches()
+
         updateAclRequest(newAcl)
         //TODO: voltar para tela de relacoes
         //TODO: e apresentar toast com o resultado da API
@@ -126,11 +145,26 @@ class NewPermissionFragment : Fragment() {
         return unionOfBits
     }
 
-    fun switchChanged() {
-
+    fun getSystemAclRequest() {
+        val callback = object : Callback<ResponseBody6> {
+            override fun onFailure(call: Call<ResponseBody6>?, t: Throwable?) {
+                Log.e(TAG, "Problem calling the API", t)
+            }
+            override fun onResponse(call: Call<ResponseBody6>?, response: Response<ResponseBody6>?) {
+                if(response!!.isSuccessful) {
+                    getActivity()?.runOnUiThread {
+                        systemACL = response.body()!!.acl
+                        makeSwitchesHideOrNot(false)
+                    }
+                }
+                else {
+                    handleNetworkResponse(response?.code(), context!!)
+                }
+            }
+        }
+        if(userName == null) return
+        networkManager.runGetAcl(tokenString!!, userName!!, callback)
     }
-
-
 
     fun updateAclRequest(newAcl: Int) {
         val callbackUpdate = object : Callback<ResponseBody0> {
@@ -147,6 +181,10 @@ class NewPermissionFragment : Fragment() {
             }
         }
         if(userName == null) return
+
+        if(userAcl == 0){
+            userAcl = newUserDefaultACL
+        }
         networkManager.runUpdateAcl(tokenString!!, userName!!, newAcl, callbackUpdate)
     }
 }
