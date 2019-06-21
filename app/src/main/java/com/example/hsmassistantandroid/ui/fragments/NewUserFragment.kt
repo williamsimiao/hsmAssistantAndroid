@@ -46,8 +46,11 @@ class NewUserFragment : Fragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                response?.isSuccessful.let {
+                if(response!!.isSuccessful) {
                     context!!.toast("Usuário criado com sucesso")
+                }
+                else {
+                    Log.d(TAG, response?.errorBody().toString())
                 }
             }
         }
