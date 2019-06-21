@@ -59,7 +59,7 @@ class TrustFragment: Fragment() {
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val userName = sharedPreferences.getString("USER", null)
-        val op = if(isTrustees!!) 1 else 2
+        val op = if(isTrustees!!) 2 else 1
         networkManager.runListUsrsTrust(tokenString!!, op, userName, callbackList)
     }
 

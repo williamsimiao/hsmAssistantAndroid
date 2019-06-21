@@ -40,11 +40,6 @@ class gestaoUsuarioFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        listUsrsRequest()
-    }
-
     fun listUsrsRequest() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
