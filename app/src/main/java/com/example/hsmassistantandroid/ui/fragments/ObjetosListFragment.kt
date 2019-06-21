@@ -53,7 +53,7 @@ class ObjetosListFragment : Fragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                val codeMeaning = handleNetworkResponse(response?.code())
+                val codeMeaning = handleNetworkResponse(response?.code(), context!!)
                 Log.e("CODIGO", codeMeaning)
                 response?.isSuccessful.let {
                     val certificateData =

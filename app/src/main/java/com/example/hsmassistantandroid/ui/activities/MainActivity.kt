@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
-                val codeMeaning = handleNetworkResponse(response?.code())
+                val codeMeaning = handleNetworkResponse(response?.code(), baseContext)
                 if(codeMeaning == "sucess") {
                     val intent = Intent(baseContext, SecondActivity::class.java)
                     startActivity(intent)

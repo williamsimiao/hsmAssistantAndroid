@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +40,11 @@ class gestaoUsuarioFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        listUsrsRequest()
+    }
+
     fun listUsrsRequest() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
@@ -45,13 +52,16 @@ class gestaoUsuarioFragment : Fragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
-                response?.isSuccessful.let {
-                    usrNamesStrings = response?.body()?.usr!!.toTypedArray()
+                if(response!!.isSuccessful) {
+                    usrNamesStrings = response.body()?.usr!!.toTypedArray()
                     gestaousuarioList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         gestaousuarioList.adapter =
                             ObjetosListAdapter(usrNamesStrings)
                     }
+                }
+                else {
+                    handleNetworkResponse(response.code(), context!!)
                 }
             }
         }

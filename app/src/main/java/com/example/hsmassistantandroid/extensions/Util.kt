@@ -1,22 +1,46 @@
 package com.example.hsmassistantandroid.extensions
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import org.jetbrains.anko.runOnUiThread
 
 private val minPwdLenght = 8
 
-fun handleNetworkResponse(responseCode: Int?): String {
+fun handleNetworkResponse(responseCode: Int?, context: Context): String {
     if(responseCode == null) {
         return "failed null"
     }
     when(responseCode) {
         in 200..299 -> return "sucess"
-        in 401..500 -> return "authenticationError"
+        in 401..499 -> {
+//            context.runOnUiThread {
+//                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
+//                    .setMessage(context.getString(R.string.internal_error_dialog_message))
+//                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+//                builder.create().show()
+//            }
+
+
+            return "authenticationError"
+        }
+        500 -> {
+            context.runOnUiThread {
+                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
+                    .setMessage(context.getString(R.string.internal_error_dialog_message))
+                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+                builder.create().show()
+            }
+            return "Internal Server error"
+        }
         in 501..599 -> return "badRequest"
         600 -> return "outdated"
         else -> return "failed"

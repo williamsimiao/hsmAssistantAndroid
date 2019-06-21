@@ -16,6 +16,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.aclStruct
+import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_new_permission.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
@@ -49,7 +50,12 @@ class NewPermissionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(userAcl == null) {
+            //TODO: colocar 0
             userAcl = 15
+        }
+        //TODO: Apagar
+        if(userName == null) {
+            userName = "queiroz"
         }
         setUpSwitches(userAcl!!)
         setUpViews()
@@ -113,7 +119,7 @@ class NewPermissionFragment : Fragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 response?.isSuccessful.let {
-                    context!!.toast(getString(R.string.permissionSavedToastText))
+
                 }
             }
         }

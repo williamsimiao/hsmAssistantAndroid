@@ -25,5 +25,8 @@
     <string name="deletePermissionText">Remover</string>
     <string name="atualizarPermissionText">Atualizar</string>
     <string name="permissionSavedToastText">Permissão salva com sucesso</string>
+    <string name="internal_error_dialog_title">Erro Interno</string>
+    <string name="internal_error_dialog_message">Verifique se seu usuário posusi permissão para realizar esta operação</string>
+
 
 </resources>
