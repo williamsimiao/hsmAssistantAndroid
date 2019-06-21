@@ -27,7 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
+private val TAG: String = UserOptions::class.java.simpleName
 
 class UserOptions : Fragment() {
     private val networkManager = NetworkManager()

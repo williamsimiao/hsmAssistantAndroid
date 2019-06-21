@@ -24,5 +24,6 @@
     <string name="criarPermissionText">Criar</string>
     <string name="removerPermissionText">Remover</string>
     <string name="atualizarPermissionText">Atualizar</string>
+    <string name="permissionSavedToastText">Permissão salva com sucesso</string>
 
 </resources>

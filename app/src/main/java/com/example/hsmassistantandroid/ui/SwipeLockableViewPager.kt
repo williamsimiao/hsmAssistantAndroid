@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
 
 class SwipeLockableViewPager(context: Context, attrs: AttributeSet): ViewPager(context, attrs) {
-    private var swipeEnabled = false
+    private var swipeEnabled = true
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (swipeEnabled) {
