@@ -22,13 +22,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private val TAG: String = NewPermissionFragment::class.java.simpleName
-private val newUserDefaultACL = 80
 
 class NewPermissionFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     var userName: String? = null
     var userAcl: Int? = null
+    var systemACL: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +40,16 @@ class NewPermissionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //TODO: deletar
-        if(userName == null) {
-            userName = "queiroz"
-        }
 
+        //TODO: deletar
+        if(userName == null) userName = "master"
         //TODO: mudar userACl de acordo com o parametro recebido
         if(userAcl == null) {
             //caso em que clicou em de nova permissao
             userAcl = 0
         }
+        getSystemAclRequest()
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_permission, container, false)
     }
@@ -146,6 +146,32 @@ class NewPermissionFragment : Fragment() {
         return unionOfBits
     }
 
+    fun composeFinalAcl(newAcl: Int): Int {
+        val onlySystemAcl = systemACL!!.shr(4).shl(4)
+        val finalAcl = onlySystemAcl or newAcl
+        return finalAcl
+    }
+
+    fun getSystemAclRequest() {
+        val callback = object : Callback<ResponseBody6> {
+            override fun onFailure(call: Call<ResponseBody6>?, t: Throwable?) {
+                Log.e(TAG, "Problem calling the API", t)
+            }
+            override fun onResponse(call: Call<ResponseBody6>?, response: Response<ResponseBody6>?) {
+                if(response!!.isSuccessful) {
+                    getActivity()?.runOnUiThread {
+                        systemACL = response.body()!!.acl
+                    }
+                }
+                else {
+                    handleNetworkResponse(response?.code(), context!!)
+                }
+            }
+        }
+        if(userName == null) return
+        networkManager.runGetAcl(tokenString!!, userName!!, callback)
+    }
+
     fun updateAclRequest(newAcl: Int) {
         val callbackUpdate = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
@@ -162,10 +188,7 @@ class NewPermissionFragment : Fragment() {
         }
         if(userName == null) return
 
-        var finalAcl: Int?
-        if(newAcl == 0) finalAcl = newUserDefaultACL
-        else finalAcl = newAcl
-
+        val finalAcl = composeFinalAcl(newAcl)
         networkManager.runUpdateAcl(tokenString!!, userName!!, finalAcl, callbackUpdate)
     }
 }
