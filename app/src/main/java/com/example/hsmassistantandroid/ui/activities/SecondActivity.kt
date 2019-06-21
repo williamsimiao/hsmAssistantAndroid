@@ -22,7 +22,7 @@ class SecondActivity : AppCompatActivity(),
 
     lateinit var activeFragment: Fragment
 
-    val fragmentUsuario = UserSelectionFragment.newInstance()
+    val fragmentUsuario = NewPermissionFragment()
     val fragmentGestao = gestaoUsuarioFragment.newInstance()
     val fragmentRelacao = relacaoFragment.newInstance()
     val fragmentCertificados = ObjetosListFragment.newInstance()

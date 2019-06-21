@@ -1,0 +1,106 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!--LER-->
+    <TextView
+            android:text="@string/leituraPermissionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/LerTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/Lerswitch"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start"
+            android:layout_marginTop="32dp"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/LerTextView"
+            android:id="@+id/Lerswitch"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--CRIAR-->
+    <TextView
+            android:text="@string/criarPermissionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CriarTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/Lerswitch"
+            app:layout_constraintTop_toBottomOf="@id/LerTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start"
+            android:layout_marginTop="32dp"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/CriarTextView"
+            android:id="@+id/Criarswitch"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <!--REMOVER-->
+    <TextView
+            android:text="@string/removerPermissionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/RemoverTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/Removerswitch"
+            app:layout_constraintTop_toBottomOf="@id/CriarTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start"
+            android:layout_marginTop="32dp"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/RemoverTextView"
+            android:id="@+id/Removerswitch"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--ATUALIZAR-->
+    <TextView
+            android:text="@string/atualizarPermissionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/AtualizarTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/Atualizarswitch"
+            app:layout_constraintTop_toBottomOf="@id/RemoverTextView"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="start"
+            android:layout_marginTop="32dp"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/AtualizarTextView"
+            android:id="@+id/Atualizarswitch"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/savePermissionButton"
+            android:text="@string/savePermissionButtonLabel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

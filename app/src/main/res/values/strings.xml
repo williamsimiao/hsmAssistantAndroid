@@ -19,5 +19,10 @@
     <string name="confirm_pwd">Confirme a senha</string>
     <string name="wrong_confirmation">Confirmacão difere da senha</string>
     <string name="pwd_too_short">Senha deve conter pelo menos 8 caracteres</string>
+    <string name="savePermissionButtonLabel">salvar</string>
+    <string name="leituraPermissionText">Leitura</string>
+    <string name="criarPermissionText">Criar</string>
+    <string name="removerPermissionText">Remover</string>
+    <string name="atualizarPermissionText">Atualizar</string>
 
 </resources>

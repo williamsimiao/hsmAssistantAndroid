@@ -8,6 +8,9 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.ctx
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import android.util.Log
+import com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment
+
+private val TAG: String = ObjetosListAdapter::class.java.simpleName
 
 
 class ObjetosListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
@@ -20,7 +23,7 @@ class ObjetosListAdapter(private val itensStringList: Array<String>) : RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d("TAG-94", "item x")
+                Log.d(TAG, "name:" + itensStringList[position])
             }
         })
 
