@@ -22,7 +22,7 @@
     <string name="savePermissionButtonLabel">salvar</string>
     <string name="leituraPermissionText">Leitura</string>
     <string name="criarPermissionText">Criar</string>
-    <string name="removerPermissionText">Remover</string>
+    <string name="deletePermissionText">Remover</string>
     <string name="atualizarPermissionText">Atualizar</string>
     <string name="permissionSavedToastText">Permissão salva com sucesso</string>
 

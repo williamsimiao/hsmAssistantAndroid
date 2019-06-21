@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
+import com.example.hsmassistantandroid.data.aclStruct
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_new_permission.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
@@ -28,7 +29,9 @@ private val TAG: String = NewPermissionFragment::class.java.simpleName
 class NewPermissionFragment : Fragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    lateinit var userId: String
+    var userName: String? = null
+    var userAcl: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -45,6 +48,10 @@ class NewPermissionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(userAcl == null) {
+            userAcl = 15
+        }
+        setUpSwitches(userAcl!!)
         setUpViews()
     }
 
@@ -60,15 +67,41 @@ class NewPermissionFragment : Fragment() {
     }
 
     fun setUpSwitches(aclInteger: Int) {
-
+        val mAclStruct = aclStruct(aclInteger)
+        if(mAclStruct.rawValue and mAclStruct.obj_read == mAclStruct.obj_read) {
+            Lerswitch.isChecked = true
+        }
+        if(mAclStruct.rawValue and mAclStruct.obj_create == mAclStruct.obj_create) {
+            Criarswitch.isChecked = true
+        }
+        if(mAclStruct.rawValue and mAclStruct.obj_del == mAclStruct.obj_del) {
+            Deleteswitch.isChecked = true
+        }
+        if(mAclStruct.rawValue and mAclStruct.obj_update == mAclStruct.obj_update) {
+            Atualizarswitch.isChecked = true
+        }
     }
 
     fun getIntFromSwitches(): Int {
-        return 0
+        //Just an aux to access the masks
+        val aux = aclStruct(0)
+        var unionOfBits = 0
+        if(Lerswitch.isChecked) {
+            unionOfBits = unionOfBits or aux.obj_read
+        }
+        if(Criarswitch.isChecked) {
+            unionOfBits = unionOfBits or aux.obj_create
+        }
+        if(Deleteswitch.isChecked) {
+            unionOfBits = unionOfBits or aux.obj_del
+        }
+        if(Atualizarswitch.isChecked) {
+            unionOfBits = unionOfBits or aux.obj_update
+        }
+        return unionOfBits
     }
 
     fun switchChanged() {
-
     }
 
 
@@ -84,6 +117,7 @@ class NewPermissionFragment : Fragment() {
                 }
             }
         }
-        networkManager.runUpdateAcl(tokenString!!, userId, newAcl, callbackUpdate)
+        if(userName == null) return
+        networkManager.runUpdateAcl(tokenString!!, userName!!, newAcl, callbackUpdate)
     }
 }

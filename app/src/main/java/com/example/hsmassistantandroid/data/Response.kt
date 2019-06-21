@@ -36,39 +36,39 @@ data class ResponseBody7 (
 
 data class aclStruct(val rawValue: Int) {
     val obj_del: Int
-        get() = rawValue shl 0
+        get() = 1 shl 0
     val obj_read: Int
-        get() = rawValue shl 1
+        get() = 1 shl 1
     val obj_create: Int
-        get() = rawValue shl 2
+        get() = 1 shl 2
     val obj_update: Int
-        get() = rawValue shl 3
+        get() = 1 shl 3
     val usr_write: Int
         get() = obj_update
     val usr_create: Int
-        get() = rawValue shl 4
+        get() = 1 shl 4
     val usr_delete: Int
         get() = usr_create
     val usr_remote_log: Int
-        get() = rawValue shl 5
+        get() = 1 shl 5
     val usr_list: Int
-        get() = rawValue shl 6
+        get() = 1 shl 6
     val sys_operator: Int
-        get() = rawValue shl 7
+        get() = 1 shl 7
     val sys_backup: Int
-        get() = rawValue shl 8
+        get() = 1 shl 8
     val sys_restore: Int
         get() = sys_backup
     val sys_update_hsm: Int
-        get() = rawValue shl 9
+        get() = 1 shl 9
     val ns_authorization: Int
-        get() = rawValue shl 10
+        get() = 1 shl 10
     val virtual_x509_auth: Int
-        get() = rawValue shl 28
+        get() = 1 shl 28
     val virtual_otp_auth: Int
-        get() = rawValue shl 29
+        get() = 1 shl 29
     val change_pwd_next_time: Int
-        get() = rawValue shl 30
+        get() = 1 shl 30
 }
 
 //let rawValue: UInt32

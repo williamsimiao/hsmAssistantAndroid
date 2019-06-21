@@ -48,14 +48,14 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
 
-    <!--REMOVER-->
+    <!--DELETAR-->
     <TextView
-            android:text="@string/removerPermissionText"
+            android:text="@string/deletePermissionText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/RemoverTextView"
+            android:id="@+id/DeleteTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/Removerswitch"
+            app:layout_constraintEnd_toStartOf="@id/Deleteswitch"
             app:layout_constraintTop_toBottomOf="@id/CriarTextView"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -64,8 +64,8 @@
     <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/RemoverTextView"
-            android:id="@+id/Removerswitch"
+            app:layout_constraintTop_toTopOf="@id/DeleteTextView"
+            android:id="@+id/Deleteswitch"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -77,7 +77,7 @@
             android:id="@+id/AtualizarTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/Atualizarswitch"
-            app:layout_constraintTop_toBottomOf="@id/RemoverTextView"
+            app:layout_constraintTop_toBottomOf="@id/DeleteTextView"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="start"
