@@ -29,20 +29,21 @@ class NewPermissionFragment : Fragment() {
     private var tokenString: String? = null
     var userName: String? = null
     var userAcl: Int? = null
-    var systemACL: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        getSystemAclRequest()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //TODO: deletar
+        if(userName == null) {
+            userName = "queiroz"
+        }
 
         //TODO: mudar userACl de acordo com o parametro recebido
         if(userAcl == null) {
@@ -145,27 +146,6 @@ class NewPermissionFragment : Fragment() {
         return unionOfBits
     }
 
-    fun getSystemAclRequest() {
-        val callback = object : Callback<ResponseBody6> {
-            override fun onFailure(call: Call<ResponseBody6>?, t: Throwable?) {
-                Log.e(TAG, "Problem calling the API", t)
-            }
-            override fun onResponse(call: Call<ResponseBody6>?, response: Response<ResponseBody6>?) {
-                if(response!!.isSuccessful) {
-                    getActivity()?.runOnUiThread {
-                        systemACL = response.body()!!.acl
-                        makeSwitchesHideOrNot(false)
-                    }
-                }
-                else {
-                    handleNetworkResponse(response?.code(), context!!)
-                }
-            }
-        }
-        if(userName == null) return
-        networkManager.runGetAcl(tokenString!!, userName!!, callback)
-    }
-
     fun updateAclRequest(newAcl: Int) {
         val callbackUpdate = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
@@ -182,9 +162,10 @@ class NewPermissionFragment : Fragment() {
         }
         if(userName == null) return
 
-        if(userAcl == 0){
-            userAcl = newUserDefaultACL
-        }
-        networkManager.runUpdateAcl(tokenString!!, userName!!, newAcl, callbackUpdate)
+        var finalAcl: Int?
+        if(newAcl == 0) finalAcl = newUserDefaultACL
+        else finalAcl = newAcl
+
+        networkManager.runUpdateAcl(tokenString!!, userName!!, finalAcl, callbackUpdate)
     }
 }
