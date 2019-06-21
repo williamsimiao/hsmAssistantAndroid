@@ -1,8 +1,5 @@
 package com.example.hsmassistantandroid.ui.fragments
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -10,16 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Switch
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.aclStruct
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
-import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_new_permission.*
-import kotlinx.android.synthetic.main.fragment_user_options.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -62,7 +57,31 @@ class NewPermissionFragment : Fragment() {
     }
 
     fun setUpViews() {
+        Lerswitch.setOnClickListener { didTapASwitch(it) }
+        Criarswitch.setOnClickListener { didTapASwitch(it) }
+        Deleteswitch.setOnClickListener { didTapASwitch(it) }
+        Atualizarswitch.setOnClickListener { didTapASwitch(it) }
+
         savePermissionButton.setOnClickListener { didTapSave() }
+    }
+
+    fun didTapASwitch(view: View) {
+        when(view) {
+            Lerswitch -> {
+                if(Lerswitch.isChecked == false) {
+                    Criarswitch.isChecked = false
+                    Deleteswitch.isChecked = false
+                    Atualizarswitch.isChecked = false
+                }
+            }
+            else -> {
+                val mSwitch = view as Switch
+                if(mSwitch.isChecked) {
+                    Lerswitch.isChecked = true
+                }
+            }
+
+        }
     }
 
     fun didTapSave() {
@@ -108,6 +127,7 @@ class NewPermissionFragment : Fragment() {
     }
 
     fun switchChanged() {
+
     }
 
 
@@ -119,7 +139,10 @@ class NewPermissionFragment : Fragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 response?.isSuccessful.let {
-
+                    val codeMeaning = handleNetworkResponse(response?.code(), context!!)
+                    if(codeMeaning == "sucess") {
+                        context!!.toast(getString(R.string.permissionSavedToastText))
+                    }
                 }
             }
         }
