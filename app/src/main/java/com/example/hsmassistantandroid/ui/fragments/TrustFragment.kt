@@ -25,8 +25,6 @@ class TrustFragment: Fragment() {
     private var tokenString: String? = null
     private var usrNamesStrings: ArrayList<String> = ArrayList()
 
-    private var listener: gestaoUsuarioFragment.OnFragmentInteractionListener? = null
-
     var isTrustees: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

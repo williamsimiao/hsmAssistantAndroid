@@ -35,7 +35,6 @@ class ObjetosListFragment : Fragment() {
     private var exportedCertificateCounter: Int = 0
     private val certificateTypeInteger = 13
     private var certificateNameArray = arrayListOf<String>()
-    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,28 +153,5 @@ class ObjetosListFragment : Fragment() {
 
     fun onOptionReloadClick() {
         objetosRequest()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-        fun newInstance(): ObjetosListFragment = ObjetosListFragment()
     }
 }

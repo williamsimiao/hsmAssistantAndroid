@@ -29,8 +29,6 @@ class gestaoUsuarioFragment : Fragment() {
     private var tokenString: String? = null
     private lateinit var usrNamesStrings: Array<String>
 
-    private var listener: OnFragmentInteractionListener? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -81,11 +79,6 @@ class gestaoUsuarioFragment : Fragment() {
         gestaousuarioList.addItemDecoration(itemDecor)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_user_and_reload, menu)
 
@@ -110,28 +103,5 @@ class gestaoUsuarioFragment : Fragment() {
 //        val manager = fragmentManager
 //        manager!!.beginTransaction().add(R.id.container, fragmentNewUser, "69")
 //        manager!!.beginTransaction().hide(this).show(fragmentNewUser).commit()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-        fun newInstance(): gestaoUsuarioFragment = gestaoUsuarioFragment()
     }
 }

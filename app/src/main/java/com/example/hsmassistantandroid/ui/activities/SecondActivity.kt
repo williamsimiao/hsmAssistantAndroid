@@ -16,20 +16,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private val TAG: String = SecondActivity::class.java.simpleName
 
-class SecondActivity : AppCompatActivity(),
-    ObjetosListFragment.OnFragmentInteractionListener,
-    gestaoUsuarioFragment.OnFragmentInteractionListener {
+class SecondActivity : AppCompatActivity() {
 
     lateinit var activeFragment: Fragment
 
     val fragmentUsuario = NewPermissionFragment()
-    val fragmentGestao = gestaoUsuarioFragment.newInstance()
+    val fragmentGestao = gestaoUsuarioFragment()
     val fragmentRelacao = relacaoFragment.newInstance()
-    val fragmentCertificados = ObjetosListFragment.newInstance()
-
-    override fun onFragmentInteraction(uri: Uri) {
-        Log.e("AQUI", "Houve interacao ")
-    }
+    val fragmentCertificados = ObjetosListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
