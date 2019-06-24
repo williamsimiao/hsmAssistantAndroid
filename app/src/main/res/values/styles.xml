@@ -7,7 +7,7 @@
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryVariant">#000000</item>
         <item name="colorOnPrimary">#FFFFFF</item>

@@ -42,7 +42,6 @@ class ObjetosListFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-        objetosRequest()
     }
 
     fun expoRequest(objId: String) {
@@ -128,6 +127,8 @@ class ObjetosListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        objetosRequest()
+
         setUpViews()
 
     }

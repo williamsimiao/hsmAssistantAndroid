@@ -34,7 +34,6 @@ class gestaoUsuarioFragment : Fragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        listUsrsRequest()
 
     }
 
@@ -71,6 +70,7 @@ class gestaoUsuarioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listUsrsRequest()
         setUpViews()
     }
 

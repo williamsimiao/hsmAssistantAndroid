@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_relacao"
+            app:startDestination="@+id/relacaoFragment">
+
+    <fragment android:id="@+id/relacaoFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.relacaoFragment"
+              android:label="relacao_fragment" tools:layout="@layout/relacao_fragment">
+        <action android:id="@+id/action_relacaoFragment_to_newPermissionFragment"
+                app:destination="@id/newPermissionFragment"/>
+        <action android:id="@+id/action_relacaoFragment_to_userSelectionFragment"
+                app:destination="@id/userSelectionFragment"/>
+    </fragment>
+    <fragment android:id="@+id/newPermissionFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
+              android:label="NewPermissionFragment"/>
+    <fragment android:id="@+id/userSelectionFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment"
+              android:label="UserSelectionFragment">
+        <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment2"
+                app:destination="@id/newPermissionFragment2"/>
+    </fragment>
+    <fragment android:id="@+id/newPermissionFragment2"
+              android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
+              android:label="NewPermissionFragment"/>
+</navigation>
