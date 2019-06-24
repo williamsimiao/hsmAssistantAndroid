@@ -24,6 +24,7 @@ import javax.security.cert.X509Certificate
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
+import androidx.recyclerview.widget.RecyclerView
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
@@ -124,6 +125,13 @@ class ObjetosListFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_objetos_list, container, false)
+
+        getActivity()?.runOnUiThread {
+            val recyclerView = view.findViewById<RecyclerView>(R.id.objetosList).apply {
+                adapter = ObjetosListAdapter(certificateNameArray.toTypedArray())
+            }
+        }
+
         return view
     }
 
