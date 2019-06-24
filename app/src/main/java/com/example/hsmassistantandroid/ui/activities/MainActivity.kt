@@ -35,25 +35,24 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
         tokenString = sharedPreferences.getString("TOKEN", null)
-//        autenticarButton.setOnClickListener { didTapAutenticar() }
-//
-//        loadingProgressBar.show()
-//        usrEditText.visibility = View.INVISIBLE
-//        pwdEditText.visibility = View.INVISIBLE
-//        otpEditText.visibility = View.INVISIBLE
-//        autenticarButton.visibility = View.INVISIBLE
-//
-//        usrEditText.editText!!.onChange { usrEditText.error = null }
-//        pwdEditText.editText!!.onChange { pwdEditText.error = null }
+        autenticarButton.setOnClickListener { didTapAutenticar() }
 
-        didTapAutenticar()
-//        probeRequest()
+        loadingProgressBar.show()
+        usrEditText.visibility = View.INVISIBLE
+        pwdEditText.visibility = View.INVISIBLE
+        otpEditText.visibility = View.INVISIBLE
+        autenticarButton.visibility = View.INVISIBLE
+
+        usrEditText.editText!!.onChange { usrEditText.error = null }
+        pwdEditText.editText!!.onChange { pwdEditText.error = null }
+
+        probeRequest()
     }
 
     fun didTapAutenticar() {
-//        if(fieldsAreValid(baseContext, arrayOf(usrEditText, pwdEditText)) == false) {
-//            return
-//        }
+        if(fieldsAreValid(baseContext, arrayOf(usrEditText, pwdEditText)) == false) {
+            return
+        }
 
         val callback = object : Callback<ResponseBody1> {
             override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
@@ -77,19 +76,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        submitedUser = "master"
-        networkManager.runAuth(submitedUser!!, "12345678", "", callback)
-//        submitedUser = usrEditText.editText!!.text.toString()
-//        networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
+        submitedUser = usrEditText.editText!!.text.toString()
+        networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }
 
     fun showLoginFields() {
         loadingProgressBar.hide()
 
-//        usrEditText.visibility = View.VISIBLE
-//        pwdEditText.visibility = View.VISIBLE
-//        otpEditText.visibility = View.VISIBLE
-//        autenticarButton.visibility = View.VISIBLE
+        usrEditText.visibility = View.VISIBLE
+        pwdEditText.visibility = View.VISIBLE
+        otpEditText.visibility = View.VISIBLE
+        autenticarButton.visibility = View.VISIBLE
     }
 
     fun probeRequest() {
