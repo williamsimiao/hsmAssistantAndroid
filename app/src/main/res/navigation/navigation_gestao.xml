@@ -4,11 +4,11 @@
             android:id="@+id/navigation_gestao" app:startDestination="@id/gestaoUsuarioFragment2">
     <fragment android:id="@+id/gestaoUsuarioFragment2"
               android:name="com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment"
-              android:label="gestaoUsuarioFragment">
+              android:label="@string/screenTitle_gestao">
         <action android:id="@+id/action_gestaoUsuarioFragment2_to_newUserFragment"
                 app:destination="@id/newUserFragment"/>
     </fragment>
     <fragment android:id="@+id/newUserFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"
-              android:label="NewUserFragment"/>
+              android:label="@string/screenTitle_newUser"/>
 </navigation>

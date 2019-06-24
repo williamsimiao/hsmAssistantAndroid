@@ -6,5 +6,6 @@
 
     <fragment android:id="@+id/objetosListFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.ObjetosListFragment"
-              android:label="fragment_objetos_list" tools:layout="@layout/fragment_objetos_list"/>
+              android:label="@string/screenTitle_certificados"
+              tools:layout="@layout/fragment_objetos_list"/>
 </navigation>

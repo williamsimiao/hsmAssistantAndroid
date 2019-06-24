@@ -4,5 +4,5 @@
             android:id="@+id/navigation_usuario" app:startDestination="@id/userOptions">
 
     <fragment android:id="@+id/userOptions" android:name="com.example.hsmassistantandroid.ui.fragments.UserOptions"
-              android:label="UserOptions"/>
+              android:label="@string/screenTitle_usuario"/>
 </navigation>

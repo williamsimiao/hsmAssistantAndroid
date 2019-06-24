@@ -5,22 +5,22 @@
     <item
             android:id="@+id/navigation_objetos"
             android:icon="@drawable/ic_action_key"
-            android:title="Certificados"
+            android:title="@string/screenTitle_certificados"
             app:showAsAction="always"/>
     <item
             android:id="@+id/navigation_relacao"
             android:icon="@drawable/ic_thumbs_up_down"
-            android:title="Relações"
+            android:title="@string/screenTitle_relacoes"
             app:showAsAction="always"/>
     <item
             android:id="@+id/navigation_gestao"
             android:icon="@drawable/ic_people"
-            android:title="Gestão"
+            android:title="@string/screenTitle_gestao"
             app:showAsAction="always"/>
     <item
             android:id="@+id/navigation_usuario"
             android:icon="@drawable/ic_person"
-            android:title="Usuário"
+            android:title="@string/screenTitle_usuario"
             app:showAsAction="always"/>
 
 

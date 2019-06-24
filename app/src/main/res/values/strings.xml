@@ -27,6 +27,13 @@
     <string name="permissionSavedToastText">Permissão salva com sucesso</string>
     <string name="internal_error_dialog_title">Erro Interno</string>
     <string name="internal_error_dialog_message">Verifique se seu usuário posusi permissão para realizar esta operação</string>
+    <string name="screenTitle_usuario">Usuário</string>
+    <string name="screenTitle_gestao">Gestão</string>
+    <string name="screenTitle_relacoes">Relações</string>
+    <string name="screenTitle_certificados">Certificados</string>
+    <string name="screenTitle_permissao">Permissão</string>
+    <string name="screenTitle_novaPermissao">Nova Permissão</string>
+    <string name="screenTitle_newUser">Novo usuário</string>
 
 
 </resources>

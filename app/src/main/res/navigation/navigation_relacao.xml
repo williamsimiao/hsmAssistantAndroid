@@ -6,7 +6,8 @@
 
     <fragment android:id="@+id/relacaoFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.relacaoFragment"
-              android:label="relacao_fragment" tools:layout="@layout/relacao_fragment">
+              android:label="@string/screenTitle_relacoes"
+              tools:layout="@layout/relacao_fragment">
         <action android:id="@+id/action_relacaoFragment_to_newPermissionFragment"
                 app:destination="@id/newPermissionFragment"/>
         <action android:id="@+id/action_relacaoFragment_to_userSelectionFragment"
@@ -14,7 +15,7 @@
     </fragment>
     <fragment android:id="@+id/newPermissionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
-              android:label="NewPermissionFragment"/>
+              android:label="@string/screenTitle_permissao"/>
     <fragment android:id="@+id/userSelectionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment"
               android:label="UserSelectionFragment">
@@ -23,5 +24,5 @@
     </fragment>
     <fragment android:id="@+id/newPermissionFragment2"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
-              android:label="NewPermissionFragment"/>
+              android:label="@string/screenTitle_novaPermissao"/>
 </navigation>
