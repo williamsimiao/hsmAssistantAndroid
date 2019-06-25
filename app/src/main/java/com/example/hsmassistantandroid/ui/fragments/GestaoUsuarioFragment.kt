@@ -30,7 +30,7 @@ private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 class gestaoUsuarioFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    private lateinit var usrNamesStrings: Array<String>
+    private lateinit var usrNamesStrings: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class gestaoUsuarioFragment : mainFragment() {
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
                 if(response!!.isSuccessful) {
-                    usrNamesStrings = response.body()?.usr!!.toTypedArray()
+                    usrNamesStrings = ArrayList(response.body()!!.usr)
                     gestaousuarioList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         gestaousuarioList.adapter = GestaoListAdapter(usrNamesStrings)
@@ -107,7 +107,7 @@ class gestaoUsuarioFragment : mainFragment() {
     }
 }
 
-class GestaoListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<GestaoListAdapter.ViewHolder>() {
+class GestaoListAdapter(private val itensStringList: ArrayList<String>) : RecyclerView.Adapter<GestaoListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2

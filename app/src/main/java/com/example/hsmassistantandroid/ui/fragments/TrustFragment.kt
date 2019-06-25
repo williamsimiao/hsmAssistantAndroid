@@ -50,6 +50,7 @@ class TrustFragment: mainFragment() {
             override fun onResponse(call: Call<ResponseBody5>?, response: Response<ResponseBody5>?) {
                 response?.isSuccessful.let {
                     val result = response?.body()?.trust!!
+                    usrNameAndAclArray.clear()
                     for(item in result) {
                         usrNameAndAclArray.add(Pair(item.usr, item.acl))
                     }
