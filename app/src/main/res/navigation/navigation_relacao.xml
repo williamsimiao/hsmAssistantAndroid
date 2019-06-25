@@ -9,9 +9,13 @@
               android:label="@string/screenTitle_relacoes"
               tools:layout="@layout/relacao_fragment">
         <action android:id="@+id/action_relacaoFragment_to_newPermissionFragment"
-                app:destination="@id/newPermissionFragment"/>
+                app:destination="@id/newPermissionFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
         <action android:id="@+id/action_relacaoFragment_to_userSelectionFragment"
-                app:destination="@id/userSelectionFragment"/>
+                app:destination="@id/userSelectionFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/newPermissionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
@@ -20,7 +24,9 @@
               android:name="com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment"
               android:label="UserSelectionFragment">
         <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment2"
-                app:destination="@id/newPermissionFragment2"/>
+                app:destination="@id/newPermissionFragment2" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/newPermissionFragment2"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
