@@ -14,7 +14,6 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
 import com.example.hsmassistantandroid.data.ResponseBody7
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
-import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -25,6 +24,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hsmassistantandroid.extensions.ctx
+import kotlinx.android.synthetic.main.item_objetos.view.*
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
@@ -122,6 +123,7 @@ class ObjetosListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_objetos_list, container, false)
@@ -162,5 +164,33 @@ class ObjetosListFragment : Fragment() {
 
     fun onOptionReloadClick() {
         objetosRequest()
+    }
+}
+
+class ObjetosListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                Log.d(TAG, "name:" + itensStringList[position])
+            }
+        })
+
+        holder.bindObjetos(itensStringList[position])
+    }
+
+    override fun getItemCount(): Int = itensStringList.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindObjetos(objeto: String) {
+            with(objeto) {
+                itemView.title_label.text = objeto
+            }
+        }
     }
 }

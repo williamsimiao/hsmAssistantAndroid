@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*

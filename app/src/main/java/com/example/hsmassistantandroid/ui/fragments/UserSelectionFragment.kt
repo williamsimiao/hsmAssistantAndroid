@@ -10,12 +10,14 @@ import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
-import com.example.hsmassistantandroid.ui.adapters.ObjetosListAdapter
+import com.example.hsmassistantandroid.extensions.ctx
 import kotlinx.android.synthetic.main.fragment_user_selection.*
+import kotlinx.android.synthetic.main.item_objetos.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,7 +50,7 @@ class UserSelectionFragment : Fragment() {
                     userSelectionList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         userSelectionList.adapter =
-                            ObjetosListAdapter(usrNamesStrings)
+                            SelectionListAdapter(usrNamesStrings)
                     }
                 }
             }
@@ -73,8 +75,32 @@ class UserSelectionFragment : Fragment() {
         val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
         userSelectionList.addItemDecoration(itemDecor)
     }
+}
 
-    companion object {
-        fun newInstance(): UserSelectionFragment = UserSelectionFragment()
+class SelectionListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<SelectionListAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                Log.d(TAG, "name:" + itensStringList[position])
+            }
+        })
+
+        holder.bindUsuario(itensStringList[position])
+    }
+
+    override fun getItemCount(): Int = itensStringList.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindUsuario(objeto: String) {
+            with(objeto) {
+                itemView.title_label.text = objeto
+            }
+        }
     }
 }
