@@ -111,7 +111,7 @@ class gestaoUsuarioFragment : mainFragment() {
     }
 
     fun onOptionAddUserClick() {
-        findNavController().navigate(R.id.newUserFragment)
+        findNavController().navigate(R.id.action_gestaoUsuarioFragment2_to_newUserFragment)
     }
 }
 

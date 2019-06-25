@@ -6,7 +6,9 @@
               android:name="com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment"
               android:label="@string/screenTitle_gestao">
         <action android:id="@+id/action_gestaoUsuarioFragment2_to_newUserFragment"
-                app:destination="@id/newUserFragment"/>
+                app:destination="@id/newUserFragment"
+                app:exitAnim="@anim/slide_out_left" app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@anim/slide_in_left" app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/newUserFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"

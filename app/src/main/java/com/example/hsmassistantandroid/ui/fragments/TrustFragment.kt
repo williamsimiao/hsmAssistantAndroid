@@ -122,7 +122,7 @@ class TrustFragment: mainFragment() {
 
     fun onOptionAddUserClick() {
 
-        findNavController().navigate(R.id.userSelectionFragment)
+        findNavController().navigate(R.id.action_relacaoFragment_to_userSelectionFragment)
     }
 
 }
@@ -141,7 +141,7 @@ class TrustListAdapter(private val itensArrayList: ArrayList<Pair<String, Int>>)
                     ACL_KEY to itensArrayList[position].second)
 
                 holder.itemView.findNavController().navigate(
-                    R.id.newPermissionFragment,
+                    R.id.action_relacaoFragment_to_newPermissionFragment,
                     bundle)
             }
         })
