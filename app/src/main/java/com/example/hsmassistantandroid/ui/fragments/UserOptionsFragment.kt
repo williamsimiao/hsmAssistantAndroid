@@ -59,6 +59,7 @@ class UserOptions : mainFragment() {
 
                     val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
+                    requireActivity().finish()
                 }
             }
         }
@@ -67,27 +68,6 @@ class UserOptions : mainFragment() {
 
     fun didTapChangePwd() {
         context!!.toast("Não implementado")
-
-//        val callbackClose = object : Callback<ResponseBody0> {
-//            override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-//                Log.e("SecondActivity", "Problem calling the API", t)
-//            }
-//            override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-//                response?.isSuccessful.let {
-//
-//                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
-//                        .setMessage("Sessão encerrada com sucesso")
-//                        .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-//
-//                        }
-//
-//                    Log.e(TAG, "Sessao fechada")
-//                    val intent = Intent(context, MainActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-//        networkManager.runClose(tokenString!!, callbackClose)
     }
 
     override fun onCreateView(
