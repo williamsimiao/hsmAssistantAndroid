@@ -23,13 +23,14 @@ import javax.security.cert.X509Certificate
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hsmassistantandroid.extensions.ctx
 import kotlinx.android.synthetic.main.item_objetos.view.*
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
-class ObjetosListFragment : Fragment() {
+class ObjetosListFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private lateinit var objetosStrings: Array<String>
@@ -123,11 +124,9 @@ class ObjetosListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
-
+        super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_objetos_list, container, false)
-
         getActivity()?.runOnUiThread {
             val recyclerView = view.findViewById<RecyclerView>(R.id.objetosList).apply {
                 adapter = ObjetosListAdapter(certificateNameArray.toTypedArray())

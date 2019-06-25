@@ -28,7 +28,7 @@ import retrofit2.Response
 
 private val TAG: String = UserOptions::class.java.simpleName
 
-class UserOptions : Fragment() {
+class UserOptions : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
 
@@ -94,6 +94,7 @@ class UserOptions : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_options, container, false)
     }

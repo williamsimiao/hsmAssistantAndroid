@@ -28,7 +28,7 @@ import retrofit2.Response
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 private val newUserDefaultACL = 80
 
-class NewUserFragment : Fragment() {
+class NewUserFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
 
@@ -63,6 +63,7 @@ class NewUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_user, container, false)

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
+import androidx.core.app.ActivityCompat
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
@@ -23,7 +24,7 @@ import retrofit2.Response
 
 private val TAG: String = NewPermissionFragment::class.java.simpleName
 
-class NewPermissionFragment : Fragment() {
+class NewPermissionFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     var userName: String? = null
@@ -50,6 +51,8 @@ class NewPermissionFragment : Fragment() {
             userAcl = 0
         }
         getSystemAclRequest()
+
+        super.onCreateView(inflater, container, savedInstanceState)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_permission, container, false)

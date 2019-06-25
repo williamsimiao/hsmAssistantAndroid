@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +25,7 @@ import retrofit2.Response
 
 private val TAG: String = UserSelectionFragment::class.java.simpleName
 
-class UserSelectionFragment : Fragment() {
+class UserSelectionFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private lateinit var usrNamesStrings: Array<String>
@@ -35,7 +36,6 @@ class UserSelectionFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         listUsrsRequest()
-
     }
 
     fun listUsrsRequest() {
@@ -62,6 +62,8 @@ class UserSelectionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_selection, container, false)
     }

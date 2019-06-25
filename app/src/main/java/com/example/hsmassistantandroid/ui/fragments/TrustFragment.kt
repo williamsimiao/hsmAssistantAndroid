@@ -5,6 +5,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,7 @@ import retrofit2.Response
 
 private val TAG: String = TrustFragment::class.java.simpleName
 
-class TrustFragment: Fragment() {
+class TrustFragment: mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private var usrNamesStrings: ArrayList<String> = ArrayList()
@@ -65,6 +66,7 @@ class TrustFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
 
         return inflater.inflate(R.layout.trust_fragment, container, false)
     }

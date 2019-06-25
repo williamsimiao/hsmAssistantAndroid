@@ -26,7 +26,7 @@ import retrofit2.Response
 
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
-class gestaoUsuarioFragment : Fragment() {
+class gestaoUsuarioFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private lateinit var usrNamesStrings: Array<String>
@@ -65,6 +65,8 @@ class gestaoUsuarioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gestao_usuario_list, container, false)
     }
