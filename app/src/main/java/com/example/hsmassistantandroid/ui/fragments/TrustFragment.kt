@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +29,7 @@ private val TAG: String = TrustFragment::class.java.simpleName
 class TrustFragment: mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    private var usrNamesStrings: ArrayList<String> = ArrayList()
-
+    private var usrNameAndAclArray: ArrayList<Pair<String, Int>> = ArrayList()
     var isTrustees: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +51,12 @@ class TrustFragment: mainFragment() {
                 response?.isSuccessful.let {
                     val result = response?.body()?.trust!!
                     for(item in result) {
-                        usrNamesStrings.add(item.usr)
+                        usrNameAndAclArray.add(Pair(item.usr, item.acl))
                     }
                     trustList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         trustList.adapter =
-                            TrustListAdapter(usrNamesStrings.toTypedArray())
+                            TrustListAdapter(usrNameAndAclArray)
                     }
                 }
             }
@@ -109,11 +111,12 @@ class TrustFragment: mainFragment() {
 
     fun onOptionAddUserClick() {
 
+        findNavController().navigate(R.id.userSelectionFragment)
     }
 
 }
 
-class TrustListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<TrustListAdapter.ViewHolder>() {
+class TrustListAdapter(private val itensArrayList: ArrayList<Pair<String, Int>>) : RecyclerView.Adapter<TrustListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
@@ -123,14 +126,19 @@ class TrustListAdapter(private val itensStringList: Array<String>) : RecyclerVie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d(TAG, "name:" + itensStringList[position])
+                val bundle = bundleOf(USERNAME_KEY to itensArrayList[position].first,
+                    ACL_KEY to itensArrayList[position].second)
+
+                holder.itemView.findNavController().navigate(
+                    R.id.newPermissionFragment,
+                    bundle)
             }
         })
 
-        holder.bindUsuario(itensStringList[position])
+        holder.bindUsuario(itensArrayList[position].first)
     }
 
-    override fun getItemCount(): Int = itensStringList.size
+    override fun getItemCount(): Int = itensArrayList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindUsuario(objeto: String) {
@@ -138,5 +146,10 @@ class TrustListAdapter(private val itensStringList: Array<String>) : RecyclerVie
                 itemView.title_label.text = objeto
             }
         }
+    }
+
+    companion object {
+        const val USERNAME_KEY = "userName"
+        const val ACL_KEY = "userAcl"
     }
 }

@@ -16,6 +16,8 @@ import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct
 import com.example.hsmassistantandroid.extensions.handleNetworkResponse
+import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.ACL_KEY
+import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.USERNAME_KEY
 import kotlinx.android.synthetic.main.fragment_new_permission.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -36,22 +38,18 @@ class NewPermissionFragment : mainFragment() {
         setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+
+        userName = arguments?.getString(USERNAME_KEY)
+        //case doesn't exist is set to 0
+        userAcl = arguments?.getInt(ACL_KEY)
+
+        getSystemAclRequest()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        //TODO: deletar
-        if(userName == null) userName = "master"
-        //TODO: mudar userACl de acordo com o parametro recebido
-        if(userAcl == null) {
-            //caso em que clicou em de nova permissao
-            userAcl = 0
-        }
-        getSystemAclRequest()
-
         super.onCreateView(inflater, container, savedInstanceState)
 
         // Inflate the layout for this fragment

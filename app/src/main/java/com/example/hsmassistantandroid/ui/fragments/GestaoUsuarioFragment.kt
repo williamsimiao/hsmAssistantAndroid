@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -102,10 +103,7 @@ class gestaoUsuarioFragment : mainFragment() {
     }
 
     fun onOptionAddUserClick() {
-//        val fragmentNewUser = NewUserFragment.newInstance()
-//        val manager = fragmentManager
-//        manager!!.beginTransaction().add(R.id.container, fragmentNewUser, "69")
-//        manager!!.beginTransaction().hide(this).show(fragmentNewUser).commit()
+        findNavController().navigate(R.id.newUserFragment)
     }
 }
 

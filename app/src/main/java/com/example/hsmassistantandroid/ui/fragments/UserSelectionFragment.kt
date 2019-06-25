@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,7 +91,8 @@ class SelectionListAdapter(private val itensStringList: Array<String>) : Recycle
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d(TAG, "name:" + itensStringList[position])
+                val bundle = bundleOf(TrustListAdapter.USERNAME_KEY to itensStringList[position])
+                holder.itemView.findNavController().navigate(R.id.newPermissionFragment, bundle)
             }
         })
 
