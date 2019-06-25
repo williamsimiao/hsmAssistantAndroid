@@ -30,14 +30,14 @@ private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 class gestaoUsuarioFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    private lateinit var usrNamesStrings: ArrayList<String>
+    private var usrNamesStrings = ArrayList<String>()
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-
     }
 
     fun listUsrsRequest() {
@@ -49,10 +49,11 @@ class gestaoUsuarioFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
                 if(response!!.isSuccessful) {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
+
                     gestaousuarioList.layoutManager = LinearLayoutManager(context)
-                    getActivity()?.runOnUiThread {
-                        gestaousuarioList.adapter = GestaoListAdapter(usrNamesStrings)
-                    }
+                    viewAdapter = GestaoListAdapter(usrNamesStrings)
+                    gestaousuarioList.adapter = viewAdapter
+                    alreadyLoaded = true
                 }
                 else {
                     handleNetworkResponse(response.code(), context!!)
@@ -68,13 +69,20 @@ class gestaoUsuarioFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gestao_usuario_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_gestao_usuario_list, container, false)
+
+        viewAdapter = GestaoListAdapter(usrNamesStrings)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.gestaousuarioList)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+
+        if(!alreadyLoaded) listUsrsRequest()
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listUsrsRequest()
         setUpViews()
     }
 

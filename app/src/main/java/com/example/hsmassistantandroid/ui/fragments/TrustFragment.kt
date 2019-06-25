@@ -31,6 +31,8 @@ class TrustFragment: mainFragment() {
     private var tokenString: String? = null
     private var usrNameAndAclArray: ArrayList<Pair<String, Int>> = ArrayList()
     var isTrustees: Boolean? = null
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,6 @@ class TrustFragment: mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         listTrustRequest()
-
     }
 
     fun listTrustRequest() {
@@ -54,11 +55,11 @@ class TrustFragment: mainFragment() {
                     for(item in result) {
                         usrNameAndAclArray.add(Pair(item.usr, item.acl))
                     }
+
                     trustList.layoutManager = LinearLayoutManager(context)
-                    getActivity()?.runOnUiThread {
-                        trustList.adapter =
-                            TrustListAdapter(usrNameAndAclArray)
-                    }
+                    viewAdapter = TrustListAdapter(usrNameAndAclArray)
+                    trustList.adapter = viewAdapter
+                    alreadyLoaded = true
                 }
             }
         }
@@ -71,7 +72,16 @@ class TrustFragment: mainFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        return inflater.inflate(R.layout.trust_fragment, container, false)
+        val view = inflater.inflate(R.layout.trust_fragment, container, false)
+
+        viewAdapter = TrustListAdapter(usrNameAndAclArray)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.trustList)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+
+        if(!alreadyLoaded) listTrustRequest()
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

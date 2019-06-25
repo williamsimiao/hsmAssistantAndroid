@@ -37,15 +37,14 @@ class ObjetosListFragment : mainFragment() {
     private var certificateCounter: Int = 0
     private var exportedCertificateCounter: Int = 0
     private val certificateTypeInteger = 13
-    private var certificateNameArray = arrayListOf<String>()
+    private var certificateNameArray = ArrayList<String>()
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        objetosRequest()
-
     }
 
     fun expoRequest(objId: String) {
@@ -69,10 +68,9 @@ class ObjetosListFragment : mainFragment() {
                 }
                 if(certificateCounter == exportedCertificateCounter) {
                     objetosList.layoutManager = LinearLayoutManager(context)
-                    getActivity()?.runOnUiThread {
-                        objetosList.adapter =
-                            ObjetosListAdapter(certificateNameArray.toTypedArray())
-                    }
+                    viewAdapter = ObjetosListAdapter(certificateNameArray)
+                    objetosList.adapter = viewAdapter
+                    alreadyLoaded = true
                 }
             }
         }
@@ -126,12 +124,15 @@ class ObjetosListFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_objetos_list, container, false)
-        getActivity()?.runOnUiThread {
-            val recyclerView = view.findViewById<RecyclerView>(R.id.objetosList).apply {
-                adapter = ObjetosListAdapter(certificateNameArray.toTypedArray())
-            }
-        }
+
+        viewAdapter = ObjetosListAdapter(certificateNameArray)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.objetosList)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+
+        if(!alreadyLoaded) objetosRequest()
 
         return view
     }
@@ -139,7 +140,6 @@ class ObjetosListFragment : mainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
-
     }
 
     fun setUpViews() {
@@ -149,7 +149,6 @@ class ObjetosListFragment : mainFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.reload, menu)
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -166,7 +165,7 @@ class ObjetosListFragment : mainFragment() {
     }
 }
 
-class ObjetosListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
+class ObjetosListAdapter(private val itensStringList: ArrayList<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
