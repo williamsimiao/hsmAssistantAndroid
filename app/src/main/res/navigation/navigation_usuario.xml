@@ -4,5 +4,12 @@
             android:id="@+id/navigation_usuario" app:startDestination="@id/userOptions">
 
     <fragment android:id="@+id/userOptions" android:name="com.example.hsmassistantandroid.ui.fragments.UserOptions"
-              android:label="@string/screenTitle_usuario"/>
+              android:label="@string/screenTitle_usuario">
+        <action android:id="@+id/action_userOptions_to_changePwdFragment" app:destination="@id/changePwdFragment"
+                app:enterAnim="@anim/slide_in_right" app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left" app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment android:id="@+id/changePwdFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.ChangePwdFragment"
+              android:label="ChangePwdFragment"/>
 </navigation>

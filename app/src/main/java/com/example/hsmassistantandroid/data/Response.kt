@@ -34,6 +34,10 @@ data class ResponseBody7 (
     val type: Int,
     val attr: Int)
 
+data class errorBody (
+    val rc: Int,
+    val rd: String)
+
 data class aclStruct(val rawValue: Int) {
     val obj_del: Int
         get() = 1 shl 0

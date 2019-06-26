@@ -11,13 +11,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import okhttp3.ResponseBody
 import org.jetbrains.anko.runOnUiThread
+import retrofit2.http.Body
 
 private val minPwdLenght = 8
+
+fun handleAPIError(mResponseBody: ResponseBody) {
+}
 
 fun handleNetworkResponse(responseCode: Int?, context: Context): String {
     if(responseCode == null) {

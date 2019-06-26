@@ -1,36 +1,36 @@
 package com.example.hsmassistantandroid.ui.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
-import com.example.hsmassistantandroid.extensions.goToLoginScreen
-import com.example.hsmassistantandroid.ui.activities.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.hsmassistantandroid.extensions.*
+import kotlinx.android.synthetic.main.fragment_change_pwd.*
+import kotlinx.android.synthetic.main.fragment_change_pwd.newPwdEditText
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
-import kotlinx.android.synthetic.main.fragment_user_options.*
+import kotlinx.android.synthetic.main.fragment_new_user.*
+import kotlinx.android.synthetic.main.item_objetos.view.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private val TAG: String = UserOptions::class.java.simpleName
+private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
-class UserOptions : mainFragment() {
+class ChangePwdFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
 
@@ -41,31 +41,23 @@ class UserOptions : mainFragment() {
         tokenString = sharedPreferences.getString("TOKEN", null)
     }
 
-    fun didTapcloseButton() {
-        val callbackClose = object : Callback<ResponseBody0> {
+    fun changePwdRequest() {
+        val callback = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                Log.e("SecondActivity", "Problem calling the API", t)
+                Log.e("SecondsActivity", "Problem calling the API", t)
             }
+
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                if(response?.isSuccessful!!) {                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
-                        .setMessage("Sessão encerrada com sucesso")
-                        .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-
-                        }
-                    Log.d(TAG, "Passou aqui")
-
-//                    goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
+                if(response!!.isSuccessful) {
+                    context!!.toast(getString(R.string.pwdAlteredWithSuccess))
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleNetworkResponse(response.code(), context!!)
                 }
             }
         }
-        networkManager.runClose(tokenString!!, callbackClose)
-    }
-
-    fun didTapChangePwd() {
-        findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
+        val newPwd = newPwdEditText.editText!!.text.toString()
+        networkManager.runChangePwd(tokenString!!, newPwd, callback)
     }
 
     override fun onCreateView(
@@ -73,8 +65,10 @@ class UserOptions : mainFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_options, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_change_pwd, container, false)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,7 +77,26 @@ class UserOptions : mainFragment() {
     }
 
     fun setUpViews() {
-        closeButton.setOnClickListener { didTapcloseButton() }
-        changePwd.setOnClickListener { didTapChangePwd() }
+        val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
+        gestaousuarioList.addItemDecoration(itemDecor)
+
+        alterarButton.setOnClickListener { didTapAlterar() }
+    }
+
+    fun didTapAlterar() {
+        if(fieldsAreValid(context, arrayOf(newUsrEditText, newPwdEditText,
+                newPwdEditText)) == false) {
+            return
+        }
+
+        if(validPwd(context, newPwdEditText) ==  false) return
+
+        if(validPwdConfirmation(context, newPwdEditText.editText!!.text.toString(),
+                newPwdConfirmationEditText) == false) {
+            return
+        }
+
+        changePwdRequest()
     }
 }
+

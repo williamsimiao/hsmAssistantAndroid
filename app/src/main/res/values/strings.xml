@@ -38,6 +38,10 @@
     <string name="invalidTokenDialog_message">Faça o login novamente</string>
     <string name="noInternetDialog_title">Erro ao conectar-se</string>
     <string name="noInternetDialog_message">Verifique sua coneccao com a internet e tente novamente</string>
+    <string name="password_confirmation">Confirmacao da senha</string>
+    <string name="nova_senha">Nova senha</string>
+    <string name="alterar_senha">Alterar senha</string>
+    <string name="pwdAlteredWithSuccess">Senha alterada com sucesso</string>
 
 
 </resources>

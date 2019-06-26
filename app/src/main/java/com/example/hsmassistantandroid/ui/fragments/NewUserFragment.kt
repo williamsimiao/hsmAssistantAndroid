@@ -53,7 +53,7 @@ class NewUserFragment : mainFragment() {
             }
         }
         val newUserName = newUsrEditText.editText!!.text.toString()
-        val newPassword = newPwdEditText.editText!!.text.toString()
+        val newPassword = newUsrPwdEditText.editText!!.text.toString()
         networkManager.runCreateUsr(tokenString!!, newUserName, newPassword, newUserDefaultACL, callbackList)
     }
 
@@ -73,15 +73,15 @@ class NewUserFragment : mainFragment() {
     }
 
     fun didtapCreateUser() {
-        if(fieldsAreValid(context, arrayOf(newUsrEditText, newPwdEditText,
-                newRepeatPwdEditText)) == false) {
+        if(fieldsAreValid(context, arrayOf(newUsrEditText, newUsrPwdEditText,
+                newUsrPwdRepeatEditText)) == false) {
             return
         }
 
-        if(validPwd(context, newPwdEditText) ==  false) return
+        if(validPwd(context, newUsrPwdEditText) ==  false) return
 
-        if(validPwdConfirmation(context, newPwdEditText.editText!!.text.toString(),
-                newRepeatPwdEditText) == false) {
+        if(validPwdConfirmation(context, newUsrPwdEditText.editText!!.text.toString(),
+                newUsrPwdRepeatEditText) == false) {
             return
         }
 
@@ -90,24 +90,24 @@ class NewUserFragment : mainFragment() {
 
     fun setUpViews() {
         newUsrEditText.editText!!.onChange { newUsrEditText.error = null }
-        newPwdEditText.editText!!.onChange { newPwdEditText.error = null }
+        newUsrPwdEditText.editText!!.onChange { newUsrPwdEditText.error = null }
 
-        val fieldNewPwd = newPwdEditText.editText
+        val fieldNewPwd = newUsrPwdEditText.editText
         fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus && fieldNewPwd.text.toString().isNotEmpty()) {
-                validPwd(context, newPwdEditText)
+                validPwd(context, newUsrPwdEditText)
             }
         }
 
-        val fieldNewPwdConfirmation =  newRepeatPwdEditText.editText
+        val fieldNewPwdConfirmation =  newUsrPwdRepeatEditText.editText
         fieldNewPwdConfirmation!!.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus && fieldNewPwdConfirmation.text.toString().isNotEmpty()) {
-                validPwdConfirmation(context, newPwdEditText.editText!!.text.toString(),
-                    newRepeatPwdEditText)
+                validPwdConfirmation(context, newUsrPwdEditText.editText!!.text.toString(),
+                    newUsrPwdRepeatEditText)
             }
         }
-        
-        newRepeatPwdEditText.editText!!.onChange { newRepeatPwdEditText.error = null }
+
+        newUsrPwdRepeatEditText.editText!!.onChange { newUsrPwdRepeatEditText.error = null }
 
         createUserButton.setOnClickListener { didtapCreateUser() }
     }

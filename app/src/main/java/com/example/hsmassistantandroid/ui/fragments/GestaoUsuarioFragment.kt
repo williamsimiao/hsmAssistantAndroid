@@ -56,6 +56,7 @@ class gestaoUsuarioFragment : mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
+                    val teste = response.errorBody()!!.byteStream()
                     handleNetworkResponse(response.code(), context!!)
                 }
             }
