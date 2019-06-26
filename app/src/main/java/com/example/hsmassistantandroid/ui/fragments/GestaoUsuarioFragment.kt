@@ -17,6 +17,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.data.errorBody
+import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -44,7 +45,7 @@ class gestaoUsuarioFragment : mainFragment() {
     fun listUsrsRequest() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {

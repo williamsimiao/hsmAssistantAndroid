@@ -39,7 +39,7 @@ class NewUserFragment : mainFragment() {
     fun createUserRequest() {
         val callbackList = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {

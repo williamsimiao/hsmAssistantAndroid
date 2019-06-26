@@ -16,6 +16,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct
+import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.ACL_KEY
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.USERNAME_KEY
@@ -161,7 +162,7 @@ class NewPermissionFragment : mainFragment() {
     fun getSystemAclRequest() {
         val callback = object : Callback<ResponseBody6> {
             override fun onFailure(call: Call<ResponseBody6>?, t: Throwable?) {
-                Log.e(TAG, "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
             override fun onResponse(call: Call<ResponseBody6>?, response: Response<ResponseBody6>?) {
                 if(response!!.isSuccessful) {
@@ -181,7 +182,7 @@ class NewPermissionFragment : mainFragment() {
     fun updateAclRequest(newAcl: Int) {
         val callbackUpdate = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                Log.e(TAG, "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {

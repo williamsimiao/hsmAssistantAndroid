@@ -53,12 +53,21 @@ fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
 
 fun alertAboutConnectionError(context: Context?) : Boolean {
     val isConnected = isNetworkConnected(context)
+
+    val title: String
+    val message: String
     if (isConnected == false ) {
-        AlertDialog.Builder(context!!).setTitle(context!!.getString(R.string.noInternetDialog_title))
-            .setMessage(R.string.noInternetDialog_message)
-            .setPositiveButton(android.R.string.ok) { _, _ -> }
-            .show()
+        title = context!!.getString(R.string.noInternetDialog_message)
+        message = context!!.getString(R.string.noInternetDialog_message)
     }
+    else {
+        title = "Erro"
+        message = context!!.getString(R.string.ERR_DESCONHECIDO_message)
+    }
+    AlertDialog.Builder(context!!).setTitle(title)
+        .setMessage(message)
+        .setPositiveButton(android.R.string.ok) { _, _ -> }
+        .show()
     return isConnected
 }
 

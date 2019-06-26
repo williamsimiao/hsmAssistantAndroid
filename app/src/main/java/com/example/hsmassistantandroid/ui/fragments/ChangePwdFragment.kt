@@ -45,7 +45,7 @@ class ChangePwdFragment : mainFragment() {
     fun changePwdRequest() {
         val callback = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {

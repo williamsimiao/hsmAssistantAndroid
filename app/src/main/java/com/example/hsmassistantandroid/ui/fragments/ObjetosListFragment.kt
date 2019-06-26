@@ -24,6 +24,7 @@ import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import kotlinx.android.synthetic.main.item_objetos.view.*
@@ -50,7 +51,7 @@ class ObjetosListFragment : mainFragment() {
     fun expoRequest(objId: String) {
         val callbackList = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem EXPO", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
@@ -83,7 +84,7 @@ class ObjetosListFragment : mainFragment() {
     fun detailsRequest(objId: String) {
         val callbackList = object : Callback<ResponseBody7> {
             override fun onFailure(call: Call<ResponseBody7>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem INFO", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody7>?, response: Response<ResponseBody7>?) {
@@ -108,7 +109,7 @@ class ObjetosListFragment : mainFragment() {
         certificateNameArray = arrayListOf<String>()
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {

@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         val callback = object : Callback<ResponseBody1> {
             override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                Log.e("MainActivity", "Problem calling the API", t)
+                alertAboutConnectionError(baseContext)
             }
 
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {

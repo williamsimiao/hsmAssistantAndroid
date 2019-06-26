@@ -18,6 +18,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.ui.activities.MainActivity
@@ -46,7 +47,7 @@ class UserOptions : mainFragment() {
 
         val callbackClose = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                Log.e("SecondActivity", "Problem calling the API", t)
+                alertAboutConnectionError(context)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
