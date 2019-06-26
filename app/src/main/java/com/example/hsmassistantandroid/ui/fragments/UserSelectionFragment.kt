@@ -31,7 +31,8 @@ private val TAG: String = UserSelectionFragment::class.java.simpleName
 class UserSelectionFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-    private lateinit var usrNamesStrings: Array<String>
+    private var usrNamesStrings = ArrayList<String>()
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +49,13 @@ class UserSelectionFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
-                if(response?.isSuccessful!!) {                    usrNamesStrings = response?.body()?.usr!!.toTypedArray()
+                if(response?.isSuccessful!!) {
+                    usrNamesStrings = ArrayList(response?.body()?.usr)
                     userSelectionList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         userSelectionList.adapter =
                             SelectionListAdapter(usrNamesStrings)
+                        alreadyLoaded = true
                     }
                 }
                 else {
@@ -69,8 +72,16 @@ class UserSelectionFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_selection, container, false)
+        val view = inflater.inflate(R.layout.fragment_user_selection, container, false)
+
+        viewAdapter = SelectionListAdapter(usrNamesStrings)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.userSelectionList)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+
+        if(!alreadyLoaded) listUsrsRequest()
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,7 +95,7 @@ class UserSelectionFragment : mainFragment() {
     }
 }
 
-class SelectionListAdapter(private val itensStringList: Array<String>) : RecyclerView.Adapter<SelectionListAdapter.ViewHolder>() {
+class SelectionListAdapter(private val itensStringList: ArrayList<String>) : RecyclerView.Adapter<SelectionListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
