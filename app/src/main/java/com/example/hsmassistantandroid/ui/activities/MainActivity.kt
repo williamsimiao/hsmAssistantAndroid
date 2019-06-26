@@ -18,9 +18,7 @@ import android.preference.PreferenceManager
 import android.text.TextWatcher
 import android.view.View
 import com.example.hsmassistantandroid.data.ResponseBody3
-import com.example.hsmassistantandroid.extensions.fieldsAreValid
-import com.example.hsmassistantandroid.extensions.handleAPIError
-import com.example.hsmassistantandroid.extensions.onChange
+import com.example.hsmassistantandroid.extensions.*
 import com.google.android.material.textfield.TextInputLayout
 
 private val TAG: String = MainActivity::class.java.simpleName
@@ -111,17 +109,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun probeRequest() {
-        if (isNetworkConnected() == false ) {
-            AlertDialog.Builder(this).setTitle(getString(R.string.noInternetDialog_title))
-                .setMessage(getString(R.string.noInternetDialog_message))
-                .setPositiveButton(android.R.string.ok) { _, _ -> }
-                .show()
-            return
-        }
 
         val callback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
-                Log.e("Probe", "Problem calling the API", t)
+                alertAboutConnectionError(baseContext)
                 hideLoading()
             }
 
@@ -145,11 +136,5 @@ class MainActivity : AppCompatActivity() {
             return
         }
         networkManager.runProbe(tokenString!!, callback)
-    }
-
-    private fun isNetworkConnected(): Boolean {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected //3
     }
 }

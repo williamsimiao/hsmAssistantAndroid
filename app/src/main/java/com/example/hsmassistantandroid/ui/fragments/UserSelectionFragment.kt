@@ -45,7 +45,7 @@ class UserSelectionFragment : mainFragment() {
     fun listUsrsRequest() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
-                Log.e("SecondsActivity", "Problem calling the API", t)
+
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {

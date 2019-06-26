@@ -3,6 +3,7 @@ package com.example.hsmassistantandroid.extensions
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -48,40 +49,18 @@ fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
         }
     }
     context.toast(message)
-
 }
 
-//fun handleNetworkResponse(responseCode: Int?, context: Context): String {
-//    if(responseCode == null) {
-//        return "failed null"
-//    }
-//    when(responseCode) {
-//        in 200..299 -> return "sucess"
-//        in 401..499 -> {
-////            context.runOnUiThread {
-////                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
-////                    .setMessage(context.getString(R.string.internal_error_dialog_message))
-////                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-////                builder.create().show()
-////            }
-//
-//
-//            return "authenticationError"
-//        }
-//        500 -> {
-//            context.runOnUiThread {
-//                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
-//                    .setMessage(context.getString(R.string.internal_error_dialog_message))
-//                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-//                builder.create().show()
-//            }
-//            return "Internal Server error"
-//        }
-//        in 501..599 -> return "badRequest"
-//        600 -> return "outdated"
-//        else -> return "failed"
-//    }
-//}
+fun alertAboutConnectionError(context: Context?) : Boolean {
+    val isConnected = isNetworkConnected(context)
+    if (isConnected == false ) {
+        AlertDialog.Builder(context!!).setTitle(context!!.getString(R.string.noInternetDialog_title))
+            .setMessage(R.string.noInternetDialog_message)
+            .setPositiveButton(android.R.string.ok) { _, _ -> }
+            .show()
+    }
+    return isConnected
+}
 
 fun EditText.onChange(cb: (String) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {
@@ -136,4 +115,10 @@ fun goToLoginScreen(fragment: Fragment, shouldShowInvalidTokenDialog: Boolean) {
     intent.putExtra("shouldShowInvalidTokenDialog", shouldShowInvalidTokenDialog)
     fragment.startActivity(intent)
     fragment.requireActivity().finish()
+}
+
+fun isNetworkConnected(context: Context?): Boolean {
+    val connectivityManager = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = connectivityManager.activeNetworkInfo
+    return networkInfo != null && networkInfo.isConnected //3
 }
