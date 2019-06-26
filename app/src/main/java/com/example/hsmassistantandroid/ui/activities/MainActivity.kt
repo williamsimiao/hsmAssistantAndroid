@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    showInvalidTokenDialog()
                     Log.d(TAG, response.errorBody().toString())
                 }
             }
