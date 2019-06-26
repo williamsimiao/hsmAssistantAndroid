@@ -9,26 +9,64 @@
               android:label="@string/screenTitle_relacoes"
               tools:layout="@layout/relacao_fragment">
         <action android:id="@+id/action_relacaoFragment_to_newPermissionFragment"
-                app:destination="@id/newPermissionFragment" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"/>
+                app:destination="@id/newPermissionFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right">
+            <argument
+                    android:name="comingFromRelacoesFragment"
+                    app:argType="boolean"
+                    android:defaultValue="true" />
+        </action>
+
         <action android:id="@+id/action_relacaoFragment_to_userSelectionFragment"
-                app:destination="@id/userSelectionFragment" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:destination="@id/userSelectionFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+
     <fragment android:id="@+id/newPermissionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
-              android:label="@string/screenTitle_permissao"/>
+              android:label="@string/screenTitle_permissao">
+        <action android:id="@+id/action_newPermissionFragment_to_relacaoFragment"
+                app:destination="@id/relacaoFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" app:popUpTo="@+id/relacaoFragment" app:popUpToInclusive="true">
+
+            <argument
+                    android:name="comingFromRelacoesFragment"
+                    app:argType="boolean"
+                    android:defaultValue="false"/>
+        </action>
+
+    </fragment>
+
     <fragment android:id="@+id/userSelectionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment"
               android:label="UserSelectionFragment">
         <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment2"
-                app:destination="@id/newPermissionFragment2" app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:destination="@id/newPermissionFragment2"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+
     <fragment android:id="@+id/newPermissionFragment2"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
-              android:label="@string/screenTitle_novaPermissao"/>
+              android:label="@string/screenTitle_novaPermissao">
+        <action android:id="@+id/action_newPermissionFragment2_to_relacaoFragment"
+                app:destination="@id/relacaoFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:popUpTo="@+id/relacaoFragment"
+                app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import androidx.core.app.ActivityCompat
+import androidx.navigation.fragment.findNavController
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
@@ -32,6 +33,7 @@ class NewPermissionFragment : mainFragment() {
     var userName: String? = null
     var userAcl: Int? = null
     var systemACL: Int? = null
+    var comingFromRelacoesFragment: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,8 @@ class NewPermissionFragment : mainFragment() {
         userName = arguments?.getString(USERNAME_KEY)
         //case doesn't exist is set to 0
         userAcl = arguments?.getInt(ACL_KEY)
+        comingFromRelacoesFragment = arguments?.getBoolean("comingFromRelacoesFragment") ?: false
+
 
         getSystemAclRequest()
     }
@@ -181,6 +185,13 @@ class NewPermissionFragment : mainFragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
+                    context?.toast(getString(R.string.permissionSaved_toast))
+                    if(comingFromRelacoesFragment) {
+                        findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
+                    }
+                    else {
+                        findNavController().navigate(R.id.action_newPermissionFragment2_to_relacaoFragment)
+                    }
 
                 }
                 else {
