@@ -295,12 +295,6 @@
                   <entry key="newPermissionFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="308" />
-                            <option name="y" value="-36" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment_to_relacaoFragment">
@@ -316,12 +310,6 @@
                   <entry key="newPermissionFragment2">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="338" />
-                            <option name="y" value="643" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment2_to_relacaoFragment">
@@ -337,12 +325,6 @@
                   <entry key="relacaoFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="54" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_relacaoFragment_to_newPermissionFragment">
@@ -363,12 +345,6 @@
                   <entry key="userSelectionFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="328" />
-                            <option name="y" value="289" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_userSelectionFragment_to_newPermissionFragment2">

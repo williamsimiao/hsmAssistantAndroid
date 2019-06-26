@@ -103,10 +103,11 @@
             android:id="@+id/autenticarButton"
             android:text="AUTENTICAR"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/button_height"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:layout_marginEnd="16dp" android:layout_marginTop="24dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
