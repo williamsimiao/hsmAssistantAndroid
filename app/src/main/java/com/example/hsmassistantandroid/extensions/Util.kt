@@ -23,6 +23,7 @@ import retrofit2.http.Body
 private val minPwdLenght = 8
 
 fun handleAPIError(mResponseBody: ResponseBody) {
+    
 }
 
 fun handleNetworkResponse(responseCode: Int?, context: Context): String {

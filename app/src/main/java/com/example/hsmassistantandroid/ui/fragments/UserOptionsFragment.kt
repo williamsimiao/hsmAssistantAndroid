@@ -47,14 +47,14 @@ class UserOptions : mainFragment() {
                 Log.e("SecondActivity", "Problem calling the API", t)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                if(response?.isSuccessful!!) {                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
-                        .setMessage("Sessão encerrada com sucesso")
+                if(response?.isSuccessful!!) {
+                    AlertDialog.Builder(activity!!.baseContext).setTitle("Encerrar sessão")
+                        .setMessage("Deseja mesmo encerrar a sessão ?")
+                        .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
                         .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-
+                            goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
                         }
                     Log.d(TAG, "Passou aqui")
-
-//                    goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
                 }
                 else {
                     Log.d(TAG, response.errorBody().toString())

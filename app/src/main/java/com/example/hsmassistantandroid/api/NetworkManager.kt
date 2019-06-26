@@ -170,7 +170,10 @@ class NetworkManager {
 
     //SESSAO
     fun runClose(token: String, callback: Callback<ResponseBody0>) {
-        val call = sessaoRouter.close(token)
+        val json = JSONObject()
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+
+        val call = sessaoRouter.close(requestBody, token)
         call.enqueue(callback)
     }
 

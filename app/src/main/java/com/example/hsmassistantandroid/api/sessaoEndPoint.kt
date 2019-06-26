@@ -11,7 +11,7 @@ interface sessaoEndPoint {
 
     @POST("close")
     @Headers("Content-type:application/json")
-    fun close(@Header("Authorization") token: String?): Call<ResponseBody0>
+    fun close(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody0>
 
     @POST("auth")
     @Headers("Content-type:application/json")

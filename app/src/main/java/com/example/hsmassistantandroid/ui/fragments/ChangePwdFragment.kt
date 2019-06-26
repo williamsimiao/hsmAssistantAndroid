@@ -77,9 +77,6 @@ class ChangePwdFragment : mainFragment() {
     }
 
     fun setUpViews() {
-        val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
-        gestaousuarioList.addItemDecoration(itemDecor)
-
         alterarButton.setOnClickListener { didTapAlterar() }
     }
 
