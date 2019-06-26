@@ -19,7 +19,6 @@ import android.text.TextWatcher
 import android.view.View
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.fieldsAreValid
-import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import com.example.hsmassistantandroid.extensions.onChange
 import com.google.android.material.textfield.TextInputLayout
 

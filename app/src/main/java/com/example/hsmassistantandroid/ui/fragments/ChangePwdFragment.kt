@@ -52,7 +52,8 @@ class ChangePwdFragment : mainFragment() {
                     context!!.toast(getString(R.string.pwdAlteredWithSuccess))
                 }
                 else {
-                    handleNetworkResponse(response.code(), context!!)
+                    handleAPIError(context, response.errorBody())
+
                 }
             }
         }

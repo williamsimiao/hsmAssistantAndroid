@@ -13,7 +13,6 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
 import com.example.hsmassistantandroid.data.ResponseBody7
-import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import okhttp3.ResponseBody
 import retrofit2.Call

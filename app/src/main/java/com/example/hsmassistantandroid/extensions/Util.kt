@@ -11,52 +11,70 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import okhttp3.Response
 import okhttp3.ResponseBody
 import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
+import retrofit2.Retrofit
 import retrofit2.http.Body
 
 private val minPwdLenght = 8
 
-fun handleAPIError(mResponseBody: ResponseBody) {
-    
+fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
+    val message: String
+    if(context == null) {
+        return
+    }
+    val teste = mErrorBody?.byteStream().toString()
+    val rc = teste.substringAfter("\"rc\": ").substringBefore(",")
+    val rd = teste.substringAfter("\"rd\":  \"").substringBefore("\"")
+    val errorBody = errorBody(rc.toLong(), rd)
+
+    when(errorBody.rd) {
+        "ERR_ACCESS_DENIED" -> message = context.getString(R.string.ERR_ACCESS_DENIED_message)
+        else -> message = context.getString(R.string.ERR_DESCONHECIDO_message)
+    }
+    context.toast(message)
+
 }
 
-fun handleNetworkResponse(responseCode: Int?, context: Context): String {
-    if(responseCode == null) {
-        return "failed null"
-    }
-    when(responseCode) {
-        in 200..299 -> return "sucess"
-        in 401..499 -> {
+//fun handleNetworkResponse(responseCode: Int?, context: Context): String {
+//    if(responseCode == null) {
+//        return "failed null"
+//    }
+//    when(responseCode) {
+//        in 200..299 -> return "sucess"
+//        in 401..499 -> {
+////            context.runOnUiThread {
+////                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
+////                    .setMessage(context.getString(R.string.internal_error_dialog_message))
+////                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+////                builder.create().show()
+////            }
+//
+//
+//            return "authenticationError"
+//        }
+//        500 -> {
 //            context.runOnUiThread {
 //                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
 //                    .setMessage(context.getString(R.string.internal_error_dialog_message))
 //                    .setPositiveButton(android.R.string.ok) { _, _ -> }
 //                builder.create().show()
 //            }
-
-
-            return "authenticationError"
-        }
-        500 -> {
-            context.runOnUiThread {
-                val builder = AlertDialog.Builder(context).setTitle(context.getString(R.string.internal_error_dialog_title))
-                    .setMessage(context.getString(R.string.internal_error_dialog_message))
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-                builder.create().show()
-            }
-            return "Internal Server error"
-        }
-        in 501..599 -> return "badRequest"
-        600 -> return "outdated"
-        else -> return "failed"
-    }
-}
+//            return "Internal Server error"
+//        }
+//        in 501..599 -> return "badRequest"
+//        600 -> return "outdated"
+//        else -> return "failed"
+//    }
+//}
 
 fun EditText.onChange(cb: (String) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {

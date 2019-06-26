@@ -42,6 +42,9 @@
     <string name="nova_senha">Nova senha</string>
     <string name="alterar_senha">Alterar senha</string>
     <string name="pwdAlteredWithSuccess">Senha alterada com sucesso</string>
+    <string name="ERR_ACCESS_DENIED_message">Acesso negado</string>
+    <string name="ERR_DESCONHECIDO_message">Erro desconhecido</string>
+    <string name="userCreated_toast">Usuário criado com sucesso</string>
 
 
 </resources>

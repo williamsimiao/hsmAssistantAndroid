@@ -15,7 +15,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct
-import com.example.hsmassistantandroid.extensions.handleNetworkResponse
+import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.ACL_KEY
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.USERNAME_KEY
 import kotlinx.android.synthetic.main.fragment_new_permission.*
@@ -166,7 +166,7 @@ class NewPermissionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleNetworkResponse(response?.code(), context!!)
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }
@@ -180,13 +180,11 @@ class NewPermissionFragment : mainFragment() {
                 Log.e(TAG, "Problem calling the API", t)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                if(response?.isSuccessful!!) {                    val codeMeaning = handleNetworkResponse(response?.code(), context!!)
-                    if(codeMeaning == "sucess") {
-                        context!!.toast(getString(R.string.permissionSavedToastText))
-                    }
+                if(response?.isSuccessful!!) {
+
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }

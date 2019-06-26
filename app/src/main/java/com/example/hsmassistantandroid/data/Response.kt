@@ -35,7 +35,7 @@ data class ResponseBody7 (
     val attr: Int)
 
 data class errorBody (
-    val rc: Int,
+    val rc: Long,
     val rd: String)
 
 data class aclStruct(val rawValue: Int) {
