@@ -17,6 +17,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
+import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -45,21 +46,15 @@ class UserOptions : mainFragment() {
                 Log.e("SecondActivity", "Problem calling the API", t)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                response?.isSuccessful.let {
-
-                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
+                if(response?.isSuccessful!!) {                    AlertDialog.Builder(activity!!.baseContext).setTitle("Sessão encerrada")
                         .setMessage("Sessão encerrada com sucesso")
                         .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
 
                         }
-                    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                    val editor = sharedPreferences.edit()
-                    editor.remove("TOKEN")
-                    editor.commit()
-
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
+                    goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }

@@ -34,6 +34,10 @@
     <string name="screenTitle_permissao">Permissão</string>
     <string name="screenTitle_novaPermissao">Nova Permissão</string>
     <string name="screenTitle_newUser">Novo usuário</string>
+    <string name="invalidTokenDialog_title">Credenciais inválidas</string>
+    <string name="invalidTokenDialog_message">Faça o login novamente</string>
+    <string name="noInternetDialog_title">Erro ao conectar-se</string>
+    <string name="noInternetDialog_message">Verifique sua coneccao com a internet e tente novamente</string>
 
 
 </resources>

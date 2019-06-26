@@ -8,11 +8,15 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.setupWithNavController
+import com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
  * An activity that inflates a layout that has a [BottomNavigationView].
  */
+
+private val TAG: String = SecondActivity::class.java.simpleName
+
 class SecondActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null

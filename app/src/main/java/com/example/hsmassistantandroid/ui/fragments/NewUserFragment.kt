@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
-import com.example.hsmassistantandroid.extensions.fieldsAreValid
-import com.example.hsmassistantandroid.extensions.onChange
-import com.example.hsmassistantandroid.extensions.validPwd
-import com.example.hsmassistantandroid.extensions.validPwdConfirmation
+import com.example.hsmassistantandroid.extensions.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_new_user.*
@@ -51,6 +48,7 @@ class NewUserFragment : mainFragment() {
                 }
                 else {
                     Log.d(TAG, response?.errorBody().toString())
+                    goToLoginScreen(this@NewUserFragment, shouldShowInvalidTokenDialog = true)
                 }
             }
         }

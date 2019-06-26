@@ -54,9 +54,7 @@ class ObjetosListFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                val codeMeaning = handleNetworkResponse(response?.code(), context!!)
-                Log.e("CODIGO", codeMeaning)
-                response?.isSuccessful.let {
+                if(response?.isSuccessful!!) {
                     val certificateData =
                         response?.body()?.bytes()
                     val cert = X509Certificate.getInstance(certificateData)
@@ -66,6 +64,10 @@ class ObjetosListFragment : mainFragment() {
                     certificateNameArray.add(result)
                     exportedCertificateCounter += 1
                 }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
+                }
+
                 if(certificateCounter == exportedCertificateCounter) {
                     objetosList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = ObjetosListAdapter(certificateNameArray)
@@ -85,11 +87,14 @@ class ObjetosListFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody7>?, response: Response<ResponseBody7>?) {
-                response?.isSuccessful.let {
+                if(response?.isSuccessful!!) {
                     if(response?.body()?.type == certificateTypeInteger) {
                         certificateCounter += 1
                         expoRequest(objId)
                     }
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }
@@ -107,11 +112,13 @@ class ObjetosListFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-                response?.isSuccessful.let {
-                    objetosStrings = response?.body()?.obj!!.toTypedArray()
+                if(response?.isSuccessful!!) {                    objetosStrings = response?.body()?.obj!!.toTypedArray()
                     for(objId: String in objetosStrings) {
                         detailsRequest(objId)
                     }
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }

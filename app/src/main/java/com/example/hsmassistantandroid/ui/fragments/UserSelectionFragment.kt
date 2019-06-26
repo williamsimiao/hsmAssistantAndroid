@@ -47,13 +47,15 @@ class UserSelectionFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
-                response?.isSuccessful.let {
-                    usrNamesStrings = response?.body()?.usr!!.toTypedArray()
+                if(response?.isSuccessful!!) {                    usrNamesStrings = response?.body()?.usr!!.toTypedArray()
                     userSelectionList.layoutManager = LinearLayoutManager(context)
                     getActivity()?.runOnUiThread {
                         userSelectionList.adapter =
                             SelectionListAdapter(usrNamesStrings)
                     }
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }

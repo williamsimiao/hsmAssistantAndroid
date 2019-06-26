@@ -180,11 +180,13 @@ class NewPermissionFragment : mainFragment() {
                 Log.e(TAG, "Problem calling the API", t)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                response?.isSuccessful.let {
-                    val codeMeaning = handleNetworkResponse(response?.code(), context!!)
+                if(response?.isSuccessful!!) {                    val codeMeaning = handleNetworkResponse(response?.code(), context!!)
                     if(codeMeaning == "sucess") {
                         context!!.toast(getString(R.string.permissionSavedToastText))
                     }
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }

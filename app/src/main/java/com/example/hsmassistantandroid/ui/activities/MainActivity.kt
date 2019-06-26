@@ -23,30 +23,48 @@ import com.example.hsmassistantandroid.extensions.handleNetworkResponse
 import com.example.hsmassistantandroid.extensions.onChange
 import com.google.android.material.textfield.TextInputLayout
 
+private val TAG: String = MainActivity::class.java.simpleName
+
 class MainActivity : AppCompatActivity() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
-
     private var submitedUser: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        loadingProgressBar.hide()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
         tokenString = sharedPreferences.getString("TOKEN", null)
         autenticarButton.setOnClickListener { didTapAutenticar() }
 
+        usrEditText.editText!!.onChange { usrEditText.error = null }
+        pwdEditText.editText!!.onChange { pwdEditText.error = null }
+
+        val shouldShowDialog = intent.getBooleanExtra("shouldShowInvalidTokenDialog", false)
+        if(shouldShowDialog) {
+            showInvalidTokenDialog()
+        }
+        else {
+            showLoading()
+            probeRequest()
+        }
+    }
+
+    fun showLoading() {
         loadingProgressBar.show()
         usrEditText.visibility = View.INVISIBLE
         pwdEditText.visibility = View.INVISIBLE
         otpEditText.visibility = View.INVISIBLE
         autenticarButton.visibility = View.INVISIBLE
+    }
 
-        usrEditText.editText!!.onChange { usrEditText.error = null }
-        pwdEditText.editText!!.onChange { pwdEditText.error = null }
-
-        probeRequest()
+    fun showInvalidTokenDialog() {
+        AlertDialog.Builder(this).setTitle(getString(R.string.invalidTokenDialog_title))
+            .setMessage(getString(R.string.invalidTokenDialog_message))
+            .setPositiveButton(android.R.string.ok) { _, _ -> }
+            .show()
     }
 
     fun didTapAutenticar() {
@@ -60,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                response?.isSuccessful.let {
+                if(response?.isSuccessful!!) {
                     tokenString = "HSM " + response?.body()?.token
                     Log.e("MainActivity", "Autenticado "+tokenString)
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -73,6 +91,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
+                else {
+                    showInvalidTokenDialog()
+                    Log.d(TAG, response.errorBody().toString())
+                }
             }
         }
 
@@ -80,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }
 
-    fun showLoginFields() {
+    fun hideLoading() {
         loadingProgressBar.hide()
 
         usrEditText.visibility = View.VISIBLE
@@ -91,34 +113,36 @@ class MainActivity : AppCompatActivity() {
 
     fun probeRequest() {
         if (isNetworkConnected() == false ) {
-            Log.d("MainActivity", "Sem NET nao da neh")
-            AlertDialog.Builder(this).setTitle("No Internet Connection")
-                .setMessage("Please check your internet connection and try again")
+            AlertDialog.Builder(this).setTitle(getString(R.string.noInternetDialog_title))
+                .setMessage(getString(R.string.noInternetDialog_message))
                 .setPositiveButton(android.R.string.ok) { _, _ -> }
-                .setIcon(android.R.drawable.ic_dialog_alert).show()
+                .show()
             return
         }
 
         val callback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 Log.e("Probe", "Problem calling the API", t)
-                showLoginFields()
+                hideLoading()
             }
 
             override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
-                val codeMeaning = handleNetworkResponse(response?.code(), baseContext)
-                if(codeMeaning == "sucess") {
+                if(response?.isSuccessful!!) {
                     val intent = Intent(baseContext, SecondActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
-                showLoginFields()
-                Log.d("probe", codeMeaning)
+                else {
+                    showInvalidTokenDialog()
+                    Log.d(TAG, response.errorBody().toString())
+                }
+                hideLoading()
             }
+
         }
 
         if(tokenString == null) {
-            showLoginFields()
+            hideLoading()
             return
         }
         networkManager.runProbe(tokenString!!, callback)

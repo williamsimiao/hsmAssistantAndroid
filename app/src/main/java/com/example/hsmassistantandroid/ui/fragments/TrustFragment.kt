@@ -49,7 +49,7 @@ class TrustFragment: mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody5>?, response: Response<ResponseBody5>?) {
-                response?.isSuccessful.let {
+                if(response?.isSuccessful!!) {
                     val result = response?.body()?.trust!!
                     usrNameAndAclArray.clear()
                     for(item in result) {
@@ -60,6 +60,9 @@ class TrustFragment: mainFragment() {
                     viewAdapter = TrustListAdapter(usrNameAndAclArray)
                     trustList.adapter = viewAdapter
                     alreadyLoaded = true
+                }
+                else {
+                    Log.d(TAG, response.errorBody().toString())
                 }
             }
         }

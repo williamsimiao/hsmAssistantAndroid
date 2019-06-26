@@ -2,11 +2,16 @@ package com.example.hsmassistantandroid.extensions
 
 import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Intent
+import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -87,4 +92,16 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
         }
     }
     return isValid
+}
+
+fun goToLoginScreen(fragment: Fragment, shouldShowInvalidTokenDialog: Boolean) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+    val editor = sharedPreferences.edit()
+    editor.remove("TOKEN")
+    editor.commit()
+
+    val intent = Intent(fragment.context, MainActivity::class.java)
+    intent.putExtra("shouldShowInvalidTokenDialog", shouldShowInvalidTokenDialog)
+    fragment.startActivity(intent)
+    fragment.requireActivity().finish()
 }
