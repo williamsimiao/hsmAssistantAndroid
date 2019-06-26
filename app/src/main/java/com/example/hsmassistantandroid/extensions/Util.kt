@@ -41,6 +41,7 @@ fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
 
     when(errorBody.rd) {
         "ERR_ACCESS_DENIED" -> message = context.getString(R.string.ERR_ACCESS_DENIED_message)
+        "ERR_USR_NOT_FOUND" -> message = context.getString(R.string.ERR_USR_NOT_FOUND_message)
         else -> {
             message = context.getString(R.string.ERR_DESCONHECIDO_message)
             Log.d(TAG, errorBody.rd)

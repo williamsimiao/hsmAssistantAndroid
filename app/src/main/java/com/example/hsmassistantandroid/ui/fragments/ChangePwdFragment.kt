@@ -18,6 +18,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_change_pwd.newPwdEditText
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -53,7 +54,6 @@ class ChangePwdFragment : mainFragment() {
                 }
                 else {
                     handleAPIError(context, response.errorBody())
-
                 }
             }
         }
@@ -78,12 +78,14 @@ class ChangePwdFragment : mainFragment() {
     }
 
     fun setUpViews() {
+        newPwdEditText.editText!!.onChange { newPwdEditText.error = null }
+        newPwdConfirmationEditText.editText!!.onChange { newPwdConfirmationEditText.error = null }
         alterarButton.setOnClickListener { didTapAlterar() }
     }
 
     fun didTapAlterar() {
-        if(fieldsAreValid(context, arrayOf(newUsrEditText, newPwdEditText,
-                newPwdEditText)) == false) {
+        if(fieldsAreValid(context, arrayOf(newPwdEditText,
+                newPwdConfirmationEditText)) == false) {
             return
         }
 

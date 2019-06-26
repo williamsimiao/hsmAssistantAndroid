@@ -46,6 +46,7 @@
     <string name="ERR_DESCONHECIDO_message">Erro desconhecido</string>
     <string name="userCreated_toast">Usuário criado com sucesso</string>
     <string name="permissionSaved_toast">Permissao salva com sucesso</string>
+    <string name="ERR_USR_NOT_FOUND_message">Usuário não encontrado</string>
 
 
 </resources>

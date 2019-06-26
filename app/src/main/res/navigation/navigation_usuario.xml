@@ -11,5 +11,8 @@
     </fragment>
     <fragment android:id="@+id/changePwdFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.ChangePwdFragment"
-              android:label="ChangePwdFragment"/>
+              android:label="ChangePwdFragment">
+        <action android:id="@+id/action_changePwdFragment_to_userOptions" app:destination="@id/userOptions"
+                app:popUpTo="@+id/changePwdFragment" app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
