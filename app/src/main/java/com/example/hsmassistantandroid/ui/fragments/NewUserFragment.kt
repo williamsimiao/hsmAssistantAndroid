@@ -47,8 +47,7 @@ class NewUserFragment : mainFragment() {
                     context!!.toast(getString(R.string.userCreated_toast))
                 }
                 else {
-                    Log.d(TAG, response?.errorBody().toString())
-                    goToLoginScreen(this@NewUserFragment, shouldShowInvalidTokenDialog = true)
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }

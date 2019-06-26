@@ -17,6 +17,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody5
 import com.example.hsmassistantandroid.extensions.ctx
+import com.example.hsmassistantandroid.extensions.handleAPIError
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import kotlinx.android.synthetic.main.trust_fragment.*
@@ -62,7 +63,7 @@ class TrustFragment: mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }

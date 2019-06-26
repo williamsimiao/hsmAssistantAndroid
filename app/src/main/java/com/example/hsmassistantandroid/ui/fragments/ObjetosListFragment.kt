@@ -25,6 +25,7 @@ import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hsmassistantandroid.extensions.ctx
+import com.example.hsmassistantandroid.extensions.handleAPIError
 import kotlinx.android.synthetic.main.item_objetos.view.*
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
@@ -64,7 +65,7 @@ class ObjetosListFragment : mainFragment() {
                     exportedCertificateCounter += 1
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
 
                 if(certificateCounter == exportedCertificateCounter) {
@@ -93,7 +94,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }
@@ -117,7 +118,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }

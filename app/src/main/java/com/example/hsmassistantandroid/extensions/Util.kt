@@ -6,6 +6,7 @@ import android.content.Intent
 import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
@@ -14,6 +15,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.ui.activities.MainActivity
+import com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -25,6 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 
 private val minPwdLenght = 8
+private val TAG: String = "Util"
 
 fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
     val message: String
@@ -38,7 +41,10 @@ fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
 
     when(errorBody.rd) {
         "ERR_ACCESS_DENIED" -> message = context.getString(R.string.ERR_ACCESS_DENIED_message)
-        else -> message = context.getString(R.string.ERR_DESCONHECIDO_message)
+        else -> {
+            message = context.getString(R.string.ERR_DESCONHECIDO_message)
+            Log.d(TAG, errorBody.rd)
+        }
     }
     context.toast(message)
 

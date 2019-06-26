@@ -19,6 +19,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.ctx
+import com.example.hsmassistantandroid.extensions.handleAPIError
 import kotlinx.android.synthetic.main.fragment_user_selection.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import retrofit2.Call
@@ -55,7 +56,7 @@ class UserSelectionFragment : mainFragment() {
                     }
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(context, response.errorBody())
                 }
             }
         }

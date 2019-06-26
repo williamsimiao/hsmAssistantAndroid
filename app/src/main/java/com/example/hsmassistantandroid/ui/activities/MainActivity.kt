@@ -19,6 +19,7 @@ import android.text.TextWatcher
 import android.view.View
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.fieldsAreValid
+import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.onChange
 import com.google.android.material.textfield.TextInputLayout
 
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(baseContext, response.errorBody())
                 }
             }
         }
@@ -132,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     showInvalidTokenDialog()
-                    Log.d(TAG, response.errorBody().toString())
+                    handleAPIError(baseContext, response.errorBody())
                 }
                 hideLoading()
             }
