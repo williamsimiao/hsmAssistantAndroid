@@ -51,6 +51,7 @@ class ChangePwdFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response!!.isSuccessful) {
                     context!!.toast(getString(R.string.pwdAlteredWithSuccess))
+                    findNavController().navigate(R.id.action_changePwdFragment_to_userOptions)
                 }
                 else {
                     handleAPIError(context, response.errorBody())
