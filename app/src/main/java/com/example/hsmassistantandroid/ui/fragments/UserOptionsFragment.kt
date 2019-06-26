@@ -42,26 +42,28 @@ class UserOptions : mainFragment() {
     }
 
     fun didTapcloseButton() {
+
         val callbackClose = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
                 Log.e("SecondActivity", "Problem calling the API", t)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
-                    AlertDialog.Builder(activity!!.baseContext).setTitle("Encerrar sessão")
-                        .setMessage("Deseja mesmo encerrar a sessão ?")
-                        .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
-                        .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-                            goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
-                        }
-                    Log.d(TAG, "Passou aqui")
+                    goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
                 }
                 else {
                     Log.d(TAG, response.errorBody().toString())
                 }
             }
         }
-        networkManager.runClose(tokenString!!, callbackClose)
+
+        AlertDialog.Builder(requireContext()).setTitle("Encerrar sessão")
+            .setMessage("Deseja mesmo encerrar a sessão ?")
+            .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
+            .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+                networkManager.runClose(tokenString!!, callbackClose)
+            }
+            .show()
     }
 
     fun didTapChangePwd() {
