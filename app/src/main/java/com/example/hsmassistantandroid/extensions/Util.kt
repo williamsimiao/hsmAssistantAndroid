@@ -31,15 +31,15 @@ import retrofit2.http.Body
 private val minPwdLenght = 8
 private val TAG: String = "Util"
 
-fun handleAPIError(activity: Activity, mErrorBody: ResponseBody?): String? {
+fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     val message: String
 
-    val errorStream = mErrorBody?.byteStream().toString()
+    val errorStream = error?.byteStream().toString()
     val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
     val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
-    val errorBody = errorBody(rc.toLong(), rd)
+    val mErrorBody = errorBody(rc.toLong(), rd)
 
-    when(errorBody.rd) {
+    when(mErrorBody.rd) {
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
@@ -49,7 +49,7 @@ fun handleAPIError(activity: Activity, mErrorBody: ResponseBody?): String? {
         "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
         else -> {
             message = activity.getString(R.string.ERR_DESCONHECIDO_message)
-            Log.d(TAG, errorBody.rd)
+            Log.d(TAG, mErrorBody.rd)
         }
     }
     return message
@@ -61,7 +61,7 @@ fun alertAboutConnectionError(context: Context?) : Boolean {
     val title: String?
     val message: String?
     if (isConnected == false ) {
-        title = context?.getString(R.string.noInternetDialog_message)
+        title = context?.getString(R.string.noInternetDialog_title)
         message = context?.getString(R.string.noInternetDialog_message)
     }
     else {

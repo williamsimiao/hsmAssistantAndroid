@@ -125,9 +125,6 @@ class MainActivity : AppCompatActivity() {
                 else {
                     showInvalidTokenDialog()
                     val message = handleAPIError(this@MainActivity, response.errorBody())
-                    if(message == getString(R.string.ERR_ACCESS_DENIED_message)) {
-                        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                    }
                 }
                 hideLoading()
             }
