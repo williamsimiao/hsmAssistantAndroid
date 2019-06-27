@@ -43,7 +43,7 @@ fun handleAPIError(activity: Activity, mErrorBody: ResponseBody?): String? {
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
-                goToLoginScreen(activity, true)
+                goToLoginScreen(activity)
             }
         }
         "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
