@@ -17,9 +17,11 @@ import retrofit2.Response
 import android.preference.PreferenceManager
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
 import com.google.android.material.textfield.TextInputLayout
+import org.jetbrains.anko.toast
 
 private val TAG: String = MainActivity::class.java.simpleName
 
@@ -124,7 +126,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     showInvalidTokenDialog()
-                    handleAPIError(this@MainActivity, response.errorBody())
+                    val message = handleAPIError(this@MainActivity, response.errorBody())
+                    if(message == getString(R.string.ERR_ACCESS_DENIED_message)) {
+                        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+                    }
                 }
                 hideLoading()
             }
