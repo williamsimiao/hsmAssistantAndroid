@@ -171,7 +171,7 @@ class NewPermissionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }
@@ -196,7 +196,7 @@ class NewPermissionFragment : mainFragment() {
 
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }

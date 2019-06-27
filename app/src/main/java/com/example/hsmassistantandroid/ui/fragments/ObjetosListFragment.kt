@@ -66,7 +66,7 @@ class ObjetosListFragment : mainFragment() {
                     exportedCertificateCounter += 1
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
 
                 if(certificateCounter == exportedCertificateCounter) {
@@ -95,7 +95,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }
@@ -119,7 +119,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }

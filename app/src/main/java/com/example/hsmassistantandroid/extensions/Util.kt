@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.extensions
 
+import android.app.Activity
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
@@ -30,35 +31,36 @@ import retrofit2.http.Body
 private val minPwdLenght = 8
 private val TAG: String = "Util"
 
-fun handleAPIError(context: Context?, mErrorBody: ResponseBody?) {
+fun handleAPIError(activity: Activity, mErrorBody: ResponseBody?): String? {
     val message: String
-    if(context == null) {
-        return
-    }
-    val teste = mErrorBody?.byteStream().toString()
-    val rc = teste.substringAfter("\"rc\": ").substringBefore(",")
-    val rd = teste.substringAfter("\"rd\":  \"").substringBefore("\"")
+
+    val errorStream = mErrorBody?.byteStream().toString()
+    val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
+    val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
     val errorBody = errorBody(rc.toLong(), rd)
 
     when(errorBody.rd) {
-        "ERR_ACCESS_DENIED" -> message = context.getString(R.string.ERR_ACCESS_DENIED_message)
-        "ERR_USR_NOT_FOUND" -> message = context.getString(R.string.ERR_USR_NOT_FOUND_message)
+        "ERR_ACCESS_DENIED" -> {
+            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
+            goToLoginScreen(activity, true)
+        }
+        "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
         else -> {
-            message = context.getString(R.string.ERR_DESCONHECIDO_message)
+            message = activity.getString(R.string.ERR_DESCONHECIDO_message)
             Log.d(TAG, errorBody.rd)
         }
     }
-    context.toast(message)
+    return message
 }
 
 fun alertAboutConnectionError(context: Context?) : Boolean {
     val isConnected = isNetworkConnected(context)
 
-    val title: String
-    val message: String
+    val title: String?
+    val message: String?
     if (isConnected == false ) {
-        title = context!!.getString(R.string.noInternetDialog_message)
-        message = context!!.getString(R.string.noInternetDialog_message)
+        title = context?.getString(R.string.noInternetDialog_message)
+        message = context?.getString(R.string.noInternetDialog_message)
     }
     else {
         title = "Erro"
@@ -114,16 +116,16 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
     return isValid
 }
 
-fun goToLoginScreen(fragment: Fragment, shouldShowInvalidTokenDialog: Boolean) {
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+fun goToLoginScreen(activity: Activity, shouldShowInvalidTokenDialog: Boolean) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
     val editor = sharedPreferences.edit()
     editor.remove("TOKEN")
     editor.commit()
 
-    val intent = Intent(fragment.context, MainActivity::class.java)
+    val intent = Intent(activity, MainActivity::class.java)
     intent.putExtra("shouldShowInvalidTokenDialog", shouldShowInvalidTokenDialog)
-    fragment.startActivity(intent)
-    fragment.requireActivity().finish()
+    activity.startActivity(intent)
+    activity.finish()
 }
 
 fun isNetworkConnected(context: Context?): Boolean {

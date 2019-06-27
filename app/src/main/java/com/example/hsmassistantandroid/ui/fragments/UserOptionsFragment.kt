@@ -51,10 +51,10 @@ class UserOptions : mainFragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
-                    goToLoginScreen(this@UserOptions, shouldShowInvalidTokenDialog = false)
+                    goToLoginScreen(requireActivity(), shouldShowInvalidTokenDialog = false)
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }

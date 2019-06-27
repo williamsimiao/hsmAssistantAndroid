@@ -64,7 +64,7 @@ class TrustFragment: mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    handleAPIError(context, response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }

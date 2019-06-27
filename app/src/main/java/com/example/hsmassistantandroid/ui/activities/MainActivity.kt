@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    handleAPIError(baseContext, response.errorBody())
+                    handleAPIError(this@MainActivity, response.errorBody())
                 }
             }
         }
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     showInvalidTokenDialog()
-                    handleAPIError(baseContext, response.errorBody())
+                    handleAPIError(this@MainActivity, response.errorBody())
                 }
                 hideLoading()
             }
