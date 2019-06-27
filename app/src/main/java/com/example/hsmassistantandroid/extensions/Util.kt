@@ -118,14 +118,13 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
     return isValid
 }
 
-fun goToLoginScreen(activity: Activity, shouldShowInvalidTokenDialog: Boolean) {
+fun goToLoginScreen(activity: Activity) {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
     val editor = sharedPreferences.edit()
     editor.remove("TOKEN")
     editor.commit()
 
     val intent = Intent(activity, MainActivity::class.java)
-    intent.putExtra("shouldShowInvalidTokenDialog", shouldShowInvalidTokenDialog)
     activity.startActivity(intent)
     activity.finish()
 }

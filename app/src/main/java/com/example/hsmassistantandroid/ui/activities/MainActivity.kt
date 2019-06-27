@@ -42,14 +42,12 @@ class MainActivity : AppCompatActivity() {
         usrEditText.editText!!.onChange { usrEditText.error = null }
         pwdEditText.editText!!.onChange { pwdEditText.error = null }
 
-        val shouldShowDialog = intent.getBooleanExtra("shouldShowInvalidTokenDialog", false)
-        if(shouldShowDialog) {
-            showInvalidTokenDialog()
-        }
-        else {
+        if(tokenString != null) {
+            //Então fez logout logo não deve mostrar que o token expirou
             showLoading()
             probeRequest()
         }
+
     }
 
     fun showLoading() {
