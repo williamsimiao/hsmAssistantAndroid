@@ -85,7 +85,8 @@ class ChangePwdFragment : mainFragment() {
     }
 
     fun didTapAlterar() {
-        if(fieldsAreValid(context, arrayOf(newPwdEditText)) == false) {
+        if(fieldsAreValid(context, arrayOf(newPwdEditText,
+                newPwdConfirmationEditText)) == false) {
             return
         }
 
