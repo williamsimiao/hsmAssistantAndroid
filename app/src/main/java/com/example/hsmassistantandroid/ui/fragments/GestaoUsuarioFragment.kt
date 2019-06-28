@@ -45,7 +45,7 @@ class gestaoUsuarioFragment : mainFragment() {
     fun listUsrsRequest() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {

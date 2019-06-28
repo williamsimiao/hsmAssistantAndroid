@@ -51,7 +51,7 @@ class ObjetosListFragment : mainFragment() {
     fun expoRequest(objId: String) {
         val callbackList = object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
@@ -84,7 +84,7 @@ class ObjetosListFragment : mainFragment() {
     fun detailsRequest(objId: String) {
         val callbackList = object : Callback<ResponseBody7> {
             override fun onFailure(call: Call<ResponseBody7>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody7>?, response: Response<ResponseBody7>?) {
@@ -109,7 +109,7 @@ class ObjetosListFragment : mainFragment() {
         certificateNameArray = arrayListOf<String>()
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {

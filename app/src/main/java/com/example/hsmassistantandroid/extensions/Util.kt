@@ -9,6 +9,7 @@ import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
@@ -18,6 +19,7 @@ import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -55,23 +57,20 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     return message
 }
 
-fun alertAboutConnectionError(context: Context?) : Boolean {
-    val isConnected = isNetworkConnected(context)
+fun alertAboutConnectionError(view: View?) : Boolean {
+    if(view == null) {
+        return false
+    }
 
+    val isConnected = isNetworkConnected(view.context)
     val title: String?
-    val message: String?
     if (isConnected == false ) {
-        title = context?.getString(R.string.noInternetDialog_title)
-        message = context?.getString(R.string.noInternetDialog_message)
+        title = view.context?.getString(R.string.noInternetDialog_message)
     }
     else {
         title = "Erro"
-        message = context!!.getString(R.string.ERR_DESCONHECIDO_message)
     }
-    AlertDialog.Builder(context!!).setTitle(title)
-        .setMessage(message)
-        .setPositiveButton(android.R.string.ok) { _, _ -> }
-        .show()
+    Snackbar.make(view, title!!, Snackbar.LENGTH_LONG).show()
     return isConnected
 }
 

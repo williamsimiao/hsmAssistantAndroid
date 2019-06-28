@@ -47,7 +47,7 @@ class TrustFragment: mainFragment() {
     fun listTrustRequest() {
         val callbackList = object : Callback<ResponseBody5> {
             override fun onFailure(call: Call<ResponseBody5>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody5>?, response: Response<ResponseBody5>?) {

@@ -21,6 +21,7 @@ import android.widget.Toast
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
 import com.google.android.material.textfield.TextInputLayout
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.toast
 
 private val TAG: String = MainActivity::class.java.simpleName
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         val callback = object : Callback<ResponseBody1> {
             override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                alertAboutConnectionError(baseContext)
+                alertAboutConnectionError(contentView)
             }
 
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         val callback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
-                alertAboutConnectionError(baseContext)
+                alertAboutConnectionError(contentView)
                 hideLoading()
             }
 

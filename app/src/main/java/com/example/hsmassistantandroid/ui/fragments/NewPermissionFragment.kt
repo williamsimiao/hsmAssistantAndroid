@@ -162,7 +162,7 @@ class NewPermissionFragment : mainFragment() {
     fun getSystemAclRequest() {
         val callback = object : Callback<ResponseBody6> {
             override fun onFailure(call: Call<ResponseBody6>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
             override fun onResponse(call: Call<ResponseBody6>?, response: Response<ResponseBody6>?) {
                 if(response!!.isSuccessful) {
@@ -182,7 +182,7 @@ class NewPermissionFragment : mainFragment() {
     fun updateAclRequest(newAcl: Int) {
         val callbackUpdate = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                alertAboutConnectionError(context)
+                alertAboutConnectionError(view)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
