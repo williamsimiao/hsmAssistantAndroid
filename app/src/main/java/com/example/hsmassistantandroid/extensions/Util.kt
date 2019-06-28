@@ -68,7 +68,7 @@ fun alertAboutConnectionError(view: View?) : Boolean {
         title = view.context?.getString(R.string.noInternetDialog_message)
     }
     else {
-        title = "Erro"
+        title = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
     }
     Snackbar.make(view, title!!, Snackbar.LENGTH_LONG).show()
     return isConnected

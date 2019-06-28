@@ -45,18 +45,10 @@ class MainActivity : AppCompatActivity() {
 
         if(tokenString != null) {
             //Então fez logout logo não deve mostrar que o token expirou
-            showLoading()
+            hideLoginFields()
             probeRequest()
         }
 
-    }
-
-    fun showLoading() {
-        loadingProgressBar.show()
-        usrEditText.visibility = View.INVISIBLE
-        pwdEditText.visibility = View.INVISIBLE
-        otpEditText.visibility = View.INVISIBLE
-        autenticarButton.visibility = View.INVISIBLE
     }
 
     fun showInvalidTokenDialog() {
@@ -100,7 +92,15 @@ class MainActivity : AppCompatActivity() {
         networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }
 
-    fun hideLoading() {
+    fun hideLoginFields() {
+        loadingProgressBar.show()
+        usrEditText.visibility = View.INVISIBLE
+        pwdEditText.visibility = View.INVISIBLE
+        otpEditText.visibility = View.INVISIBLE
+        autenticarButton.visibility = View.INVISIBLE
+    }
+
+    fun showLoginFields() {
         loadingProgressBar.hide()
 
         usrEditText.visibility = View.VISIBLE
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         val callback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 alertAboutConnectionError(contentView)
-                hideLoading()
+                showLoginFields()
             }
 
             override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
@@ -124,17 +124,13 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    showInvalidTokenDialog()
                     val message = handleAPIError(this@MainActivity, response.errorBody())
+                    if(message == "ERR_ACCESS_DENIED") {
+                        showInvalidTokenDialog()
+                    }
                 }
-                hideLoading()
+                showLoginFields()
             }
-
-        }
-
-        if(tokenString == null) {
-            hideLoading()
-            return
         }
         networkManager.runProbe(tokenString!!, callback)
     }
