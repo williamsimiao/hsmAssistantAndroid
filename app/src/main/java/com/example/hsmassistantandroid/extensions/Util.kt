@@ -45,13 +45,16 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     when(mErrorBody.rd) {
         "ERR_INVALID_KEY" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
-            if(activity !is MainActivity) {
-                goToLoginScreen(activity)
-            }
+            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
         }
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
-            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
+            if(activity is MainActivity) {
+                Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
+            }
+            else {
+                goToLoginScreen(activity)
+            }
         }
         "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
         "ERR_USR_ALREADY_EXISTS" -> {
@@ -63,7 +66,6 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
             Log.d(TAG, mErrorBody.rd)
         }
     }
-    Log.d(TAG, message)
     return message
 }
 

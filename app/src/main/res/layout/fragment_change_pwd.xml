@@ -7,8 +7,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        tools:context=".ui.activities.MainActivity">
+        android:focusableInTouchMode="true">
 
     <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
