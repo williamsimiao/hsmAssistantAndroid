@@ -77,7 +77,7 @@ fun alertAboutConnectionError(view: View?) : Boolean {
     val isConnected = isNetworkConnected(view.context)
     val title: String?
     if (isConnected == false ) {
-        title = view.context?.getString(R.string.noInternetDialog_message)
+        title = view.context?.getString(R.string.noInternet_message)
     }
     else {
         title = view.context?.getString(R.string.ERR_DESCONHECIDO_message)

@@ -17,13 +17,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activities.SecondActivity">
+        <activity android:name=".ui.activities.SecondActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.activities.MainActivity" />
         </activity>
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".ui.activities.MainActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
