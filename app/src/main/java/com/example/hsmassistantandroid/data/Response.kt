@@ -1,5 +1,7 @@
 package com.example.hsmassistantandroid.data
 
+import java.util.*
+
 //Usado quando a resposta é vazia
 data class ResponseBody0 (
     val nothing: String
@@ -37,6 +39,13 @@ data class ResponseBody7 (
 data class errorBody (
     val rc: Long,
     val rd: String)
+
+data class certificate (
+    val name: String,
+    val issuer: String,
+    val notBefore: Date,
+    val notAfter: Date
+)
 
 data class aclStruct(val rawValue: Int) {
     val obj_del: Int

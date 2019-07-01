@@ -24,10 +24,12 @@ import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
-import kotlinx.android.synthetic.main.item_objetos.view.*
+import kotlinx.android.synthetic.main.item_certificado.view.*
+import java.text.SimpleDateFormat
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
@@ -38,7 +40,7 @@ class ObjetosListFragment : mainFragment() {
     private var certificateCounter: Int = 0
     private var exportedCertificateCounter: Int = 0
     private val certificateTypeInteger = 13
-    private var certificateNameArray = ArrayList<String>()
+    private var certificateNameArray = ArrayList<certificate>()
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +63,16 @@ class ObjetosListFragment : mainFragment() {
                     val cert = X509Certificate.getInstance(certificateData)
 
                     val certificateName = cert.subjectDN.name
-                    val result = certificateName.substringAfter("CN=").substringBefore(',')
-                    certificateNameArray.add(result)
+                    val subjectName = certificateName.substringAfter("CN=").substringBefore(',')
+
+                    val issuer = cert.issuerDN.name
+                    val issuerName = issuer.substringAfter("CN=").substringBefore(',')
+
+                    val beginDate = cert.notBefore
+                    val finalDate = cert.notAfter
+
+                    val myCert = certificate(subjectName, issuerName, beginDate, finalDate)
+                    certificateNameArray.add(myCert)
                     exportedCertificateCounter += 1
                 }
                 else {
@@ -106,14 +116,15 @@ class ObjetosListFragment : mainFragment() {
     fun objetosRequest() {
         certificateCounter = 0
         exportedCertificateCounter = 0
-        certificateNameArray = arrayListOf<String>()
+        certificateNameArray = arrayListOf<certificate>()
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
                 alertAboutConnectionError(view)
             }
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
-                if(response?.isSuccessful!!) {                    objetosStrings = response?.body()?.obj!!.toTypedArray()
+                if(response?.isSuccessful!!) {
+                    objetosStrings = response?.body()?.obj!!.toTypedArray()
                     for(objId: String in objetosStrings) {
                         detailsRequest(objId)
                     }
@@ -173,29 +184,34 @@ class ObjetosListFragment : mainFragment() {
     }
 }
 
-class ObjetosListAdapter(private val itensStringList: ArrayList<String>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
+class ObjetosListAdapter(private val certArrayList: ArrayList<certificate>) : RecyclerView.Adapter<ObjetosListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_certificado, parent, false) //2
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d(TAG, "name:" + itensStringList[position])
+                Log.d(TAG, "name:" + certArrayList[position].name)
             }
         })
 
-        holder.bindObjetos(itensStringList[position])
+        holder.bindObjetos(certArrayList[position])
     }
 
-    override fun getItemCount(): Int = itensStringList.size
+    override fun getItemCount(): Int = certArrayList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindObjetos(objeto: String) {
-            with(objeto) {
-                itemView.title_label.text = objeto
+        fun bindObjetos(myCert: certificate) {
+            with(myCert) {
+                itemView.certificateName.text = myCert.name
+                itemView.emissor.text =  myCert.issuer
+
+                val format = SimpleDateFormat("dd/MM/yyyy")
+                itemView.fromDate.text = format.format(myCert.notBefore)
+                itemView.toDate.text = format.format(myCert.notAfter)
             }
         }
     }
