@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import okhttp3.Response
 import okhttp3.ResponseBody
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import retrofit2.Retrofit
@@ -42,18 +43,27 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     val mErrorBody = errorBody(rc.toLong(), rd)
 
     when(mErrorBody.rd) {
-        "ERR_ACCESS_DENIED" -> {
+        "ERR_INVALID_KEY" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
                 goToLoginScreen(activity)
             }
         }
+        "ERR_ACCESS_DENIED" -> {
+            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
+            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
+        }
         "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
+        "ERR_USR_ALREADY_EXISTS" -> {
+            message = activity.getString(R.string.ERR_USR_ALREADY_EXISTS_message)
+            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
+        }
         else -> {
             message = activity.getString(R.string.ERR_DESCONHECIDO_message)
             Log.d(TAG, mErrorBody.rd)
         }
     }
+    Log.d(TAG, message)
     return message
 }
 

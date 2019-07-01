@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.toast
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    handleAPIError(this@MainActivity, response.errorBody())
+                    val message = handleAPIError(this@MainActivity, response.errorBody())
                 }
             }
         }

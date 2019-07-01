@@ -47,6 +47,7 @@
     <string name="userCreated_toast">Usuário criado com sucesso</string>
     <string name="permissionSaved_toast">Permissão salva com sucesso</string>
     <string name="ERR_USR_NOT_FOUND_message">Usuário não encontrado</string>
+    <string name="ERR_USR_ALREADY_EXISTS_message">Usuário já existe</string>
 
 
 </resources>

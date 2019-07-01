@@ -47,7 +47,7 @@ class NewUserFragment : mainFragment() {
                     context!!.toast(getString(R.string.userCreated_toast))
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    val message = handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }
