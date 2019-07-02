@@ -212,6 +212,8 @@ class ObjetosListAdapter(private val certArrayList: ArrayList<certificate>) : Re
                 val format = SimpleDateFormat("dd/MM/yyyy")
                 itemView.fromDate.text = format.format(myCert.notBefore)
                 itemView.toDate.text = format.format(myCert.notAfter)
+                itemView.toLabel.text = "To:"
+                itemView.fromLabel.text = "From:"
             }
         }
     }
