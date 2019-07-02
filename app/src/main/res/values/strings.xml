@@ -50,6 +50,7 @@
     <string name="ERR_USR_ALREADY_EXISTS_message">Usuário já existe</string>
     <string name="screenTitle_userSelection">Seleção de usuário</string>
     <string name="screenTitle_changePwd">Trocar senha</string>
+    <string name="leituraPermissionDescription">Habilitar visualização e uso dos certificados na partição</string>
 
 
 </resources>
