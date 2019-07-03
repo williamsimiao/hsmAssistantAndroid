@@ -21,6 +21,7 @@ import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.extensions.removeTokenFromKeyChain
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
@@ -44,13 +45,13 @@ class UserOptions : mainFragment() {
     }
 
     fun didTapcloseButton() {
-
         val callbackClose = object : Callback<ResponseBody0> {
             override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
                 alertAboutConnectionError(view)
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
+                    removeTokenFromKeyChain(requireActivity())
                     goToLoginScreen(requireActivity())
                 }
                 else {

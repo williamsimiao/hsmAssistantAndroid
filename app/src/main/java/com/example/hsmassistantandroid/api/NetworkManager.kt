@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 
+private val TAG: String = NetworkManager::class.java.simpleName
 
 class UnsafeOkHttpClient {
     companion object {
