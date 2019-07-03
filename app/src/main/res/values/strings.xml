@@ -21,9 +21,9 @@
     <string name="pwd_too_short">Senha deve conter pelo menos 8 caracteres</string>
     <string name="savePermissionButtonLabel">salvar</string>
     <string name="leituraPermissionText">Leitura</string>
-    <string name="criarPermissionText">Criar</string>
-    <string name="deletePermissionText">Remover</string>
-    <string name="atualizarPermissionText">Atualizar</string>
+    <string name="criarPermissionText">Criação</string>
+    <string name="deletePermissionText">Remoção</string>
+    <string name="atualizarPermissionText">Atualização</string>
     <string name="permissionSavedToastText">Permissão salva com sucesso</string>
     <string name="internal_error_dialog_title">Erro Interno</string>
     <string name="internal_error_dialog_message">Verifique se seu usuário posusi permissão para realizar esta operação</string>
@@ -51,6 +51,9 @@
     <string name="screenTitle_userSelection">Seleção de usuário</string>
     <string name="screenTitle_changePwd">Trocar senha</string>
     <string name="leituraPermissionDescription">Habilitar visualização e uso dos certificados na partição</string>
+    <string name="criacaoPermisssionDescription">Habilita criação de novos certificados.</string>
+    <string name="deletePermissionDescription">Habilita a remoção de certificados na partição</string>
+    <string name="atualizarPermissionDescription">Habilita a atualização de certificados na partição</string>
 
 
 </resources>
