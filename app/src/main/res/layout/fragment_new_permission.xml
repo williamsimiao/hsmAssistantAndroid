@@ -17,7 +17,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="start"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+    />
 
     <TextView
             android:text="@string/leituraPermissionDescription"
@@ -67,7 +69,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="start"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+    />
 
     <TextView
             android:text="@string/criacaoPermisssionDescription"
@@ -117,7 +121,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="start"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+    />
 
     <TextView
             android:text="@string/deletePermissionDescription"
@@ -167,7 +173,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="start"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+    />
 
     <TextView
             android:text="@string/atualizarPermissionDescription"

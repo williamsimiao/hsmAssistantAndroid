@@ -3,6 +3,8 @@
     <color name="dinamoLightGray">#AAAAAA</color>
     <color name="dinamoDarkGray">#38454C</color>
     <color name="dinamoMostard">#BFAA49</color>
+    <color name="black">#000</color>
+
     <!--<color name="colorPrimaryDark">#00574B</color>-->
     <!--<color name="colorAccent">#D81B60</color>-->
 </resources>
