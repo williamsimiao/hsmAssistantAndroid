@@ -43,20 +43,22 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     val mErrorBody = errorBody(rc.toLong(), rd)
 
     when(mErrorBody.rd) {
-        "ERR_INVALID_KEY" -> {
-            message = activity.getString(R.string.ERR_INVALID_KEY_message)
-            Log.d(TAG, "ERR_INVALID_KEY")
-            if(activity is MainActivity) {
-                Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
-            }
-            else {
+        "ERR_ACCESS_DENIED" -> {
+            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
+            if(activity !is MainActivity) {
                 goToLoginScreen(activity)
             }
         }
+        "ERR_INVALID_KEY" -> {
+            message = activity.getString(R.string.ERR_INVALID_KEY_message)
+            if(activity !is MainActivity) {
+                goToLoginScreen(activity)
+            }
+        }
+        "ERR_INVALID_PAYLOAD" -> message = activity.getString(R.string.ERR_INVALID_PAYLOAD_message)
         "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
         "ERR_USR_ALREADY_EXISTS" -> {
             message = activity.getString(R.string.ERR_USR_ALREADY_EXISTS_message)
-            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
         }
         else -> {
             message = activity.getString(R.string.ERR_DESCONHECIDO_message)
@@ -126,7 +128,7 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
     return isValid
 }
 
-fun removeTokenFromKeyChain(activity: Activity) {
+fun removeTokenFromSecureLocation(activity: Activity) {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
     val editor = sharedPreferences.edit()
     editor.remove("TOKEN")

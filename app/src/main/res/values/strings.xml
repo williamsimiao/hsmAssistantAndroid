@@ -58,6 +58,7 @@
     <string name="deletePermissionDescription">Habilita a remoção de certificados na partição</string>
     <string name="atualizarPermissionDescription">Habilita a atualização de certificados na partição</string>
     <string name="ERR_INVALID_KEY_message">Sessão expirou</string>
+    <string name="ERR_INVALID_PAYLOAD_message">Entrada inválida</string>
 
 
 </resources>
