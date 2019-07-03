@@ -44,11 +44,8 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
 
     when(mErrorBody.rd) {
         "ERR_INVALID_KEY" -> {
-            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
-            Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
-        }
-        "ERR_ACCESS_DENIED" -> {
-            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
+            message = activity.getString(R.string.ERR_INVALID_KEY_message)
+            Log.d(TAG, "ERR_INVALID_KEY")
             if(activity is MainActivity) {
                 Snackbar.make(activity.contentView!!, message, Snackbar.LENGTH_LONG).show()
             }
@@ -129,11 +126,14 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
     return isValid
 }
 
-fun goToLoginScreen(activity: Activity) {
+fun removeTokenFromKeyChain(activity: Activity) {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
     val editor = sharedPreferences.edit()
     editor.remove("TOKEN")
     editor.commit()
+}
+
+fun goToLoginScreen(activity: Activity) {
 
     val intent = Intent(activity, MainActivity::class.java)
     activity.startActivity(intent)

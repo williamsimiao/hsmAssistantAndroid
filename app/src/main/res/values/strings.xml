@@ -42,18 +42,22 @@
     <string name="nova_senha">Nova senha</string>
     <string name="alterar_senha">Alterar senha</string>
     <string name="pwdAlteredWithSuccess">Senha alterada com sucesso</string>
+
+    <!--ERRO-->
     <string name="ERR_ACCESS_DENIED_message">Acesso negado</string>
     <string name="ERR_DESCONHECIDO_message">Erro desconhecido</string>
-    <string name="userCreated_toast">Usuário criado com sucesso</string>
-    <string name="permissionSaved_toast">Permissão salva com sucesso</string>
     <string name="ERR_USR_NOT_FOUND_message">Usuário não encontrado</string>
     <string name="ERR_USR_ALREADY_EXISTS_message">Usuário já existe</string>
+
+    <string name="userCreated_toast">Usuário criado com sucesso</string>
+    <string name="permissionSaved_toast">Permissão salva com sucesso</string>
     <string name="screenTitle_userSelection">Seleção de usuário</string>
     <string name="screenTitle_changePwd">Trocar senha</string>
     <string name="leituraPermissionDescription">Habilitar visualização e uso dos certificados na partição</string>
     <string name="criacaoPermisssionDescription">Habilita criação de novos certificados.</string>
     <string name="deletePermissionDescription">Habilita a remoção de certificados na partição</string>
     <string name="atualizarPermissionDescription">Habilita a atualização de certificados na partição</string>
+    <string name="ERR_INVALID_KEY_message">Sessão expirou</string>
 
 
 </resources>
