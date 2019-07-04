@@ -12,5 +12,8 @@
     </fragment>
     <fragment android:id="@+id/newUserFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"
-              android:label="@string/screenTitle_newUser"/>
+              android:label="@string/screenTitle_newUser">
+        <action android:id="@+id/action_newUserFragment_to_gestaoUsuarioFragment2"
+                app:destination="@id/gestaoUsuarioFragment2" app:popUpTo="@+id/gestaoUsuarioFragment2"/>
+    </fragment>
 </navigation>

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
@@ -45,9 +46,10 @@ class NewUserFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if(response!!.isSuccessful) {
                     context!!.toast(getString(R.string.userCreated_toast))
+                    findNavController().navigate(R.id.action_newUserFragment_to_gestaoUsuarioFragment2)
                 }
                 else {
-                    val message = handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(requireActivity(), response.errorBody())
                 }
             }
         }
