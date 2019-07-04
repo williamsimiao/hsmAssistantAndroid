@@ -151,7 +151,8 @@ fun goToLoginScreen(activity: Activity) {
 
 fun hideSoftKeyboard(activity: Activity) {
     val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0)
+    val currentFocus = activity.currentFocus ?: return
+    inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
 }
 
 fun isNetworkConnected(context: Context?): Boolean {
