@@ -30,6 +30,13 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import retrofit2.Retrofit
 import retrofit2.http.Body
+import androidx.core.content.ContextCompat.getSystemService
+import android.view.inputmethod.InputMethodManager
+import android.view.ViewGroup
+import android.view.MotionEvent
+
+
+
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
@@ -121,7 +128,7 @@ fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayo
     for(mTextInputlayout: TextInputLayout in mTextInputLayoutArray) {
         val input = mTextInputlayout.editText!!.text.toString()
         if(input == "") {
-            mTextInputlayout.error = context!!.getString(R.string.required_field)
+            mTextInputlayout.error = context!!.getString(com.example.hsmassistantandroid.R.string.required_field)
             isValid = false
         }
     }
@@ -142,8 +149,13 @@ fun goToLoginScreen(activity: Activity) {
     activity.finish()
 }
 
+fun hideSoftKeyboard(activity: Activity) {
+    val inputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0)
+}
+
 fun isNetworkConnected(context: Context?): Boolean {
     val connectivityManager = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkInfo = connectivityManager.activeNetworkInfo
-    return networkInfo != null && networkInfo.isConnected //3
+    return networkInfo != null && networkInfo.isConnected
 }

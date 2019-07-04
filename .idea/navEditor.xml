@@ -237,12 +237,6 @@
                   <entry key="gestaoUsuarioFragment2">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="622" />
-                            <option name="y" value="150" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_gestaoUsuarioFragment2_to_newUserFragment">
@@ -258,12 +252,6 @@
                   <entry key="newUserFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="293" />
-                            <option name="y" value="142" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newUserFragment_to_gestaoUsuarioFragment2">

@@ -50,6 +50,7 @@ class ChangePwdFragment : mainFragment() {
 
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response!!.isSuccessful) {
+                    hideSoftKeyboard(requireActivity())
                     context!!.toast(getString(R.string.pwdAlteredWithSuccess))
                     findNavController().navigate(R.id.action_changePwdFragment_to_userOptions)
                 }
@@ -69,6 +70,9 @@ class ChangePwdFragment : mainFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val view = inflater.inflate(R.layout.fragment_change_pwd, container, false)
+        view.setOnClickListener {
+            hideSoftKeyboard(requireActivity())
+        }
 
         return view
     }

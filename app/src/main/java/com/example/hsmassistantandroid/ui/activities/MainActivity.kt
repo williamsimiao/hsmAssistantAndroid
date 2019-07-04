@@ -16,7 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.preference.PreferenceManager
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
@@ -36,7 +38,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         loadingProgressBar.hide()
-
+        contentView!!.setOnClickListener {
+            hideSoftKeyboard(this)
+        }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
         tokenString = sharedPreferences.getString("TOKEN", null)
         autenticarButton.setOnClickListener { didTapAutenticar() }
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("USER", submitedUser)
                     editor.apply()
 
+                    hideSoftKeyboard(this@MainActivity)
                     val intent = Intent(applicationContext, SecondActivity::class.java)
                     startActivity(intent)
                     finish()

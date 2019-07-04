@@ -45,6 +45,7 @@ class NewUserFragment : mainFragment() {
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if(response!!.isSuccessful) {
+                    hideSoftKeyboard(requireActivity())
                     context!!.toast(getString(R.string.userCreated_toast))
                     findNavController().navigate(R.id.action_newUserFragment_to_gestaoUsuarioFragment2)
                 }
@@ -64,8 +65,11 @@ class NewUserFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_user, container, false)
+        val view = inflater.inflate(R.layout.fragment_new_user, container, false)
+        view.setOnClickListener {
+            hideSoftKeyboard(requireActivity())
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
