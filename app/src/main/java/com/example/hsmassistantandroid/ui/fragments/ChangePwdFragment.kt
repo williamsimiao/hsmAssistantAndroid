@@ -73,7 +73,6 @@ class ChangePwdFragment : mainFragment() {
         view.setOnClickListener {
             hideSoftKeyboard(requireActivity())
         }
-
         return view
     }
 
@@ -85,6 +84,22 @@ class ChangePwdFragment : mainFragment() {
     fun setUpViews() {
         newPwdEditText.editText!!.onChange { newPwdEditText.error = null }
         newPwdConfirmationEditText.editText!!.onChange { newPwdConfirmationEditText.error = null }
+
+        val fieldNewPwd = newPwdEditText.editText
+        fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus && fieldNewPwd.text.toString().isNotEmpty()) {
+                validPwd(context, newPwdEditText)
+            }
+        }
+
+        val fieldNewPwdConfirmation =  newPwdConfirmationEditText.editText
+        fieldNewPwdConfirmation!!.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus && fieldNewPwdConfirmation.text.toString().isNotEmpty()) {
+                validPwdConfirmation(context, newPwdConfirmationEditText.editText!!.text.toString(),
+                    newPwdEditText)
+            }
+        }
+
         alterarButton.setOnClickListener { didTapAlterar() }
     }
 

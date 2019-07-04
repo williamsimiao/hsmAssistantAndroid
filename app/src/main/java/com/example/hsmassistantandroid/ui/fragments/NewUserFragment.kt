@@ -97,6 +97,7 @@ class NewUserFragment : mainFragment() {
         newUsrEditText.editText!!.onChange { newUsrEditText.error = null }
         newUsrPwdEditText.editText!!.onChange { newUsrPwdEditText.error = null }
         newUsrPwdRepeatEditText.editText!!.onChange { newUsrPwdRepeatEditText.error = null }
+        //TODO: VALIDAR USERNAME
 
         val fieldNewPwd = newUsrPwdEditText.editText
         fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->

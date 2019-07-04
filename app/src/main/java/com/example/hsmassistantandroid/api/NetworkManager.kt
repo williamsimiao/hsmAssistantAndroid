@@ -65,6 +65,7 @@ class NetworkManager {
 
 
     companion object {
+//        const val BASE_URL = "https://10.61.53.210"
         const val BASE_URL = "https://hsmlab63.dinamonetworks.com/api/"
     }
 
@@ -84,7 +85,6 @@ class NetworkManager {
         sessaoRouter = retrofit.create(sessaoEndPoint::class.java)
         objetosRouter = retrofit.create(objetosEndPoint::class.java)
         usuarioRouter = retrofit.create(usuarioEndPoint::class.java)
-
     }
     //USUARIO
 

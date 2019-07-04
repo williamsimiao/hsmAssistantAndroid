@@ -1,9 +1,7 @@
 package com.example.hsmassistantandroid.extensions
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.text.Editable
@@ -11,35 +9,15 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.ui.activities.MainActivity
-import com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
-import okhttp3.Response
 import okhttp3.ResponseBody
-import org.jetbrains.anko.contentView
-import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.toast
-import retrofit2.Retrofit
-import retrofit2.http.Body
-import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.InputMethodManager
-import android.view.ViewGroup
-import android.view.MotionEvent
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.hsmassistantandroid.ui.fragments.UserOptionsDirections
-
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
@@ -149,11 +127,7 @@ fun removeTokenFromSecureLocation(activity: Activity) {
 
 fun goToLoginScreen(fragment: Fragment) {
     fragment.findNavController().navigate(R.id.goto_Login)
-//    fragment.findNavController().navigate(R.id.goto_Login, null, NavOptions.Builder()
-//        .setPopUpTo(R.id.mainActivity4, true).build())
-//    fragment.findNavController().navigate(UserOptionsDirections.goto_Login())
     fragment.requireActivity().finish()
-
 }
 
 fun hideSoftKeyboard(activity: Activity) {
