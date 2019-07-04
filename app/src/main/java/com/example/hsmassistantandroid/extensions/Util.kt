@@ -80,43 +80,6 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
     return message
 }
 
-//
-//fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
-//    val message: String
-//
-//    val errorStream = error?.byteStream().toString()
-//    val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
-//    val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
-//    val mErrorBody = errorBody(rc.toLong(), rd)
-//
-//    when(mErrorBody.rd) {
-//        "ERR_ACCESS_DENIED" -> {
-//            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
-//            if(activity !is MainActivity) {
-//                goToLoginScreen(activity)
-//            }
-//        }
-//        "ERR_INVALID_KEY" -> {
-//            message = activity.getString(R.string.ERR_INVALID_KEY_message)
-//            if(activity !is MainActivity) {
-//                goToLoginScreen(activity)
-//            }
-//        }
-//        "ERR_INVALID_PAYLOAD" -> message = activity.getString(R.string.ERR_INVALID_PAYLOAD_message)
-//        "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
-//        "ERR_USR_ALREADY_EXISTS" -> {
-//            message = activity.getString(R.string.ERR_USR_ALREADY_EXISTS_message)
-//        }
-//        else -> {
-//            message = activity.getString(R.string.ERR_DESCONHECIDO_message)
-//            Log.d(TAG, mErrorBody.rd)
-//        }
-//    }
-//    return message
-//}
-
-
-
 fun alertAboutConnectionError(view: View?) : Boolean {
     if(view == null) {
         return false
@@ -191,12 +154,6 @@ fun goToLoginScreen(fragment: Fragment) {
 //    fragment.findNavController().navigate(UserOptionsDirections.goto_Login())
     fragment.requireActivity().finish()
 
-}
-
-fun goToLoginScreen(activity: Activity) {
-        val intent = Intent(activity, MainActivity::class.java)
-    activity.startActivity(intent)
-    activity.finish()
 }
 
 fun hideSoftKeyboard(activity: Activity) {

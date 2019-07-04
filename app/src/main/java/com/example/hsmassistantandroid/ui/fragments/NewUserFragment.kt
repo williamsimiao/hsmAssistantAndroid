@@ -96,6 +96,7 @@ class NewUserFragment : mainFragment() {
     fun setUpViews() {
         newUsrEditText.editText!!.onChange { newUsrEditText.error = null }
         newUsrPwdEditText.editText!!.onChange { newUsrPwdEditText.error = null }
+        newUsrPwdRepeatEditText.editText!!.onChange { newUsrPwdRepeatEditText.error = null }
 
         val fieldNewPwd = newUsrPwdEditText.editText
         fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
@@ -112,12 +113,7 @@ class NewUserFragment : mainFragment() {
             }
         }
 
-        newUsrPwdRepeatEditText.editText!!.onChange { newUsrPwdRepeatEditText.error = null }
 
         createUserButton.setOnClickListener { didtapCreateUser() }
-    }
-
-    companion object {
-        fun newInstance(): NewUserFragment = NewUserFragment()
     }
 }

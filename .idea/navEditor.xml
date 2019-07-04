@@ -435,6 +435,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="goto_Login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -464,6 +469,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_userOptions_to_changePwdFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="goto_Login">
                               <value>
                                 <LayoutPositions />
                               </value>
