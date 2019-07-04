@@ -51,8 +51,8 @@ class UserOptions : mainFragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
-//                    removeTokenFromSecureLocation(requireActivity())
-//                    goToLoginScreen(requireActivity())
+                    removeTokenFromSecureLocation(requireActivity())
+                    goToLoginScreen(requireActivity())
                 }
                 else {
                     handleAPIError(requireActivity(), response.errorBody())
