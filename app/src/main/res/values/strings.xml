@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HsmAssistantAndroid</string>
+    <string name="app_name">Assistente Dinamo</string>
     <string name="user_textfield_label">Usuário</string>
     <string name="password_textfield_label">Senha</string>
     <string name="otp_textfield_label">OTP</string>

@@ -89,7 +89,6 @@ class NewUserFragment : mainFragment() {
                 newUsrPwdRepeatEditText) == false) {
             return
         }
-
         createUserRequest()
     }
 
