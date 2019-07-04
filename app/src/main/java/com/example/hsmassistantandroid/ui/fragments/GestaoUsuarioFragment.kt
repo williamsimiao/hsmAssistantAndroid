@@ -58,7 +58,7 @@ class gestaoUsuarioFragment : mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
                 }
             }
         }

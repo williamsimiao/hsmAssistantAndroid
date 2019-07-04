@@ -55,7 +55,7 @@ class ChangePwdFragment : mainFragment() {
                     findNavController().navigate(R.id.action_changePwdFragment_to_userOptions)
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(this@ChangePwdFragment, response.errorBody())
                 }
             }
         }

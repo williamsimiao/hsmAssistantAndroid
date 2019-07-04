@@ -34,14 +34,17 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.view.inputmethod.InputMethodManager
 import android.view.ViewGroup
 import android.view.MotionEvent
-
-
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.hsmassistantandroid.ui.fragments.UserOptionsDirections
 
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
 
-fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
+fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
     val message: String
 
     val errorStream = error?.byteStream().toString()
@@ -49,17 +52,19 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
     val mErrorBody = errorBody(rc.toLong(), rd)
 
+    val activity = fragment.requireActivity()
+
     when(mErrorBody.rd) {
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
-                goToLoginScreen(activity)
+                goToLoginScreen(fragment)
             }
         }
         "ERR_INVALID_KEY" -> {
             message = activity.getString(R.string.ERR_INVALID_KEY_message)
             if(activity !is MainActivity) {
-                goToLoginScreen(activity)
+                goToLoginScreen(fragment)
             }
         }
         "ERR_INVALID_PAYLOAD" -> message = activity.getString(R.string.ERR_INVALID_PAYLOAD_message)
@@ -74,6 +79,43 @@ fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
     }
     return message
 }
+
+//
+//fun handleAPIError(activity: Activity, error: ResponseBody?): String? {
+//    val message: String
+//
+//    val errorStream = error?.byteStream().toString()
+//    val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
+//    val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
+//    val mErrorBody = errorBody(rc.toLong(), rd)
+//
+//    when(mErrorBody.rd) {
+//        "ERR_ACCESS_DENIED" -> {
+//            message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
+//            if(activity !is MainActivity) {
+//                goToLoginScreen(activity)
+//            }
+//        }
+//        "ERR_INVALID_KEY" -> {
+//            message = activity.getString(R.string.ERR_INVALID_KEY_message)
+//            if(activity !is MainActivity) {
+//                goToLoginScreen(activity)
+//            }
+//        }
+//        "ERR_INVALID_PAYLOAD" -> message = activity.getString(R.string.ERR_INVALID_PAYLOAD_message)
+//        "ERR_USR_NOT_FOUND" -> message = activity.getString(R.string.ERR_USR_NOT_FOUND_message)
+//        "ERR_USR_ALREADY_EXISTS" -> {
+//            message = activity.getString(R.string.ERR_USR_ALREADY_EXISTS_message)
+//        }
+//        else -> {
+//            message = activity.getString(R.string.ERR_DESCONHECIDO_message)
+//            Log.d(TAG, mErrorBody.rd)
+//        }
+//    }
+//    return message
+//}
+
+
 
 fun alertAboutConnectionError(view: View?) : Boolean {
     if(view == null) {
@@ -142,9 +184,17 @@ fun removeTokenFromSecureLocation(activity: Activity) {
     editor.commit()
 }
 
-fun goToLoginScreen(activity: Activity) {
+fun goToLoginScreen(fragment: Fragment) {
+    fragment.findNavController().navigate(R.id.goto_Login)
+//    fragment.findNavController().navigate(R.id.goto_Login, null, NavOptions.Builder()
+//        .setPopUpTo(R.id.mainActivity4, true).build())
+//    fragment.findNavController().navigate(UserOptionsDirections.goto_Login())
+    fragment.requireActivity().finish()
 
-    val intent = Intent(activity, MainActivity::class.java)
+}
+
+fun goToLoginScreen(activity: Activity) {
+        val intent = Intent(activity, MainActivity::class.java)
     activity.startActivity(intent)
     activity.finish()
 }

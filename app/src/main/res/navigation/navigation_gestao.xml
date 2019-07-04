@@ -9,11 +9,15 @@
                 app:destination="@id/newUserFragment"
                 app:exitAnim="@anim/slide_out_left" app:enterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_out_right" app:popEnterAnim="@anim/slide_in_left"/>
+        <action android:id="@+id/goto_Login" app:destination="@id/mainActivity" app:popUpTo="@+id/mainActivity"/>
     </fragment>
     <fragment android:id="@+id/newUserFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"
               android:label="@string/screenTitle_newUser">
         <action android:id="@+id/action_newUserFragment_to_gestaoUsuarioFragment2"
                 app:destination="@id/gestaoUsuarioFragment2" app:popUpTo="@+id/gestaoUsuarioFragment2"/>
+        <action android:id="@+id/goto_Login" app:destination="@id/mainActivity" app:popUpTo="@+id/mainActivity"/>
     </fragment>
+    <activity android:id="@+id/mainActivity" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
+              android:label="MainActivity"/>
 </navigation>

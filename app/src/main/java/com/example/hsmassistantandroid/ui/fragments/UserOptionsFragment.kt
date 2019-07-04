@@ -52,10 +52,10 @@ class UserOptions : mainFragment() {
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
                     removeTokenFromSecureLocation(requireActivity())
-                    goToLoginScreen(requireActivity())
+                    goToLoginScreen(this@UserOptions)
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(this@UserOptions, response.errorBody())
                 }
             }
         }

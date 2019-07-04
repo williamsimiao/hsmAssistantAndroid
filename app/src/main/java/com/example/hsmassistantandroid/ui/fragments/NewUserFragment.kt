@@ -50,7 +50,7 @@ class NewUserFragment : mainFragment() {
                     findNavController().navigate(R.id.action_newUserFragment_to_gestaoUsuarioFragment2)
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(this@NewUserFragment, response.errorBody())
                 }
             }
         }

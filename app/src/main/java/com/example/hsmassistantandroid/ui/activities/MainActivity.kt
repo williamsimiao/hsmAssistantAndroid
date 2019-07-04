@@ -89,7 +89,8 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    val message = handleAPIError(this@MainActivity, response.errorBody())
+                    //TODO: Mudar tudo isso que ta ai
+//                    val message = handleAPIError(this@MainActivity, response.errorBody())
                 }
             }
         }
@@ -130,7 +131,9 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
-                    val message = handleAPIError(this@MainActivity, response.errorBody())
+                    //TODO: Mudar tudo isso que ta ai
+//                    val message = handleAPIError(this@MainActivity, response.errorBody())
+                    val message = "Hello"
                     if(message == getString(R.string.ERR_INVALID_KEY_message) || message == getString(R.string.ERR_ACCESS_DENIED_message)) {
                         showInvalidTokenDialog()
                     }

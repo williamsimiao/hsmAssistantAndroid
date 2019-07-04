@@ -244,9 +244,19 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="goto_Login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mainActivity">
+                    <value>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="newUserFragment">
@@ -255,6 +265,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_newUserFragment_to_gestaoUsuarioFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="goto_Login">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -274,9 +289,24 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="objetosListFragment">
+                  <entry key="mainActivity2">
                     <value>
                       <LayoutPositions />
+                    </value>
+                  </entry>
+                  <entry key="objetosListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="goto_Login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                 </map>
@@ -289,18 +319,22 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="mainActivity3">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="newPermissionFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="20" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment_to_relacaoFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="goto_Login">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -313,15 +347,14 @@
                   <entry key="newPermissionFragment2">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="63" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment2_to_relacaoFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="goto_Login">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -334,12 +367,6 @@
                   <entry key="relacaoFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="500" />
-                            <option name="y" value="20" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_relacaoFragment_to_newPermissionFragment">
@@ -352,6 +379,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="goto_Login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -360,15 +392,14 @@
                   <entry key="userSelectionFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="20" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_userSelectionFragment_to_newPermissionFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="goto_Login">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -405,6 +436,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mainActivity4">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-111" />
+                            <option name="y" value="371" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

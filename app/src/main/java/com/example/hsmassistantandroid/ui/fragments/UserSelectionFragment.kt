@@ -60,7 +60,7 @@ class UserSelectionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(requireActivity(), response.errorBody())
+                    handleAPIError(this@UserSelectionFragment, response.errorBody())
                 }
             }
         }
