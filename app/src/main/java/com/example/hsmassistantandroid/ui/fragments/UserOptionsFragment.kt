@@ -51,8 +51,8 @@ class UserOptions : mainFragment() {
             }
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
-                    removeTokenFromSecureLocation(requireActivity())
-                    goToLoginScreen(requireActivity())
+//                    removeTokenFromSecureLocation(requireActivity())
+//                    goToLoginScreen(requireActivity())
                 }
                 else {
                     handleAPIError(requireActivity(), response.errorBody())
@@ -63,7 +63,7 @@ class UserOptions : mainFragment() {
         AlertDialog.Builder(requireContext()).setTitle("Encerrar sessão")
             .setMessage("Deseja mesmo encerrar a sessão ?")
             .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
-            .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+            .setPositiveButton(getString(R.string.yes)) { dialogInterface, i ->
                 networkManager.runClose(tokenString!!, callbackClose)
             }
             .show()

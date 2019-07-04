@@ -49,6 +49,7 @@ class gestaoUsuarioFragment : mainFragment() {
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
+                Log.d(TAG, response!!.headers().toString())
                 if(response!!.isSuccessful) {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
 

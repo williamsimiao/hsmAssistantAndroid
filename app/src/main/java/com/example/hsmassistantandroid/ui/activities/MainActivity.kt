@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else {
                     val message = handleAPIError(this@MainActivity, response.errorBody())
-                    if(message == getString(R.string.ERR_INVALID_KEY_message)) {
+                    if(message == getString(R.string.ERR_INVALID_KEY_message) || message == getString(R.string.ERR_ACCESS_DENIED_message)) {
                         showInvalidTokenDialog()
                     }
                 }
