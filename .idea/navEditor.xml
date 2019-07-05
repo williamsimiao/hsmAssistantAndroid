@@ -321,12 +321,25 @@
                 <map>
                   <entry key="mainActivity3">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="405" />
+                            <option name="y" value="79" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="newPermissionFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1148" />
+                            <option name="y" value="799" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment_to_relacaoFragment">
@@ -347,6 +360,12 @@
                   <entry key="newPermissionFragment2">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1211" />
+                            <option name="y" value="-565" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_newPermissionFragment2_to_relacaoFragment">
@@ -367,6 +386,12 @@
                   <entry key="relacaoFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1163" />
+                            <option name="y" value="190" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_relacaoFragment_to_newPermissionFragment">
@@ -392,6 +417,12 @@
                   <entry key="userSelectionFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-242" />
+                            <option name="y" value="813" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_userSelectionFragment_to_newPermissionFragment2">

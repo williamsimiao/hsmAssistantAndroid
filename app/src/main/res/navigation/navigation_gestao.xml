@@ -8,7 +8,7 @@
         <action android:id="@+id/action_gestaoUsuarioFragment2_to_newUserFragment"
                 app:destination="@id/newUserFragment"
                 app:exitAnim="@anim/slide_out_left" app:enterAnim="@anim/slide_in_right"
-                app:popExitAnim="@anim/slide_out_right" app:popEnterAnim="@anim/slide_in_left"/>
+        />
         <action android:id="@+id/goto_Login" app:destination="@id/mainActivity" app:popUpTo="@+id/mainActivity"/>
     </fragment>
     <fragment android:id="@+id/newUserFragment"

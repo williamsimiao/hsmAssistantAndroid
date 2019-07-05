@@ -51,28 +51,11 @@
     <fragment android:id="@+id/userSelectionFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.UserSelectionFragment"
               android:label="@string/screenTitle_userSelection">
-        <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment2"
-                app:destination="@id/newPermissionFragment2"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"/>
         <action android:id="@+id/goto_Login" app:destination="@id/mainActivity3" app:popUpTo="@+id/mainActivity3"/>
+        <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment"
+                app:destination="@id/newPermissionFragment"/>
     </fragment>
 
-    <fragment android:id="@+id/newPermissionFragment2"
-              android:name="com.example.hsmassistantandroid.ui.fragments.NewPermissionFragment"
-              android:label="@string/screenTitle_novaPermissao">
-        <action android:id="@+id/action_newPermissionFragment2_to_relacaoFragment"
-                app:destination="@id/relacaoFragment"
-                app:enterAnim="@anim/slide_in_right"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_left"
-                app:popExitAnim="@anim/slide_out_right"
-                app:popUpTo="@+id/relacaoFragment"
-                app:popUpToInclusive="true"/>
-        <action android:id="@+id/goto_Login" app:destination="@id/mainActivity3" app:popUpTo="@+id/mainActivity3"/>
-    </fragment>
     <activity android:id="@+id/mainActivity3" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
               android:label="MainActivity"/>
 </navigation>

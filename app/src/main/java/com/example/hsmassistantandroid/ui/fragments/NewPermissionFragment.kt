@@ -189,12 +189,15 @@ class NewPermissionFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
                 if(response?.isSuccessful!!) {
                     context?.toast(getString(R.string.permissionSaved_toast))
-                    if(comingFromRelacoesFragment) {
-                        findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
-                    }
-                    else {
-                        findNavController().navigate(R.id.action_newPermissionFragment2_to_relacaoFragment)
-                    }
+                    findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
+
+//                    if(comingFromRelacoesFragment) {
+//                        findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
+//                    }
+//                    else {
+//                        findNavController().navigate(R.id.action_newPermissionFragment2_to_relacaoFragment)
+//                    }
+
 
                 }
                 else {

@@ -109,7 +109,7 @@ class SelectionListAdapter(private val itensStringList: ArrayList<String>) : Rec
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val bundle = bundleOf(TrustListAdapter.USERNAME_KEY to itensStringList[position])
-                holder.itemView.findNavController().navigate(R.id.action_userSelectionFragment_to_newPermissionFragment2, bundle)
+                holder.itemView.findNavController().navigate(R.id.action_userSelectionFragment_to_newPermissionFragment, bundle)
             }
         })
 
