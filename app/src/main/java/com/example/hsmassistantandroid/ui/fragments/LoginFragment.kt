@@ -14,6 +14,7 @@ import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
+import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.contentView
 import retrofit2.Call
@@ -83,9 +84,9 @@ class LoginFragment : mainFragment() {
     }
 
     fun didTapAutenticar() {
-        if(fieldsAreValid(context, arrayOf(usrEditText, pwdEditText)) == false) {
-            return
-        }
+        if(fieldsAreValid(context, arrayOf(usrEditText, pwdEditText)) == false) return
+
+        if(validPwd(context, pwdEditText) ==  false) return
 
         val callback = object : Callback<ResponseBody1> {
             override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {

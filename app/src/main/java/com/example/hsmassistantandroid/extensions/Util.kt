@@ -83,19 +83,26 @@ fun EditText.onChange(cb: (String) -> Unit) {
     })
 }
 
-fun validPwdConfirmation(context: Context?, pwd: String, pwdConfirmationField: TextInputLayout): Boolean {
-    val input = pwdConfirmationField.editText!!.text.toString()
-    if(input == pwd) {
-        return true
-    }
-    else {
-        pwdConfirmationField.error = context!!.getString(R.string.wrong_confirmation)
+// MARK: - INPUT ERROR HANDLING
+
+fun validUsr(context: Context?, usrField: TextInputLayout): Boolean {
+    val input = usrField.editText!!.text.toString()
+    if(input.isEmpty()) {
         return false
     }
+    val isAlplhanumeric = input.matches("[A-Za-z0-9]*".toRegex())
+    if(isAlplhanumeric == false) {
+        usrField.error = context!!.getString(R.string.ERR_INPUT_notAlphanumeric)
+    }
+    return isAlplhanumeric
 }
 
 fun validPwd(context: Context?, pwdField: TextInputLayout): Boolean {
     val input = pwdField.editText!!.text.toString()
+    if(input.isEmpty()) {
+        return false
+    }
+
     if(input.length >= minPwdLenght) {
         return true
     }
@@ -105,12 +112,26 @@ fun validPwd(context: Context?, pwdField: TextInputLayout): Boolean {
     }
 }
 
+fun validPwdConfirmation(context: Context?, pwd: String, pwdConfirmationField: TextInputLayout): Boolean {
+    val input = pwdConfirmationField.editText!!.text.toString()
+    if(input.isEmpty()) {
+        return false
+    }
+    if(input == pwd) {
+        return true
+    }
+    else {
+        pwdConfirmationField.error = context!!.getString(R.string.wrong_confirmation)
+        return false
+    }
+}
+
 fun fieldsAreValid(context: Context?, mTextInputLayoutArray: Array<TextInputLayout>): Boolean {
     var isValid = true
 
     for(mTextInputlayout: TextInputLayout in mTextInputLayoutArray) {
         val input = mTextInputlayout.editText!!.text.toString()
-        if(input == "") {
+        if(input.isEmpty()) {
             mTextInputlayout.error = context!!.getString(com.example.hsmassistantandroid.R.string.required_field)
             isValid = false
         }

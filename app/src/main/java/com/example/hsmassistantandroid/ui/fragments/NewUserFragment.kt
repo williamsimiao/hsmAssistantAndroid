@@ -83,6 +83,8 @@ class NewUserFragment : mainFragment() {
             return
         }
 
+        if(validUsr(context, newUsrEditText))
+
         if(validPwd(context, newUsrPwdEditText) ==  false) return
 
         if(validPwdConfirmation(context, newUsrPwdEditText.editText!!.text.toString(),
@@ -96,18 +98,24 @@ class NewUserFragment : mainFragment() {
         newUsrEditText.editText!!.onChange { newUsrEditText.error = null }
         newUsrPwdEditText.editText!!.onChange { newUsrPwdEditText.error = null }
         newUsrPwdRepeatEditText.editText!!.onChange { newUsrPwdRepeatEditText.error = null }
-        //TODO: VALIDAR USERNAME
+
+        val fieldUsr = newUsrEditText.editText
+        fieldUsr!!.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus) {
+                validUsr(context, newUsrEditText)
+            }
+        }
 
         val fieldNewPwd = newUsrPwdEditText.editText
         fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus && fieldNewPwd.text.toString().isNotEmpty()) {
+            if(!hasFocus) {
                 validPwd(context, newUsrPwdEditText)
             }
         }
 
         val fieldNewPwdConfirmation =  newUsrPwdRepeatEditText.editText
         fieldNewPwdConfirmation!!.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus && fieldNewPwdConfirmation.text.toString().isNotEmpty()) {
+            if(!hasFocus) {
                 validPwdConfirmation(context, newUsrPwdEditText.editText!!.text.toString(),
                     newUsrPwdRepeatEditText)
             }

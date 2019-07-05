@@ -17,8 +17,7 @@
     <string name="change_pwd">Trocar senha</string>
     <string name="criar_usuario">Criar usuário</string>
     <string name="confirm_pwd">Confirme a senha</string>
-    <string name="wrong_confirmation">Confirmacão difere da senha</string>
-    <string name="pwd_too_short">Senha deve conter pelo menos 8 caracteres</string>
+
     <string name="savePermissionButtonLabel">salvar</string>
     <string name="leituraPermissionText">Leitura</string>
     <string name="criarPermissionText">Criação</string>
@@ -43,7 +42,12 @@
     <string name="alterar_senha">Alterar senha</string>
     <string name="pwdAlteredWithSuccess">Senha alterada com sucesso</string>
 
-    <!--ERRO-->
+    <!--INPUT ERROR-->
+    <string name="ERR_INPUT_notAlphanumeric">O nome deve conter apenas caracteres alfanuméricos</string>
+    <string name="wrong_confirmation">Confirmacão difere da senha</string>
+    <string name="pwd_too_short">Senha deve conter pelo menos 8 caracteres</string>
+
+    <!--API ERROR-->
     <string name="ERR_ACCESS_DENIED_message">Acesso negado</string>
     <string name="ERR_DESCONHECIDO_message">Erro desconhecido</string>
     <string name="ERR_USR_NOT_FOUND_message">Usuário não encontrado</string>
@@ -60,6 +64,7 @@
     <string name="ERR_INVALID_KEY_message">Sessão expirou</string>
     <string name="ERR_INVALID_PAYLOAD_message">Entrada inválida</string>
     <string name="yes">Sim</string>
+
 
 
 </resources>

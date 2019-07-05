@@ -87,14 +87,14 @@ class ChangePwdFragment : mainFragment() {
 
         val fieldNewPwd = newPwdEditText.editText
         fieldNewPwd!!.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus && fieldNewPwd.text.toString().isNotEmpty()) {
+            if(!hasFocus) {
                 validPwd(context, newPwdEditText)
             }
         }
 
         val fieldNewPwdConfirmation =  newPwdConfirmationEditText.editText
         fieldNewPwdConfirmation!!.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus && fieldNewPwdConfirmation.text.toString().isNotEmpty()) {
+            if(!hasFocus) {
                 validPwdConfirmation(context, newPwdConfirmationEditText.editText!!.text.toString(),
                     newPwdEditText)
             }
