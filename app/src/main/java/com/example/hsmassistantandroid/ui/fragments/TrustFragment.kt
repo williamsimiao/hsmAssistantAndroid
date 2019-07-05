@@ -21,6 +21,7 @@ import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
+import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import kotlinx.android.synthetic.main.trust_fragment.*
 import retrofit2.Call
@@ -64,6 +65,8 @@ class TrustFragment: mainFragment() {
                         if(isTrustees!!) { noContentLabel_trust.text = getString(R.string.noContentText_trustees) }
                         else { noContentLabel_trust.text = getString(R.string.noContentText_trusters) }
                     }
+                    else { noContentLabel_trust.visibility = View.GONE }
+
 
                     trustList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = TrustListAdapter(usrNameAndAclArray)

@@ -84,7 +84,7 @@ class ObjetosListFragment : mainFragment() {
 
                 if(certificateCounter == exportedCertificateCounter) {
                     if(exportedCertificateCounter == 0) { noContentLabel_objetos.visibility = View.VISIBLE }
-
+                    else { noContentLabel_objetos.visibility = View.GONE }
 
                     objetosList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = ObjetosListAdapter(certificateNameArray)
@@ -135,6 +135,7 @@ class ObjetosListFragment : mainFragment() {
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
 
                     if(objetosStrings.count() == 0) { noContentLabel_objetos.visibility = View.VISIBLE }
+                    else { noContentLabel_objetos.visibility = View.GONE }
 
                     for(objId: String in objetosStrings) {
                         detailsRequest(objId)
