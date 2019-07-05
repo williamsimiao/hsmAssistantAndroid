@@ -8,7 +8,9 @@
               android:name="com.example.hsmassistantandroid.ui.fragments.ObjetosListFragment"
               android:label="@string/screenTitle_certificados"
               tools:layout="@layout/fragment_objetos_list">
-        <action android:id="@+id/goto_Login" app:destination="@id/mainActivity2" app:popUpTo="@+id/mainActivity2"/>
+        <action android:id="@+id/goto_Login" app:destination="@id/mainActivity2" app:popUpTo="@+id/mainActivity2"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <activity android:id="@+id/mainActivity2" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
               android:label="MainActivity"/>

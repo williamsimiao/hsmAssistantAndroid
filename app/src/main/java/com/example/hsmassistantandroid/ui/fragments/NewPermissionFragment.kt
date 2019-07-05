@@ -35,7 +35,6 @@ class NewPermissionFragment : mainFragment() {
     var userName: String? = null
     var userAcl: Int? = null
     var systemACL: Int? = null
-    var comingFromRelacoesFragment: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +45,6 @@ class NewPermissionFragment : mainFragment() {
         userName = arguments?.getString(USERNAME_KEY)
         //case doesn't exist is set to 0
         userAcl = arguments?.getInt(ACL_KEY)
-        comingFromRelacoesFragment = arguments?.getBoolean("comingFromRelacoesFragment") ?: false
-
 
         getSystemAclRequest()
     }
@@ -190,14 +187,6 @@ class NewPermissionFragment : mainFragment() {
                 if(response?.isSuccessful!!) {
                     context?.toast(getString(R.string.permissionSaved_toast))
                     findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
-
-//                    if(comingFromRelacoesFragment) {
-//                        findNavController().navigate(R.id.action_newPermissionFragment_to_relacaoFragment)
-//                    }
-//                    else {
-//                        findNavController().navigate(R.id.action_newPermissionFragment2_to_relacaoFragment)
-//                    }
-
 
                 }
                 else {
