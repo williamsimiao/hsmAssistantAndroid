@@ -14,6 +14,7 @@ import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.contentView
@@ -110,6 +111,7 @@ class LoginFragment : mainFragment() {
                 }
                 else {
                     val message = handleAPIError(this@LoginFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

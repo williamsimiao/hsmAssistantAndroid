@@ -21,6 +21,7 @@ import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_selection.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import retrofit2.Call
@@ -60,7 +61,8 @@ class UserSelectionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(this@UserSelectionFragment, response.errorBody())
+                    val message = handleAPIError(this@UserSelectionFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

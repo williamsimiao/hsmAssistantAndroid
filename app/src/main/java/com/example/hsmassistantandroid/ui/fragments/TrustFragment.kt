@@ -19,6 +19,7 @@ import com.example.hsmassistantandroid.data.ResponseBody5
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import kotlinx.android.synthetic.main.trust_fragment.*
@@ -64,7 +65,9 @@ class TrustFragment: mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    handleAPIError(this@TrustFragment, response.errorBody())
+                    val message = handleAPIError(this@TrustFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+
                 }
             }
         }

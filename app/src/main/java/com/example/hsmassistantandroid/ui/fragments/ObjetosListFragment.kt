@@ -28,6 +28,7 @@ import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_certificado.view.*
 import java.text.SimpleDateFormat
 
@@ -76,7 +77,8 @@ class ObjetosListFragment : mainFragment() {
                     exportedCertificateCounter += 1
                 }
                 else {
-                    handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
 
                 if(certificateCounter == exportedCertificateCounter) {
@@ -105,7 +107,9 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+
                 }
             }
         }
@@ -130,7 +134,8 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

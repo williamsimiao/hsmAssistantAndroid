@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.extensions.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_new_user.*
@@ -50,7 +51,8 @@ class NewUserFragment : mainFragment() {
                     findNavController().navigate(R.id.action_newUserFragment_to_gestaoUsuarioFragment2)
                 }
                 else {
-                    handleAPIError(this@NewUserFragment, response.errorBody())
+                    val message = handleAPIError(this@NewUserFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

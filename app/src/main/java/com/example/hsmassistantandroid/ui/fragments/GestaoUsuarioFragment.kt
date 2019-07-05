@@ -20,6 +20,7 @@ import com.example.hsmassistantandroid.data.errorBody
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import org.jetbrains.anko.toast
@@ -58,7 +59,8 @@ class gestaoUsuarioFragment : mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
+                    val message = handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

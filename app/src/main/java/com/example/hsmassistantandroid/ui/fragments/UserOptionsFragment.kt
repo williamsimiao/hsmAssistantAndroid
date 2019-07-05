@@ -23,6 +23,7 @@ import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
 import com.example.hsmassistantandroid.ui.activities.MainActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
@@ -55,7 +56,8 @@ class UserOptions : mainFragment() {
                     goToLoginScreen(this@UserOptions)
                 }
                 else {
-                    handleAPIError(this@UserOptions, response.errorBody())
+                    val message = handleAPIError(this@UserOptions, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

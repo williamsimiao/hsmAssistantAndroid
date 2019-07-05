@@ -20,6 +20,7 @@ import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.ACL_KEY
 import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.USERNAME_KEY
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_new_permission.*
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -171,7 +172,8 @@ class NewPermissionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    val message = handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
@@ -196,7 +198,8 @@ class NewPermissionFragment : mainFragment() {
 
                 }
                 else {
-                    handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    val message = handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

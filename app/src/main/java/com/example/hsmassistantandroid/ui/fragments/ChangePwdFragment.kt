@@ -18,6 +18,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.*
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_change_pwd.newPwdEditText
@@ -55,7 +56,8 @@ class ChangePwdFragment : mainFragment() {
                     findNavController().navigate(R.id.action_changePwdFragment_to_userOptions)
                 }
                 else {
-                    handleAPIError(this@ChangePwdFragment, response.errorBody())
+                    val message = handleAPIError(this@ChangePwdFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
