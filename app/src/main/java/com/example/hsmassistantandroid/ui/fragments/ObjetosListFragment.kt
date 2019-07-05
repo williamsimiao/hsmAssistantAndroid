@@ -40,6 +40,7 @@ class ObjetosListFragment : mainFragment() {
     private lateinit var objetosStrings: Array<String>
     private var certificateCounter: Int = 0
     private var exportedCertificateCounter: Int = 0
+    private var objectCounter: Int = 0
     private val certificateTypeInteger = 13
     private var certificateNameArray = ArrayList<certificate>()
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -82,6 +83,9 @@ class ObjetosListFragment : mainFragment() {
                 }
 
                 if(certificateCounter == exportedCertificateCounter) {
+                    if(exportedCertificateCounter == 0) { noContentLabel_objetos.visibility = View.VISIBLE }
+
+
                     objetosList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = ObjetosListAdapter(certificateNameArray)
                     objetosList.adapter = viewAdapter
@@ -129,6 +133,9 @@ class ObjetosListFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 if(response?.isSuccessful!!) {
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
+
+                    if(objetosStrings.count() == 0) { noContentLabel_objetos.visibility = View.VISIBLE }
+
                     for(objId: String in objetosStrings) {
                         detailsRequest(objId)
                     }

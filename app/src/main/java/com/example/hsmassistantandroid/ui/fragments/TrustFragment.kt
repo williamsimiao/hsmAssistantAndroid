@@ -59,6 +59,12 @@ class TrustFragment: mainFragment() {
                         usrNameAndAclArray.add(Pair(item.usr, item.acl))
                     }
 
+                    if(usrNameAndAclArray.count() == 0) {
+                        noContentLabel_trust.visibility = View.VISIBLE
+                        if(isTrustees!!) { noContentLabel_trust.text = getString(R.string.noContentText_trustees) }
+                        else { noContentLabel_trust.text = getString(R.string.noContentText_trusters) }
+                    }
+
                     trustList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = TrustListAdapter(usrNameAndAclArray)
                     trustList.adapter = viewAdapter
