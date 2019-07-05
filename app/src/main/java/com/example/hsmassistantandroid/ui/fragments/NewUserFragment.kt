@@ -36,6 +36,7 @@ class NewUserFragment : mainFragment() {
         setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+
     }
 
     fun createUserRequest() {
