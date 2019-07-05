@@ -64,9 +64,9 @@
     <string name="ERR_INVALID_KEY_message">Sessão expirou</string>
     <string name="ERR_INVALID_PAYLOAD_message">Entrada inválida</string>
     <string name="yes">Sim</string>
-    <string name="noContentText_trustees">Sem conteúdo</string>
-    <string name="noContentText_trusters">Sem conteúdo</string>
-    <string name="noContentText_objetos">Sem certificados</string>
+    <string name="noContentText_trustees">Nenhum usuário listado</string>
+    <string name="noContentText_trusters">Nenhum usuário listado</string>
+    <string name="noContentText_objetos">Nenhum certificado listado</string>
 
 
 </resources>
