@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -21,19 +22,87 @@ import org.jetbrains.anko.contentView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.net.wifi.WifiConfiguration
+import android.net.wifi.WifiManager
+import android.widget.Toast
+import android.net.NetworkInfo
+import android.net.wifi.WifiInfo
+import android.content.BroadcastReceiver
+import org.jetbrains.anko.toast
 
-//private val TAG: String = LoginFragment::class.java.simpleName
+
+private val TAG: String = LoginFragment::class.java.simpleName
 
 
 class LoginFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private var submitedUser: String? = null
+    val wm:WifiManager= context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
     companion object {
 
         fun newInstance(): LoginFragment {
             return LoginFragment()
+        }
+    }
+
+    fun connectToWPAWiFi(ssid:String, pass:String?){
+        if(isConnectedTo(ssid)){ //see if we are already connected to the given ssid
+            context?.toast("Connected to"+ssid)
+            return
+        }
+        var wifiConfig=getWiFiConfig(ssid)
+        if(wifiConfig==null){//if the given ssid is not present in the WiFiConfig, create a config for it
+            createWPAProfile(ssid, pass)
+            wifiConfig=getWiFiConfig(ssid)
+        }
+        wm.disconnect()
+        wm.enableNetwork(wifiConfig!!.networkId,true)
+        wm.reconnect()
+        Log.d(TAG,"intiated connection to SSID"+ssid);
+    }
+    fun isConnectedTo(ssid: String):Boolean{
+        val wm:WifiManager= context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        if(wm.connectionInfo.ssid == ssid){
+            return true
+        }
+        return false
+    }
+    fun getWiFiConfig(ssid: String): WifiConfiguration? {
+        val wm:WifiManager= context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wifiList=wm.configuredNetworks
+        for (item in wifiList){
+            if(item.SSID != null && item.SSID.equals(ssid)){
+                return item
+            }
+        }
+        return null
+    }
+    fun createWPAProfile(ssid: String,pass: String?){
+        Log.d(TAG,"Saving SSID :"+ssid)
+        val conf = WifiConfiguration()
+        conf.SSID = ssid
+        if(pass != null) {
+            conf.preSharedKey = pass
+        }
+        val wm:WifiManager= context!!.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        wm.addNetwork(conf)
+        Log.d(TAG,"saved SSID to WiFiManger")
+    }
+
+    class WiFiChngBrdRcr : BroadcastReceiver(){ // shows a toast message to the user when device is connected to a AP
+        private val TAG = "WiFiChngBrdRcr"
+        override fun onReceive(context: Context, intent: Intent) {
+            val networkInfo=intent.getParcelableExtra<NetworkInfo>(WifiManager.EXTRA_NETWORK_INFO)
+            if(networkInfo.state == NetworkInfo.State.CONNECTED){
+                val bssid=intent.getStringExtra(WifiManager.EXTRA_BSSID)
+                Log.d(TAG, "Connected to BSSID:"+bssid)
+                val ssid=intent.getParcelableExtra<WifiInfo>(WifiManager.EXTRA_WIFI_INFO).ssid
+                val log="Connected to SSID:"+ssid
+                Log.d(TAG,"Connected to SSID:"+ssid)
+                Toast.makeText(context, log, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -85,39 +154,47 @@ class LoginFragment : mainFragment() {
     }
 
     fun didTapAutenticar() {
-        if(fieldsAreValid(context, arrayOf(usrEditText, pwdEditText)) == false) return
-
-        if(validPwd(context, pwdEditText) ==  false) return
-
-        val callback = object : Callback<ResponseBody1> {
-            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-                alertAboutConnectionError(view)
-            }
-
-            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
-                if(response?.isSuccessful!!) {
-                    tokenString = "HSM " + response?.body()?.token
-                    Log.e("MainActivity", "Autenticado "+tokenString)
-                    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("TOKEN", tokenString)
-                    editor.putString("USER", submitedUser)
-                    editor.apply()
-
-                    hideSoftKeyboard(requireActivity())
-                    val intent = Intent(context, SecondActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-                else {
-                    val message = handleAPIError(this@LoginFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
-                }
-            }
+        if (!wm.isWifiEnabled()) {
+            context?.toast("WiFi is disabled ... We need to enable it")
+            wm.setWifiEnabled(true);
         }
 
-        submitedUser = usrEditText.editText!!.text.toString()
-        networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
+        val ssid = "pocket"
+        context?.toast("Changing wifi to "+ssid)
+        connectToWPAWiFi(ssid, null)
+//        if(fieldsAreValid(context, arrayOf(usrEditText, pwdEditText)) == false) return
+//
+//        if(validPwd(context, pwdEditText) ==  false) return
+//
+//        val callback = object : Callback<ResponseBody1> {
+//            override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+//                alertAboutConnectionError(view)
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+//                if(response?.isSuccessful!!) {
+//                    tokenString = "HSM " + response?.body()?.token
+//                    Log.e("MainActivity", "Autenticado "+tokenString)
+//                    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+//                    val editor = sharedPreferences.edit()
+//                    editor.putString("TOKEN", tokenString)
+//                    editor.putString("USER", submitedUser)
+//                    editor.apply()
+//
+//                    hideSoftKeyboard(requireActivity())
+//                    val intent = Intent(context, SecondActivity::class.java)
+//                    startActivity(intent)
+//                    requireActivity().finish()
+//                }
+//                else {
+//                    val message = handleAPIError(this@LoginFragment, response.errorBody())
+//                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+//                }
+//            }
+//        }
+//
+//        submitedUser = usrEditText.editText!!.text.toString()
+//        networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }
 
     fun hideLoginFields() {
