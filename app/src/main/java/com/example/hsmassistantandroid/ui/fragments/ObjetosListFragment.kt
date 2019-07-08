@@ -128,6 +128,7 @@ class ObjetosListFragment : mainFragment() {
         val callbackList = object : Callback<ResponseBody2> {
             override fun onFailure(call: Call<ResponseBody2>?, t: Throwable?) {
                 alertAboutConnectionError(view)
+                refresh_layout.isRefreshing = false
             }
 
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
@@ -145,6 +146,7 @@ class ObjetosListFragment : mainFragment() {
                     val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
                     Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
+                refresh_layout.isRefreshing = false
             }
         }
         networkManager. runListObjetcs(tokenString!!, callbackList)
@@ -175,21 +177,12 @@ class ObjetosListFragment : mainFragment() {
     }
 
     fun setUpViews() {
+        refresh_layout.setOnRefreshListener {
+            onOptionReloadClick()
+        }
+
         val itemDecor = DividerItemDecoration(context, VERTICAL)
         objetosList.addItemDecoration(itemDecor)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.reload, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.options_reload -> onOptionReloadClick()
-            else -> Log.d(TAG, "Estranho isso, não existe outro")
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     fun onOptionReloadClick() {
