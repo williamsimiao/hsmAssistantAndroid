@@ -18,9 +18,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        def fingerPrint = "williamSimiao"
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "FINGER_PRINT", "\"${fingerPrint}\"")
+        }
+        debug {
+            buildConfigField("String", "FINGER_PRINT", "\"${fingerPrint}\"")
         }
     }
 }

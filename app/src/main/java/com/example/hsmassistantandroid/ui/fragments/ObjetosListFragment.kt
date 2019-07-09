@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hsmassistantandroid.BuildConfig
 import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
@@ -50,6 +52,7 @@ class ObjetosListFragment : mainFragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+        Log.d(TAG, BuildConfig.FINGER_PRINT)
     }
 
     fun expoRequest(objId: String) {
@@ -113,7 +116,6 @@ class ObjetosListFragment : mainFragment() {
                 else {
                     val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
                     Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
-
                 }
             }
         }
@@ -200,7 +202,7 @@ class ObjetosListAdapter(private val certArrayList: ArrayList<certificate>) : Re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Log.d(TAG, "name:" + certArrayList[position].name)
+                findNavController(v).navigate(R.id.action_objetosListFragment_to_objetoDetailFragment)
             }
         })
 
