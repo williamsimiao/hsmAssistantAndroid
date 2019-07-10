@@ -32,7 +32,14 @@ import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_certificado.view.*
+import org.jetbrains.anko.doAsync
+import java.net.Socket
 import java.text.SimpleDateFormat
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLHandshakeException
+import javax.net.ssl.SSLSocket
+import javax.net.ssl.SSLSocketFactory
+
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
@@ -52,7 +59,9 @@ class ObjetosListFragment : mainFragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        Log.d(TAG, BuildConfig.FINGER_PRINT)
+//        Log.d(TAG, BuildConfig.FINGER_PRINT)
+
+
     }
 
     fun expoRequest(objId: String) {

@@ -66,7 +66,7 @@ class NetworkManager {
 
     companion object {
 //        const val BASE_URL = "https://10.61.53.210"
-        const val BASE_URL = "https://hsmlab63.dinamonetworks.com/api/"
+        const val BASE_URL = "https://hsmlab64.dinamonetworks.com/api/"
     }
 
     init {

@@ -18,11 +18,19 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.contentView
+import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.InputStream
+import java.net.URL
+import java.net.URLConnection
+import android.R.attr.port
+import java.net.SocketAddress
+import javax.net.ssl.*
 
-//private val TAG: String = LoginFragment::class.java.simpleName
+
+private val TAG: String = LoginFragment::class.java.simpleName
 
 
 class LoginFragment : mainFragment() {
@@ -42,6 +50,47 @@ class LoginFragment : mainFragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+        doAsync {
+            val context = SSLContext.getInstance("TLS")
+            val socket = context.getSocketFactory().createSocket("10.61.53.221", 3344)
+            socket
+
+//            val url = URL("https://wikipedia.org")
+//            val urlConnection: URLConnection = url.openConnection()
+//            val inputStream: InputStream = urlConnection.getInputStream()
+//            Log.d("WILL", "tete")
+//            inputStream.copyTo(System.out)
+//            Log.d("SIMI", "tete")
+
+//            copyInputStreamToOutputStream(inputStream, System.out)
+        }
+
+//        doAsync {
+//            // Open SSLSocket directly to gmail.com
+//            val socket: SSLSocket = SSLSocketFactory.getDefault().run {
+//                createSocket("https://10.61.53.248", 3344) as SSLSocket
+//
+//            }
+//            val session = socket.session
+//
+//            // Verify that the certicate hostname is for mail.google.com
+//            // This is due to lack of SNI support in the current SSLSocket.
+//            HttpsURLConnection.getDefaultHostnameVerifier().run {
+//                if (!verify("mail.google.com", session)) {
+//                    Log.d("WILL", session.peerPrincipal.toString())
+//                    throw SSLHandshakeException("Expected mail.google.com, found ${session.peerPrincipal} ")
+//                }
+//                else {
+//                    Log.d("SIMI", session.peerPrincipal.toString())
+//                }
+//            }
+//
+//            // At this point SSLSocket performed certificate verification and
+//            // we have performed hostname verification, so it is safe to proceed.
+//
+//            // ... use socket ...
+//            socket.close()
+//        }
     }
 
     override fun onCreateView(
