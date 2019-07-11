@@ -28,7 +28,7 @@ import java.net.URLConnection
 import android.R.attr.port
 import java.net.SocketAddress
 import javax.net.ssl.*
-
+import javax.security.cert.CertificateException
 
 private val TAG: String = LoginFragment::class.java.simpleName
 
@@ -51,46 +51,59 @@ class LoginFragment : mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         doAsync {
-            val context = SSLContext.getInstance("TLS")
-            val socket = context.getSocketFactory().createSocket("10.61.53.221", 3344)
-            socket
+            val host = "10.61.53.208"
+            val port = 3344
 
-//            val url = URL("https://wikipedia.org")
-//            val urlConnection: URLConnection = url.openConnection()
-//            val inputStream: InputStream = urlConnection.getInputStream()
-//            Log.d("WILL", "tete")
-//            inputStream.copyTo(System.out)
-//            Log.d("SIMI", "tete")
+            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+                }
 
-//            copyInputStreamToOutputStream(inputStream, System.out)
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+                }
+
+                override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+                    return arrayOf()
+                }
+            })
+
+            val sslContext = SSLContext.getInstance("SSL")
+            try {
+                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+
+                // HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+                println("AQUI")
+
+                // Create an ssl socket factory with our all-trusting manager
+                val sslSocketFactory = sslContext.socketFactory
+
+                val sslsocket: SSLSocket = sslSocketFactory.createSocket(host, port) as SSLSocket
+                val input = sslsocket.inputStream
+                val output = sslsocket.outputStream
+                output.write(1)
+
+                output.write("MI_HELLO".toByteArray())
+                val inputAsString = input.bufferedReader().use { it.readText() }
+                Log.d("LALA", inputAsString)
+
+//                while(input.available() != 0) {
+//                    Log.d(TAG, input.)
+//                }
+
+
+
+//                while (`in`.available() > 0) {
+//                    print(`in`.read())
+//                }
+
+            } catch (e: Exception) {
+                println("Deu ruim")
+                //TODO: handle exception
+            }
+
         }
-
-//        doAsync {
-//            // Open SSLSocket directly to gmail.com
-//            val socket: SSLSocket = SSLSocketFactory.getDefault().run {
-//                createSocket("https://10.61.53.248", 3344) as SSLSocket
-//
-//            }
-//            val session = socket.session
-//
-//            // Verify that the certicate hostname is for mail.google.com
-//            // This is due to lack of SNI support in the current SSLSocket.
-//            HttpsURLConnection.getDefaultHostnameVerifier().run {
-//                if (!verify("mail.google.com", session)) {
-//                    Log.d("WILL", session.peerPrincipal.toString())
-//                    throw SSLHandshakeException("Expected mail.google.com, found ${session.peerPrincipal} ")
-//                }
-//                else {
-//                    Log.d("SIMI", session.peerPrincipal.toString())
-//                }
-//            }
-//
-//            // At this point SSLSocket performed certificate verification and
-//            // we have performed hostname verification, so it is safe to proceed.
-//
-//            // ... use socket ...
-//            socket.close()
-//        }
     }
 
     override fun onCreateView(
