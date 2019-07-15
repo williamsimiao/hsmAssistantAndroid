@@ -15,20 +15,15 @@ import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_change_pwd.*
 import kotlinx.android.synthetic.main.fragment_login.*
-import org.jetbrains.anko.contentView
 import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.InputStream
-import java.net.URL
-import java.net.URLConnection
-import android.R.attr.port
-import java.net.SocketAddress
 import javax.net.ssl.*
 import javax.security.cert.CertificateException
+import java.io.PrintWriter
+import java.util.*
 
 private val TAG: String = LoginFragment::class.java.simpleName
 
@@ -51,7 +46,7 @@ class LoginFragment : mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
         doAsync {
-            val host = "10.61.53.208"
+            val host = "10.61.53.238"
             val port = 3344
 
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -72,31 +67,22 @@ class LoginFragment : mainFragment() {
             try {
                 sslContext.init(null, trustAllCerts, java.security.SecureRandom())
 
-                // HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-
-                println("AQUI")
-
                 // Create an ssl socket factory with our all-trusting manager
                 val sslSocketFactory = sslContext.socketFactory
 
                 val sslsocket: SSLSocket = sslSocketFactory.createSocket(host, port) as SSLSocket
-                val input = sslsocket.inputStream
-                val output = sslsocket.outputStream
-                output.write(1)
+                val input = Scanner(sslsocket.inputStream)
 
-                output.write("MI_HELLO".toByteArray())
-                val inputAsString = input.bufferedReader().use { it.readText() }
-                Log.d("LALA", inputAsString)
+                val output = PrintWriter(sslsocket.outputStream, true)
+                output.println("MI_MINI_AUTH 12345678")
+                Log.d(TAG, input.nextLine())
+                output.println("MI_SVC_STOP")
+                Log.d(TAG, input.nextLine())
 
-//                while(input.available() != 0) {
-//                    Log.d(TAG, input.)
-//                }
-
-
-
-//                while (`in`.available() > 0) {
-//                    print(`in`.read())
-//                }
+//                output.println("MI_MINI_AUTH 12345678")
+//                Log.d(TAG, input.nextLine())
+//                output.println("MI_SVC_STOP")
+//                Log.d(TAG, input.nextLine())
 
             } catch (e: Exception) {
                 println("Deu ruim")
