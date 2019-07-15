@@ -1,6 +1,9 @@
 package com.example.hsmassistantandroid.ui.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.net.nsd.NsdManager
+import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -8,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
@@ -25,6 +29,9 @@ import javax.security.cert.CertificateException
 import java.io.PrintWriter
 import java.util.*
 
+
+
+
 private val TAG: String = LoginFragment::class.java.simpleName
 
 
@@ -32,19 +39,31 @@ class LoginFragment : mainFragment() {
     private val networkManager = NetworkManager()
     private var tokenString: String? = null
     private var submitedUser: String? = null
+    // Instantiate a new DiscoveryListener
 
-    companion object {
-
-        fun newInstance(): LoginFragment {
-            return LoginFragment()
-        }
-    }
+//    fun slp() {
+//        // get Locator instance
+//        val locator = ServiceLocationManager.getLocator(Locale("en"))
+//
+//        // find all services of type "test" that have attribute "cool=yes"
+//        val sle = locator.findServices(ServiceType("service:pocket"), null, "(cool=yes)")
+//
+//        // iterate over the results
+//        while (sle.hasMoreElements()) {
+//            val foundService = sle.nextElement() as ServiceURL
+//            Log.d(TAG, foundService)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+
+//        slp()
+
+
         doAsync {
             val host = "10.61.53.238"
             val port = 3344

@@ -8,7 +8,7 @@
 
     <fragment
             android:id="@+id/first_frg"
-            android:name="com.example.hsmassistantandroid.ui.fragments.LoginFragment"
+            android:name="com.example.hsmassistantandroid.ui.fragments.DiscoveryFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />

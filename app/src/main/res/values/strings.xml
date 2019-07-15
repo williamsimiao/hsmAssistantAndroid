@@ -67,6 +67,7 @@
     <string name="noContentText_trustees">Nenhum usuário listado</string>
     <string name="noContentText_trusters">Nenhum usuário listado</string>
     <string name="noContentText_objetos">Nenhum certificado listado</string>
+    <string name="conectar">Conectar</string>
 
 
 </resources>
