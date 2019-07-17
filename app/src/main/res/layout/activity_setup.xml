@@ -9,8 +9,7 @@
     <com.example.hsmassistantandroid.ui.SwipeLockableViewPager
             android:id="@+id/setupViewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/relacaoTabs"/>
+            android:layout_height="match_parent"/>
 
 
     <!--<fragment-->

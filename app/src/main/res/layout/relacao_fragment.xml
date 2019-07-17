@@ -17,6 +17,6 @@
             android:id="@+id/relacaoViewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/relacaoTabs"/>
+            app:layout_constraintTop_toBottomOf="@id/relacaoTabs"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
