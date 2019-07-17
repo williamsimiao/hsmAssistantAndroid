@@ -102,8 +102,9 @@ class DiscoveryFragment : mainFragment() {
 
             val address = deviceAddressEditText.editText!!.text.toString()
             //TODO validar address
-
-            connectToAddress(address)
+            doAsync {
+                connectToAddress(address)
+            }
         }
     }
 
@@ -144,12 +145,11 @@ class DiscoveryFragment : mainFragment() {
             Log.d(TAG, response)
 
             if(response == "MI_ACK 00000000") {
-                Toast.makeText(context, "Conectado", Toast.LENGTH_SHORT)
                 Log.d(TAG, "conectado")
                 return true
             }
             else {
-                Toast.makeText(context, "Falha ao conectar", Toast.LENGTH_SHORT)
+//                Toast.makeText(context,"Falha ao conectar",Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "falha ao connectar")
                 return false
             }
@@ -160,7 +160,7 @@ class DiscoveryFragment : mainFragment() {
 //                Log.d(TAG, input.nextLine())
 
         } catch (e: Exception) {
-            Log.d(TAG, "outra falha")
+            Log.d(TAG, "outra falha: $e")
         }
 
         return false

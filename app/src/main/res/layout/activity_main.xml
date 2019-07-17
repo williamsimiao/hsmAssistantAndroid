@@ -6,16 +6,9 @@
               android:orientation="vertical"
               tools:context="ui.activities.SecondActivity">
 
-    <fragment
-            android:id="@+id/first_frg"
-            android:name="com.example.hsmassistantandroid.ui.fragments.DiscoveryFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    <!--<fragment class="com.example.hsmassistantandroid.ui.fragments.LoginFragment"-->
-              <!--android:id="@+id/container_fragment"-->
-              <!--android:layout_width="match_parent"-->
-              <!--android:layout_height="match_parent" />-->
+    <fragment class="com.example.hsmassistantandroid.ui.fragments.LoginFragment"
+              android:id="@+id/container_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" />
 
 </LinearLayout>
