@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/navigation_device_setup" app:startDestination="@id/discoveryFragment">
-
-    <activity android:id="@+id/mainActivity5" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
-              android:label="MainActivity"/>
+            android:id="@+id/navigation_device_setup" app:startDestination="@id/wellcomeFragment">
+    <fragment android:id="@+id/wellcomeFragment"
+              android:name="com.example.hsmassistantandroid.ui.fragments.WellcomeFragment"
+              android:label="WellcomeFragment">
+        <action android:id="@+id/action_wellcomeFragment_to_discoveryFragment" app:destination="@id/discoveryFragment"/>
+    </fragment>
     <fragment android:id="@+id/discoveryFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.DiscoveryFragment"
-              android:label="DiscoveryFragment"/>
+              android:label="DiscoveryFragment">
+        <action android:id="@+id/action_discoveryFragment_to_svmkFragment" app:destination="@id/svmkFragment"/>
+    </fragment>
+    <fragment android:id="@+id/svmkFragment" android:name="com.example.hsmassistantandroid.ui.fragments.svmkFragment"
+              android:label="svmkFragment">
+        <action android:id="@+id/action_svmkFragment_to_mainActivity6" app:destination="@id/mainActivity6"/>
+    </fragment>
+    <activity android:id="@+id/mainActivity6" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
+              android:label="MainActivity"/>
 </navigation>

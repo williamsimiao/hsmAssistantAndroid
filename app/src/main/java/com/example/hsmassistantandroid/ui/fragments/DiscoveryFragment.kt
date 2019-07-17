@@ -19,6 +19,7 @@ import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_discovery.*
@@ -98,13 +99,8 @@ class DiscoveryFragment : mainFragment() {
 
         deviceAddressEditText.editText!!.onChange { deviceAddressEditText.error = null }
         connectToButton.setOnClickListener {
-            Log.d(TAG, "Indo para SVK screen")
-
             val address = deviceAddressEditText.editText!!.text.toString()
-            //TODO validar address
-            doAsync {
-                connectToAddress(address)
-            }
+            connectToAddress(address)
         }
     }
 
@@ -114,7 +110,16 @@ class DiscoveryFragment : mainFragment() {
         return false
     }
 
-    fun connectToAddress(address: String): Boolean {
+    fun onConnectionEstablished() {
+        Log.d(TAG, "Indo para SVK screen")
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    fun connectToAddress(address: String) {
+        //TODO validar address
+
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             @Throws(CertificateException::class)
             override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
@@ -130,40 +135,36 @@ class DiscoveryFragment : mainFragment() {
         })
 
         val sslContext = SSLContext.getInstance("SSL")
-        try {
-            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
 
-            // Create an ssl socket factory with our all-trusting manager
-            val sslSocketFactory = sslContext.socketFactory
+        doAsync {
+            try {
+                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
 
-            val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
-            val input = Scanner(sslsocket.inputStream)
-            val output = PrintWriter(sslsocket.outputStream, true)
+                // Create an ssl socket factory with our all-trusting manager
+                val sslSocketFactory = sslContext.socketFactory
 
-            output.println("MI_HELLO")
-            val response = input.nextLine()
-            Log.d(TAG, response)
+                val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
+                val input = Scanner(sslsocket.inputStream)
+                val output = PrintWriter(sslsocket.outputStream, true)
 
-            if(response == "MI_ACK 00000000") {
-                Log.d(TAG, "conectado")
-                return true
+                output.println("MI_HELLO")
+                val response = input.nextLine()
+                Log.d(TAG, response)
+
+                if(response == "MI_ACK 00000000") {
+                    Log.d(TAG, "conectado")
+                    onConnectionEstablished()
+                }
+                else {
+                    Log.d(TAG, "falha ao connectar")
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "outra falha: $e")
             }
-            else {
-//                Toast.makeText(context,"Falha ao conectar",Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "falha ao connectar")
-                return false
-            }
 
-//                output.println("MI_MINI_AUTH 12345678")
-//                Log.d(TAG, input.nextLine())
-//                output.println("MI_SVC_STOP")
-//                Log.d(TAG, input.nextLine())
-
-        } catch (e: Exception) {
-            Log.d(TAG, "outra falha: $e")
         }
 
-        return false
     }
 
     fun sendMessage(message: String) {
