@@ -5,7 +5,10 @@
     <fragment android:id="@+id/wellcomeFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.WellcomeFragment"
               android:label="WellcomeFragment">
-        <action android:id="@+id/action_wellcomeFragment_to_discoveryFragment" app:destination="@id/discoveryFragment"/>
+        <action android:id="@+id/action_wellcomeFragment_to_discoveryFragment"
+                app:destination="@id/discoveryFragment">
+
+        </action>
     </fragment>
     <fragment android:id="@+id/discoveryFragment"
               android:name="com.example.hsmassistantandroid.ui.fragments.DiscoveryFragment"
@@ -13,9 +16,5 @@
         <action android:id="@+id/action_discoveryFragment_to_svmkFragment" app:destination="@id/svmkFragment"/>
     </fragment>
     <fragment android:id="@+id/svmkFragment" android:name="com.example.hsmassistantandroid.ui.fragments.svmkFragment"
-              android:label="svmkFragment">
-        <action android:id="@+id/action_svmkFragment_to_mainActivity6" app:destination="@id/mainActivity6"/>
-    </fragment>
-    <activity android:id="@+id/mainActivity6" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
-              android:label="MainActivity"/>
+              android:label="svmkFragment"/>
 </navigation>

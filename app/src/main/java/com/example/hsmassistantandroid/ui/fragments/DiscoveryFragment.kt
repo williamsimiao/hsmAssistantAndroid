@@ -14,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1
@@ -112,9 +114,7 @@ class DiscoveryFragment : mainFragment() {
 
     fun onConnectionEstablished() {
         Log.d(TAG, "Indo para SVK screen")
-        val intent = Intent(context, MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        findNavController().navigate(R.id.action_wellcomeFragment_to_discoveryFragment)
     }
 
     fun connectToAddress(address: String) {
@@ -146,6 +146,8 @@ class DiscoveryFragment : mainFragment() {
                 val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
                 val input = Scanner(sslsocket.inputStream)
                 val output = PrintWriter(sslsocket.outputStream, true)
+
+//                val bundle = bundleOf("input" to input, "output" to output)
 
                 output.println("MI_HELLO")
                 val response = input.nextLine()

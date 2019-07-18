@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 
 import android.view.LayoutInflater
@@ -8,8 +9,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import kotlinx.android.synthetic.main.fragment_svmk.*
+import java.io.PrintWriter
+import java.util.*
 
 private val TAG: String = svmkFragment::class.java.simpleName
 
@@ -42,8 +46,21 @@ class svmkFragment : mainFragment() {
 
     fun sendAuth() {
         val key = svmkEditText.editText!!.text.toString()
+        val input = arguments?.get("input") as Scanner
+        val output = arguments?.get("output") as PrintWriter
+
         if(validPwd(context, svmkEditText)) {
-//        MI_MINI_AUTH 1234567812345678
+            output.println("MI_MINI_AUTH $key")
+            var response = input.nextLine()
+            if(response == "MI_ACK 00000000") {
+                output.println("MI_SVC_START")
+                response = input.nextLine()
+                if(response == "MI_ACK 00000000") {
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+            }
         }
     }
 

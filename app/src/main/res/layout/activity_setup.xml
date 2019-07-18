@@ -6,10 +6,26 @@
               android:orientation="vertical"
               tools:context="ui.activities.SetupActivity">
 
-    <com.example.hsmassistantandroid.ui.SwipeLockableViewPager
-            android:id="@+id/setupViewpager"
+    <!--<FrameLayout-->
+            <!--android:id="@+id/setup_nav_host_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1" />-->
+
+    <fragment
+            android:id="@+id/setup_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation_device_setup"/>
+
+    <!--<com.example.hsmassistantandroid.ui.SwipeLockableViewPager-->
+            <!--android:id="@+id/setupViewpager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
 
 
     <!--<fragment-->

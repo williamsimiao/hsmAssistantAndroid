@@ -1,11 +1,14 @@
 package com.example.hsmassistantandroid.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.*
+import kotlinx.android.synthetic.main.fragment_wellcome.*
 
 
 private val TAG: String = DiscoveryFragment::class.java.simpleName
@@ -32,7 +35,11 @@ class WellcomeFragment : mainFragment() {
     }
 
     fun setUpViews() {
-//        reTrydiscoveryButton.setOnClickListener { Log.d(TAG, "CLICK") }
+
+        nextButton.setOnClickListener {
+            findNavController().navigate(R.id.action_wellcomeFragment_to_discoveryFragment)
+            Log.d(TAG, "CLICK")
+        }
 //
 //        deviceAddressEditText.editText!!.onChange { deviceAddressEditText.error = null }
 
