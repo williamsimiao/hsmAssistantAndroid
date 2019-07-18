@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.nsd.NsdManager
@@ -18,6 +19,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.data.MIHelper
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.data.ResponseBody3
 import com.example.hsmassistantandroid.extensions.*
@@ -45,11 +47,6 @@ private val TAG: String = DiscoveryFragment::class.java.simpleName
 
 
 class DiscoveryFragment : mainFragment() {
-    private val MI_PORT = 3344
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,9 +98,24 @@ class DiscoveryFragment : mainFragment() {
 
         deviceAddressEditText.editText!!.onChange { deviceAddressEditText.error = null }
         connectToButton.setOnClickListener {
-            val address = deviceAddressEditText.editText!!.text.toString()
-            connectToAddress(address)
+            prepareConnection()
         }
+    }
+
+    fun prepareConnection() {
+        val address = deviceAddressEditText.editText!!.text.toString()
+
+        val successCallback = {
+            onConnectionEstablished()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            getActivity()?.runOnUiThread {
+                Toast.makeText(context!!, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        MIHelper.getInstance(address).connectToAddress(address, requireContext(), successCallback, errorCallback)
     }
 
     fun makeAutoDiscovery(): Boolean {
@@ -113,60 +125,9 @@ class DiscoveryFragment : mainFragment() {
     }
 
     fun onConnectionEstablished() {
-        Log.d(TAG, "Indo para SVK screen")
-        findNavController().navigate(R.id.action_wellcomeFragment_to_discoveryFragment)
-    }
-
-    fun connectToAddress(address: String) {
-        //TODO validar address
-
-        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-            @Throws(CertificateException::class)
-            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-            }
-
-            @Throws(CertificateException::class)
-            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-            }
-
-            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
-                return arrayOf()
-            }
-        })
-
-        val sslContext = SSLContext.getInstance("SSL")
-
-        doAsync {
-            try {
-                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-
-                // Create an ssl socket factory with our all-trusting manager
-                val sslSocketFactory = sslContext.socketFactory
-
-                val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
-                val input = Scanner(sslsocket.inputStream)
-                val output = PrintWriter(sslsocket.outputStream, true)
-
-//                val bundle = bundleOf("input" to input, "output" to output)
-
-                output.println("MI_HELLO")
-                val response = input.nextLine()
-                Log.d(TAG, response)
-
-                if(response == "MI_ACK 00000000") {
-                    Log.d(TAG, "conectado")
-                    onConnectionEstablished()
-                }
-                else {
-                    Log.d(TAG, "falha ao connectar")
-                }
-
-            } catch (e: Exception) {
-                Log.d(TAG, "outra falha: $e")
-            }
-
-        }
-
+        val intent = Intent(context, SecondActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     fun sendMessage(message: String) {
