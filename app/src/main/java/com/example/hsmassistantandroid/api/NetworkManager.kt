@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.api
 
+import android.preference.PreferenceManager
 import android.util.Log
 import com.example.hsmassistantandroid.data.*
 import okhttp3.MediaType
@@ -62,12 +63,7 @@ class NetworkManager {
     private val sessaoRouter: sessaoEndPoint
     private val objetosRouter: objetosEndPoint
     private val usuarioRouter: usuarioEndPoint
-
-
-    companion object {
-//        const val BASE_URL = "https://10.61.53.210"
-        const val BASE_URL = "https://hsmlab64.dinamonetworks.com/api/"
-    }
+    private val BASE_URL: String
 
     init {
         val unsafeClient = UnsafeOkHttpClient.getUnsafeOkHttpClient().build()
@@ -76,7 +72,8 @@ class NetworkManager {
         val gson = GsonBuilder()
             .setLenient()
             .create()
-
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences()
+        tokenString = sharedPreferences.getString("TOKEN", null)
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(unsafeClient)

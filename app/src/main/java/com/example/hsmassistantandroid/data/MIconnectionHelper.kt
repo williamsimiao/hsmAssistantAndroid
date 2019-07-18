@@ -14,38 +14,11 @@ import javax.security.cert.CertificateException
 
 private val TAG: String = MIHelper::class.java.simpleName
 
-
-open class SingletonHolder<out T: Any, in A>(creator: (A) -> T) {
-    private var creator: ((A) -> T)? = creator
-    @Volatile private var instance: T? = null
-
-    fun getInstance(arg: A): T {
-        val i = instance
-        if (i != null) {
-            return i
-        }
-
-        return synchronized(this) {
-            val i2 = instance
-            if (i2 != null) {
-                i2
-            } else {
-                val created = creator!!(arg)
-                instance = created
-                creator = null
-                created
-            }
-        }
-    }
-}
-
-class MIHelper private constructor(ipAdress: String) {
-    private val MI_PORT = 3344
-
+object MIHelper {
+    private const val MI_PORT = 3344
     lateinit var myAddress: String
-    init {
-        myAddress = ipAdress
-    }
+    lateinit var input: Scanner
+    lateinit var output: PrintWriter
 
     fun connectToAddress(address: String = myAddress, context: Context, successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
         //TODO validar address
@@ -74,8 +47,8 @@ class MIHelper private constructor(ipAdress: String) {
                 val sslSocketFactory = sslContext.socketFactory
 
                 val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
-                val input = Scanner(sslsocket.inputStream)
-                val output = PrintWriter(sslsocket.outputStream, true)
+                input = Scanner(sslsocket.inputStream)
+                output = PrintWriter(sslsocket.outputStream, true)
 
 //                val bundle = bundleOf("input" to input, "output" to output)
 
@@ -95,11 +68,45 @@ class MIHelper private constructor(ipAdress: String) {
                 }
 
             } catch (e: Exception) {
-                Log.d(TAG, "outra falha: $e")
+                Log.d(TAG, "outra falha1: $e")
             }
 
         }
     }
 
-    companion object : SingletonHolder<MIHelper, String>(::MIHelper)
+    fun autenticateWithKey(key: String, successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        doAsync {
+            try {
+                output.println("MI_MINI_AUTH $key")
+                val response = input.nextLine()
+                if(response == "MI_ACK 00000000 ") {
+                    successCallback()
+                }
+                else {
+                    errorCallback(response)
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, "falha2: $e")
+            }
+        }
+    }
+
+    fun startService(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        doAsync {
+            try {
+                output.println("MI_SVC_START")
+                val response = input.nextLine()
+
+                if(response == "MI_ACK 00000000 ") {
+                    successCallback()
+                }
+                else {
+                    errorCallback(response)
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "falha3: $e")
+            }
+        }
+    }
 }

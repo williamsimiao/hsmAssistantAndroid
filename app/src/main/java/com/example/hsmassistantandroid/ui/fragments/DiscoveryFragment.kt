@@ -111,11 +111,11 @@ class DiscoveryFragment : mainFragment() {
 
         val errorCallback = { errorMessage: String ->
             getActivity()?.runOnUiThread {
-                Toast.makeText(context!!, errorMessage, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, errorMessage)
             }
         }
 
-        MIHelper.getInstance(address).connectToAddress(address, requireContext(), successCallback, errorCallback)
+        MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
     }
 
     fun makeAutoDiscovery(): Boolean {
@@ -125,16 +125,10 @@ class DiscoveryFragment : mainFragment() {
     }
 
     fun onConnectionEstablished() {
-        val intent = Intent(context, SecondActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
+
+        findNavController().navigate(R.id.action_discoveryFragment_to_svmkFragment)
     }
-
-    fun sendMessage(message: String) {
-
-    }
-
-
 
     fun showInvalidTokenDialog() {
         AlertDialog.Builder(requireContext()).setTitle(getString(R.string.invalidTokenDialog_title))
