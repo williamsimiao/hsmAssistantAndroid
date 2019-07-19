@@ -27,13 +27,14 @@ import retrofit2.Response
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
 class gestaoUsuarioFragment : mainFragment() {
-    private val networkManager = NetworkManager(context)
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private var usrNamesStrings = ArrayList<String>()
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)

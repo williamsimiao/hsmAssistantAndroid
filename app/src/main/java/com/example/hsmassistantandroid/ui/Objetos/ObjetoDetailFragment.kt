@@ -18,12 +18,13 @@ import retrofit2.Response
 private val TAG: String = ObjetoDetailFragment::class.java.simpleName
 
 class ObjetoDetailFragment : mainFragment() {
-    private val networkManager = NetworkManager(context)
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private var usrNamesStrings = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)

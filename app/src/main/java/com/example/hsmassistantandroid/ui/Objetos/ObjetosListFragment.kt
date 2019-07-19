@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
 class ObjetosListFragment : mainFragment() {
-    private val networkManager = NetworkManager(context)
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private lateinit var objetosStrings: Array<String>
     private var certificateCounter: Int = 0
@@ -44,6 +44,7 @@ class ObjetosListFragment : mainFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)

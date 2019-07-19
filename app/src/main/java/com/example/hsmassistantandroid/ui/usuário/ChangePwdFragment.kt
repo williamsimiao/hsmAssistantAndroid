@@ -22,11 +22,12 @@ import retrofit2.Response
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
 class ChangePwdFragment : mainFragment() {
-    private val networkManager = NetworkManager(context)
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
         setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)

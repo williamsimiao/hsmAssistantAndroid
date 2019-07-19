@@ -28,7 +28,7 @@ import retrofit2.Response
 private val TAG: String = TrustFragment::class.java.simpleName
 
 class TrustFragment: mainFragment() {
-    private val networkManager = NetworkManager(context)
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private var usrNameAndAclArray: ArrayList<Pair<String, Int>> = ArrayList()
     var isTrustees: Boolean? = null
@@ -37,6 +37,7 @@ class TrustFragment: mainFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)

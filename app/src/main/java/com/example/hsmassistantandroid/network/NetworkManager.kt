@@ -69,7 +69,7 @@ class NetworkManager {
     constructor(context: Context?) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val url = sharedPreferences.getString("BASE_URL", null)
-        val completeUrl = "https://$url"
+        val completeUrl = "https://$url/api/"
         BASE_URL = completeUrl
         val unsafeClient = UnsafeOkHttpClient.getUnsafeOkHttpClient().build()
 
