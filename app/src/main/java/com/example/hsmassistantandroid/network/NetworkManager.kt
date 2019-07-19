@@ -88,9 +88,6 @@ class NetworkManager {
         usuarioRouter = retrofit.create(usuarioEndPoint::class.java)
     }
 
-    init {
-
-    }
     //USUARIO
 
     fun runGetAcl(token: String, usr: String, callback: Callback<ResponseBody6>){

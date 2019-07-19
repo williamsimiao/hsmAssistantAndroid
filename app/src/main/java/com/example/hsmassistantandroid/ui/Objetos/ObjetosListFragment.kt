@@ -49,8 +49,6 @@ class ObjetosListFragment : mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 //        Log.d(TAG, BuildConfig.FINGER_PRINT)
-
-
     }
 
     fun expoRequest(objId: String) {

@@ -57,8 +57,6 @@ object MIHelper {
                 val response = input.nextLine()
                 Log.d(TAG, response)
                 if(response == "MI_ACK 00000000 ") {
-                    Log.d(TAG, "conectado")
-
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                     val editor = sharedPreferences.edit()
                     editor.putString("BASE_URL", address)
@@ -98,16 +96,21 @@ object MIHelper {
     fun startService(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
         doAsync {
             try {
-                output.println("MI_SVC_START")
+                output.println("MI_SVC_STATUS")
                 val response = input.nextLine()
+                when(response) {
+                    "MI_ACK 00000000 " -> {
+                        output.println("MI_SVC_START")
+                        val response = input.nextLine()
 
-                //TODO: checar se o erro "MI_ACK 800013F1 " significa exclusivamente que o serciso já foi
-                //iniciado
-                if(response == "MI_ACK 00000000 " || response == "MI_ACK 800013F1 ") {
-                    successCallback()
-                }
-                else {
-                    errorCallback(response)
+                        if(response == "MI_ACK 00000000 ") {
+                            successCallback()
+                        }
+                        else {
+                            errorCallback(response)
+                        }
+                    }
+                    "MI_ACK 00000000 " -> return@doAsync
                 }
 
             } catch (e: Exception) {

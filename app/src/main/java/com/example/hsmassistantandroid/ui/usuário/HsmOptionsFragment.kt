@@ -20,9 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private val TAG: String = UserOptions::class.java.simpleName
+private val TAG: String = HsmOptions::class.java.simpleName
 
-class UserOptions : mainFragment() {
+class HsmOptions : mainFragment() {
     private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
 
@@ -34,47 +34,13 @@ class UserOptions : mainFragment() {
         tokenString = sharedPreferences.getString("TOKEN", null)
     }
 
-    fun didTapcloseButton() {
-        val callbackClose = object : Callback<ResponseBody0> {
-            override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                alertAboutConnectionError(view)
-            }
-            override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                if(response?.isSuccessful!!) {
-                    removeTokenFromSecureLocation(requireActivity())
-                    goToLoginScreen(this@UserOptions)
-                }
-                else {
-                    val message = handleAPIError(this@UserOptions, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
-                }
-            }
-        }
-
-        AlertDialog.Builder(requireContext()).setTitle("Encerrar sessão")
-            .setMessage("Deseja mesmo encerrar a sessão ?")
-            .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
-            .setPositiveButton(getString(R.string.yes)) { dialogInterface, i ->
-                networkManager.runClose(tokenString!!, callbackClose)
-            }
-            .show()
-    }
-
-    fun didTapChangePwd() {
-        findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
-    }
-
-    fun didTapHsmOptions() {
-        findNavController().navigate(R.id.action_userOptions_to_hsmOptions)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_options, container, false)
+        return inflater.inflate(R.layout.fragment_hsm_options, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,8 +49,8 @@ class UserOptions : mainFragment() {
     }
 
     fun setUpViews() {
-        hsmOptions.setOnClickListener { didTapHsmOptions() }
-        closeButton.setOnClickListener { didTapcloseButton() }
-        changePwdButton.setOnClickListener { didTapChangePwd() }
+//        hsmOptions.setOnClickListener { didTapHsmOptions() }
+//        closeButton.setOnClickListener { didTapcloseButton() }
+//        changePwdButton.setOnClickListener { didTapChangePwd() }
     }
 }

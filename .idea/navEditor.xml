@@ -518,6 +518,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="hsmOptions3">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="287" />
+                            <option name="y" value="438" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="mainActivity4">
                     <value>
                       <LayoutPositions>
@@ -535,8 +547,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="63" />
+                            <option name="x" value="258" />
+                            <option name="y" value="140" />
                           </Point>
                         </option>
                         <option name="myPositions">

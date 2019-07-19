@@ -1,6 +1,7 @@
 package com.example.hsmassistantandroid.ui.setUp
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,13 @@ private val TAG: String = DiscoveryFragment::class.java.simpleName
 
 
 class DiscoveryFragment : mainFragment() {
+    private var base_url: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        base_url = sharedPreferences.getString("BASE_URL", null)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +47,10 @@ class DiscoveryFragment : mainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(base_url != null) {
+
+        }
 
         val hsmWasFound = makeAutoDiscovery()
 

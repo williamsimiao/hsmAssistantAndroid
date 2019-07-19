@@ -12,6 +12,7 @@
                 app:popUpToInclusive="true" app:launchSingleTop="true" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_userOptions_to_hsmOptions" app:destination="@id/hsmOptions"/>
     </fragment>
     <fragment android:id="@+id/changePwdFragment"
               android:name="com.example.hsmassistantandroid.ui.usuário.ChangePwdFragment"
@@ -29,4 +30,6 @@
               android:label="MainActivity">
         <argument android:name="test" app:argType="string" android:defaultValue="xixi"/>
     </activity>
+    <fragment android:id="@+id/hsmOptions" android:name="com.example.hsmassistantandroid.ui.usuário.HsmOptions"
+              android:label="HsmOptions"/>
 </navigation>

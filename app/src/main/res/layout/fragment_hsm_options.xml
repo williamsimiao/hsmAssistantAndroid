@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/hsmOptions"
-            android:text="Opções do HSM"
+            android:id="@+id/serviceButton"
+            android:text="Parado"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -14,11 +15,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintBottom_toTopOf= "@id/changePwdButton"/>
+            app:layout_constraintBottom_toTopOf= "@id/restartButton"/>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/changePwdButton"
-            android:text="@string/change_pwd"
+            android:id="@+id/restartButton"
+            android:text="restart"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,11 +27,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintBottom_toTopOf= "@id/closeButton"/>
+            app:layout_constraintBottom_toTopOf= "@id/powerButton"/>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/closeButton"
-            android:text="@string/fechar_sessao"
+            android:id="@+id/powerButton"
+            android:text="Desligar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,5 +40,4 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="24dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
