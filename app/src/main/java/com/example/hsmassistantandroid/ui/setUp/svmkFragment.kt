@@ -83,9 +83,19 @@ class svmkFragment : mainFragment() {
         getActivity()?.runOnUiThread {
             Toast.makeText(context!!, "Servico iniciado", Toast.LENGTH_SHORT).show()
         }
-        val intent = Intent(context, MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+
+        val successCallback = {
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            Log.d(TAG, errorMessage)
+            Unit
+        }
+
+        MIHelper.disconnect(successCallback, errorCallback)
     }
 
     fun showInvalidTokenDialog() {

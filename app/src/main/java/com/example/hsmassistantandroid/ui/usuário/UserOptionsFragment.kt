@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.usuário
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
@@ -13,6 +14,8 @@ import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
+import com.example.hsmassistantandroid.ui.activities.SecondActivity
+import com.example.hsmassistantandroid.ui.activities.SetupActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_options.*
@@ -68,6 +71,12 @@ class UserOptions : mainFragment() {
         findNavController().navigate(R.id.action_userOptions_to_hsmOptions)
     }
 
+    fun didTapConnectNewHSM() {
+        val intent = Intent(context, SetupActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,6 +92,7 @@ class UserOptions : mainFragment() {
     }
 
     fun setUpViews() {
+        connectNewHSM.setOnClickListener { didTapConnectNewHSM() }
         hsmOptions.setOnClickListener { didTapHsmOptions() }
         closeButton.setOnClickListener { didTapcloseButton() }
         changePwdButton.setOnClickListener { didTapChangePwd() }

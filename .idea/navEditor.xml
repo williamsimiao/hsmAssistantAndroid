@@ -518,7 +518,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="hsmOptions3">
+                  <entry key="hsmOptions">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -554,6 +554,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_userOptions_to_changePwdFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_userOptions_to_hsmOptions">
                               <value>
                                 <LayoutPositions />
                               </value>

@@ -118,4 +118,47 @@ object MIHelper {
             }
         }
     }
+
+    fun stopService(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        doAsync {
+            try {
+                output.println("MI_SVC_STATUS")
+                val response = input.nextLine()
+                when(response) {
+                    "MI_ACK 00000001 " -> {
+                        output.println("MI_SVC_STOP")
+                        val response = input.nextLine()
+
+                        if(response == "MI_ACK 00000000 ") {
+                            successCallback()
+                        }
+                        else {
+                            errorCallback(response)
+                        }
+                    }
+                    "MI_ACK 00000000 " -> successCallback()
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "falha3: $e")
+            }
+        }
+    }
+
+    fun disconnect(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        doAsync {
+            try {
+                output.println("MI_CLOSE")
+                val response = input.nextLine()
+                if(response == "MI_ACK 00000000 ") {
+                    successCallback()
+                }
+                else {
+                    errorCallback(response)
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, "falha: $e")
+            }
+        }
+    }
 }
