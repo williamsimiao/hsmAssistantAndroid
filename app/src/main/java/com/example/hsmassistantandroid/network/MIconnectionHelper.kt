@@ -110,7 +110,7 @@ object MIHelper {
                             errorCallback(response)
                         }
                     }
-                    "MI_ACK 00000000 " -> return@doAsync
+                    "MI_ACK 00000001 " -> successCallback()
                 }
 
             } catch (e: Exception) {
