@@ -22,7 +22,7 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/navigation_device_setup"/>
 
-    <!--<com.example.hsmassistantandroid.ui.SwipeLockableViewPager-->
+    <!--<com.example.hsmassistantandroid.ui.adapters.SwipeLockableViewPager-->
             <!--android:id="@+id/setupViewpager"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"/>-->
@@ -30,7 +30,7 @@
 
     <!--<fragment-->
             <!--android:id="@+id/first_frg"-->
-            <!--android:name="com.example.hsmassistantandroid.ui.fragments.WellcomeFragment"-->
+            <!--android:name="com.example.hsmassistantandroid.ui.setUp.WellcomeFragment"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--android:layout_weight="1" />-->

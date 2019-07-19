@@ -3,7 +3,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/navigation_gestao" app:startDestination="@id/gestaoUsuarioFragment2">
     <fragment android:id="@+id/gestaoUsuarioFragment2"
-              android:name="com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment"
+              android:name="com.example.hsmassistantandroid.ui.Gestão.gestaoUsuarioFragment"
               android:label="@string/screenTitle_gestao">
         <action android:id="@+id/action_gestaoUsuarioFragment2_to_newUserFragment"
                 app:destination="@id/newUserFragment"
@@ -14,7 +14,7 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment android:id="@+id/newUserFragment"
-              android:name="com.example.hsmassistantandroid.ui.fragments.NewUserFragment"
+              android:name="com.example.hsmassistantandroid.ui.Gestão.NewUserFragment"
               android:label="@string/screenTitle_newUser">
         <action android:id="@+id/action_newUserFragment_to_gestaoUsuarioFragment2"
                 app:destination="@id/gestaoUsuarioFragment2" app:popUpTo="@+id/gestaoUsuarioFragment2"

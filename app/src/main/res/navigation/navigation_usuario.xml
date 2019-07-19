@@ -3,7 +3,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/navigation_usuario" app:startDestination="@id/userOptions">
 
-    <fragment android:id="@+id/userOptions" android:name="com.example.hsmassistantandroid.ui.fragments.UserOptions"
+    <fragment android:id="@+id/userOptions" android:name="com.example.hsmassistantandroid.ui.usuário.UserOptions"
               android:label="@string/screenTitle_usuario">
         <action android:id="@+id/action_userOptions_to_changePwdFragment" app:destination="@id/changePwdFragment"
                 app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
@@ -14,7 +14,7 @@
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment android:id="@+id/changePwdFragment"
-              android:name="com.example.hsmassistantandroid.ui.fragments.ChangePwdFragment"
+              android:name="com.example.hsmassistantandroid.ui.usuário.ChangePwdFragment"
               android:label="@string/screenTitle_changePwd">
         <action android:id="@+id/action_changePwdFragment_to_userOptions" app:destination="@id/userOptions"
                 app:popUpTo="@+id/changePwdFragment" app:popUpToInclusive="true"

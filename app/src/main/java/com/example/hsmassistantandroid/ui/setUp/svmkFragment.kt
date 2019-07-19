@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.setUp
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,8 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.MIHelper
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.MainActivity
-import com.example.hsmassistantandroid.ui.activities.SecondActivity
-import kotlinx.android.synthetic.main.fragment_discovery.*
+import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_svmk.*
-import java.io.PrintWriter
-import java.util.*
 
 private val TAG: String = svmkFragment::class.java.simpleName
 

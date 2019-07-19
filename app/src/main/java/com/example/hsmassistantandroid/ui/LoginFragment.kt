@@ -1,9 +1,6 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui
 
-import android.content.Context
 import android.content.Intent
-import android.net.nsd.NsdManager
-import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -11,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody1

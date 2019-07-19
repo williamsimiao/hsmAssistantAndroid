@@ -1,33 +1,21 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.usuário
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.solver.widgets.ConstraintWidget
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
-import com.example.hsmassistantandroid.ui.activities.MainActivity
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

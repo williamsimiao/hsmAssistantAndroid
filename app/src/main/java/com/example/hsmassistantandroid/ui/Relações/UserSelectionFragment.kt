@@ -1,15 +1,10 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Relações
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
-import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +16,7 @@ import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_selection.*
 import kotlinx.android.synthetic.main.item_objetos.view.*

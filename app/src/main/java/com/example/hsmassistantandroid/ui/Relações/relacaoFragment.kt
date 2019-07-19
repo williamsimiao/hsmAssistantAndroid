@@ -1,9 +1,7 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Relações
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -51,6 +49,7 @@ class relacaoFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(): relacaoFragment = relacaoFragment()
+        fun newInstance(): relacaoFragment =
+            relacaoFragment()
     }
 }

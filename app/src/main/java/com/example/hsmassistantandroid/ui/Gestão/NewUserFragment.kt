@@ -1,24 +1,15 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Gestão
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.*
-import androidx.activity.OnBackPressedCallback
-import androidx.constraintlayout.solver.widgets.ConstraintWidget
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import kotlinx.android.synthetic.main.fragment_new_user.*
-import kotlinx.android.synthetic.main.fragment_user_options.*
 import okhttp3.ResponseBody
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -60,7 +51,8 @@ class NewUserFragment : mainFragment() {
         }
         val newUserName = newUsrEditText.editText!!.text.toString()
         val newPassword = newUsrPwdEditText.editText!!.text.toString()
-        networkManager.runCreateUsr(tokenString!!, newUserName, newPassword, newUserDefaultACL, callbackList)
+        networkManager.runCreateUsr(tokenString!!, newUserName, newPassword,
+            newUserDefaultACL, callbackList)
     }
 
     override fun onCreateView(

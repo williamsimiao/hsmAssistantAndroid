@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.hideSoftKeyboard
 import com.example.hsmassistantandroid.extensions.setupWithNavController
-import com.example.hsmassistantandroid.ui.fragments.gestaoUsuarioFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**

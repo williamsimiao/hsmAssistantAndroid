@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.setUp
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_wellcome.*
 
 

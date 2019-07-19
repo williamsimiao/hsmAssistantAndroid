@@ -3,7 +3,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/navigation_device_setup" app:startDestination="@id/wellcomeFragment">
     <fragment android:id="@+id/wellcomeFragment"
-              android:name="com.example.hsmassistantandroid.ui.fragments.WellcomeFragment"
+              android:name="com.example.hsmassistantandroid.ui.setUp.WellcomeFragment"
               android:label="WellcomeFragment">
         <action android:id="@+id/action_wellcomeFragment_to_discoveryFragment"
                 app:destination="@id/discoveryFragment">
@@ -11,10 +11,10 @@
         </action>
     </fragment>
     <fragment android:id="@+id/discoveryFragment"
-              android:name="com.example.hsmassistantandroid.ui.fragments.DiscoveryFragment"
+              android:name="com.example.hsmassistantandroid.ui.setUp.DiscoveryFragment"
               android:label="DiscoveryFragment">
         <action android:id="@+id/action_discoveryFragment_to_svmkFragment" app:destination="@id/svmkFragment"/>
     </fragment>
-    <fragment android:id="@+id/svmkFragment" android:name="com.example.hsmassistantandroid.ui.fragments.svmkFragment"
+    <fragment android:id="@+id/svmkFragment" android:name="com.example.hsmassistantandroid.ui.setUp.svmkFragment"
               android:label="svmkFragment"/>
 </navigation>

@@ -1,14 +1,11 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Relações
 
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
-import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 
 import com.example.hsmassistantandroid.R
@@ -18,8 +15,9 @@ import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.handleAPIError
-import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.ACL_KEY
-import com.example.hsmassistantandroid.ui.fragments.TrustListAdapter.Companion.USERNAME_KEY
+import com.example.hsmassistantandroid.ui.Relações.TrustListAdapter.Companion.ACL_KEY
+import com.example.hsmassistantandroid.ui.Relações.TrustListAdapter.Companion.USERNAME_KEY
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_new_permission.*
 import org.jetbrains.anko.toast

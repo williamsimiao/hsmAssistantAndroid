@@ -1,12 +1,8 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Objetos
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
@@ -20,25 +16,17 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.security.cert.X509Certificate
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.constraintlayout.solver.widgets.ConstraintWidget.HORIZONTAL
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hsmassistantandroid.BuildConfig
 import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_certificado.view.*
-import org.jetbrains.anko.doAsync
-import java.net.Socket
 import java.text.SimpleDateFormat
-import javax.net.ssl.HttpsURLConnection
-import javax.net.ssl.SSLHandshakeException
-import javax.net.ssl.SSLSocket
-import javax.net.ssl.SSLSocketFactory
 
 
 private val TAG: String = ObjetosListFragment::class.java.simpleName

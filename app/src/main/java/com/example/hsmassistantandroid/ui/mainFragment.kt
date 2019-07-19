@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

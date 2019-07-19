@@ -3,7 +3,7 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    xmlns:tools="http://schemas.android.com/tools"
-                                                   tools:context=".ui.fragments.relacaoFragment"
+                                                   tools:context=".ui.Relações.relacaoFragment"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
@@ -13,7 +13,7 @@
             app:tabMode="fixed"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.example.hsmassistantandroid.ui.SwipeLockableViewPager
+    <com.example.hsmassistantandroid.ui.adapters.SwipeLockableViewPager
             android:id="@+id/relacaoViewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

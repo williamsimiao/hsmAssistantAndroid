@@ -1,13 +1,11 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Relações
 
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.*
 import androidx.constraintlayout.solver.widgets.ConstraintWidget
-import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,9 +17,8 @@ import com.example.hsmassistantandroid.data.ResponseBody5
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
-import kotlinx.android.synthetic.main.fragment_objetos_list.*
 import kotlinx.android.synthetic.main.item_objetos.view.*
 import kotlinx.android.synthetic.main.trust_fragment.*
 import retrofit2.Call
@@ -154,7 +151,8 @@ class TrustListAdapter(private val itensArrayList: ArrayList<Pair<String, Int>>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                val bundle = bundleOf(USERNAME_KEY to itensArrayList[position].first,
+                val bundle = bundleOf(
+                    USERNAME_KEY to itensArrayList[position].first,
                     ACL_KEY to itensArrayList[position].second)
 
                 holder.itemView.findNavController().navigate(

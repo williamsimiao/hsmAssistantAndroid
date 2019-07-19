@@ -1,27 +1,21 @@
-package com.example.hsmassistantandroid.ui.fragments
+package com.example.hsmassistantandroid.ui.Objetos
 
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.*
-import androidx.constraintlayout.solver.widgets.ConstraintWidget
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.api.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody4
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_gestao_usuario_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
+private val TAG: String = ObjetoDetailFragment::class.java.simpleName
 
 class ObjetoDetailFragment : mainFragment() {
     private val networkManager = NetworkManager(context)

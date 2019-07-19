@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.ui
+package com.example.hsmassistantandroid.ui.adapters
 
 import android.content.Context
 import android.util.AttributeSet
