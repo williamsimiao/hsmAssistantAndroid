@@ -6,7 +6,7 @@ import android.view.*
 import androidx.navigation.fragment.findNavController
 
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.Gestão.gestaoUsuarioFragment

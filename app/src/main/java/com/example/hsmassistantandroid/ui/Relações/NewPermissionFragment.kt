@@ -9,7 +9,7 @@ import android.widget.Switch
 import androidx.navigation.fragment.findNavController
 
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.ResponseBody6
 import com.example.hsmassistantandroid.data.aclStruct

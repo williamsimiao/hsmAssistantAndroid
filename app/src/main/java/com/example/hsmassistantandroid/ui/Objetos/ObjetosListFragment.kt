@@ -6,7 +6,7 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody2
 import com.example.hsmassistantandroid.data.ResponseBody7
 import kotlinx.android.synthetic.main.fragment_objetos_list.*

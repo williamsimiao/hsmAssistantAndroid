@@ -1,7 +1,6 @@
-package com.example.hsmassistantandroid.api
+package com.example.hsmassistantandroid.network
 
 import com.example.hsmassistantandroid.data.ResponseBody2
-import com.example.hsmassistantandroid.data.ResponseBody5
 import com.example.hsmassistantandroid.data.ResponseBody7
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

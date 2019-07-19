@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.data
+package com.example.hsmassistantandroid.network
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -47,7 +47,9 @@ object MIHelper {
                 // Create an ssl socket factory with our all-trusting manager
                 val sslSocketFactory = sslContext.socketFactory
 
-                val sslsocket: SSLSocket = sslSocketFactory.createSocket(address, MI_PORT) as SSLSocket
+                val sslsocket: SSLSocket = sslSocketFactory.createSocket(address,
+                    MI_PORT
+                ) as SSLSocket
                 input = Scanner(sslsocket.inputStream)
                 output = PrintWriter(sslsocket.outputStream, true)
 

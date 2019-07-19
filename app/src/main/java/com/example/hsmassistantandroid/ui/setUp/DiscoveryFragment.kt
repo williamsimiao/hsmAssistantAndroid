@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.data.MIHelper
+import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_discovery.*

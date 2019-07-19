@@ -5,7 +5,7 @@ import android.preference.PreferenceManager
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.api.NetworkManager
+import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar

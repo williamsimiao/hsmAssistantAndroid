@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.data.MIHelper
+import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.mainFragment

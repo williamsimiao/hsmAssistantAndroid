@@ -1,8 +1,7 @@
-package com.example.hsmassistantandroid.api
+package com.example.hsmassistantandroid.network
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.util.Log
 import com.example.hsmassistantandroid.data.*
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -11,13 +10,11 @@ import org.json.JSONObject
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.InputStream
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import javax.security.cert.CertificateException
 import com.google.gson.GsonBuilder
-import com.google.gson.Gson
 import okhttp3.ResponseBody
 
 private val TAG: String = NetworkManager::class.java.simpleName

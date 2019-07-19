@@ -1,4 +1,4 @@
-package com.example.hsmassistantandroid.api
+package com.example.hsmassistantandroid.network
 
 import com.example.hsmassistantandroid.data.*
 import okhttp3.RequestBody
