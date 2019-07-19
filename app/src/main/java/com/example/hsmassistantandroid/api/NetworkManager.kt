@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.api
 
+import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 import com.example.hsmassistantandroid.data.*
@@ -63,17 +64,23 @@ class NetworkManager {
     private val sessaoRouter: sessaoEndPoint
     private val objetosRouter: objetosEndPoint
     private val usuarioRouter: usuarioEndPoint
-    private val BASE_URL: String
 
-    init {
+    companion object {
+        lateinit var BASE_URL: String
+    }
+
+    constructor(context: Context?) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val url = sharedPreferences.getString("BASE_URL", null)
+        val completeUrl = "https://$url"
+        BASE_URL = completeUrl
         val unsafeClient = UnsafeOkHttpClient.getUnsafeOkHttpClient().build()
 
         // setLenient : to acpect malformed JSONs
         val gson = GsonBuilder()
             .setLenient()
             .create()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences()
-        tokenString = sharedPreferences.getString("TOKEN", null)
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(unsafeClient)
@@ -82,6 +89,10 @@ class NetworkManager {
         sessaoRouter = retrofit.create(sessaoEndPoint::class.java)
         objetosRouter = retrofit.create(objetosEndPoint::class.java)
         usuarioRouter = retrofit.create(usuarioEndPoint::class.java)
+    }
+
+    init {
+
     }
     //USUARIO
 

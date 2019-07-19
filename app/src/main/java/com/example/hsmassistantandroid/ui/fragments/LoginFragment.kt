@@ -20,15 +20,9 @@ import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login.*
-import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.net.ssl.*
-import javax.security.cert.CertificateException
-import java.io.PrintWriter
-import java.util.*
-
 
 
 
@@ -36,7 +30,7 @@ private val TAG: String = LoginFragment::class.java.simpleName
 
 
 class LoginFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private var submitedUser: String? = null
     // Instantiate a new DiscoveryListener
@@ -57,58 +51,11 @@ class LoginFragment : mainFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkManager = NetworkManager(context)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
 
-//        slp()
-
-
-        doAsync {
-            val host = "10.61.53.238"
-            val port = 3344
-
-            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-                @Throws(CertificateException::class)
-                override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-                }
-
-                @Throws(CertificateException::class)
-                override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-                }
-
-                override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
-                    return arrayOf()
-                }
-            })
-
-            val sslContext = SSLContext.getInstance("SSL")
-            try {
-                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-
-                // Create an ssl socket factory with our all-trusting manager
-                val sslSocketFactory = sslContext.socketFactory
-
-                val sslsocket: SSLSocket = sslSocketFactory.createSocket(host, port) as SSLSocket
-                val input = Scanner(sslsocket.inputStream)
-
-                val output = PrintWriter(sslsocket.outputStream, true)
-                output.println("MI_MINI_AUTH 12345678")
-                Log.d(TAG, input.nextLine())
-                output.println("MI_SVC_STOP")
-                Log.d(TAG, input.nextLine())
-
-//                output.println("MI_MINI_AUTH 12345678")
-//                Log.d(TAG, input.nextLine())
-//                output.println("MI_SVC_STOP")
-//                Log.d(TAG, input.nextLine())
-
-            } catch (e: Exception) {
-                println("Deu ruim")
-                //TODO: handle exception
-            }
-
-        }
     }
 
     override fun onCreateView(

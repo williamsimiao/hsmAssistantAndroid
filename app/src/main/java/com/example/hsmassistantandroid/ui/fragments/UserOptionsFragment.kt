@@ -35,7 +35,7 @@ import retrofit2.Response
 private val TAG: String = UserOptions::class.java.simpleName
 
 class UserOptions : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

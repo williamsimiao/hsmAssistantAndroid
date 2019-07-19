@@ -30,6 +30,7 @@ object MIHelper {
 
             @Throws(CertificateException::class)
             override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+
             }
 
             override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
@@ -50,16 +51,17 @@ object MIHelper {
                 input = Scanner(sslsocket.inputStream)
                 output = PrintWriter(sslsocket.outputStream, true)
 
-//                val bundle = bundleOf("input" to input, "output" to output)
-
                 output.println("MI_HELLO")
                 val response = input.nextLine()
                 Log.d(TAG, response)
                 if(response == "MI_ACK 00000000 ") {
                     Log.d(TAG, "conectado")
+
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                     val editor = sharedPreferences.edit()
-                    editor.putString("IP", address)
+                    editor.putString("BASE_URL", address)
+                    editor.apply()
+
                     successCallback()
                 }
                 else {
@@ -97,7 +99,9 @@ object MIHelper {
                 output.println("MI_SVC_START")
                 val response = input.nextLine()
 
-                if(response == "MI_ACK 00000000 ") {
+                //TODO: checar se o erro "MI_ACK 800013F1 " significa exclusivamente que o serciso já foi
+                //iniciado
+                if(response == "MI_ACK 00000000 " || response == "MI_ACK 800013F1 ") {
                     successCallback()
                 }
                 else {

@@ -30,7 +30,7 @@ import retrofit2.Response
 private val TAG: String = NewPermissionFragment::class.java.simpleName
 
 class NewPermissionFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
     var userName: String? = null
     var userAcl: Int? = null

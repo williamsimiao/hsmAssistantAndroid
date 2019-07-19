@@ -29,7 +29,7 @@ private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 private val newUserDefaultACL = 80
 
 class NewUserFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

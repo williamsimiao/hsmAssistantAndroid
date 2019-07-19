@@ -86,7 +86,7 @@ class svmkFragment : mainFragment() {
         getActivity()?.runOnUiThread {
             Toast.makeText(context!!, "Servico iniciado", Toast.LENGTH_SHORT).show()
         }
-        val intent = Intent(context, SecondActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }

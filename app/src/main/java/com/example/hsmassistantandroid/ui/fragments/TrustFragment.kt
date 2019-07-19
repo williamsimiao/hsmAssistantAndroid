@@ -31,7 +31,7 @@ import retrofit2.Response
 private val TAG: String = TrustFragment::class.java.simpleName
 
 class TrustFragment: mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
     private var usrNameAndAclArray: ArrayList<Pair<String, Int>> = ArrayList()
     var isTrustees: Boolean? = null

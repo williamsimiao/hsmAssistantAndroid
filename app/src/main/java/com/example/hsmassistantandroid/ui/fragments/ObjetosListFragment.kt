@@ -44,7 +44,7 @@ import javax.net.ssl.SSLSocketFactory
 private val TAG: String = ObjetosListFragment::class.java.simpleName
 
 class ObjetosListFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
     private lateinit var objetosStrings: Array<String>
     private var certificateCounter: Int = 0

@@ -31,7 +31,7 @@ import retrofit2.Response
 private val TAG: String = UserSelectionFragment::class.java.simpleName
 
 class UserSelectionFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
     private var usrNamesStrings = ArrayList<String>()
     private lateinit var viewAdapter: RecyclerView.Adapter<*>

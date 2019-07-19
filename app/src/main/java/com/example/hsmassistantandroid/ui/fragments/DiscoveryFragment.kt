@@ -111,6 +111,7 @@ class DiscoveryFragment : mainFragment() {
 
         val errorCallback = { errorMessage: String ->
             getActivity()?.runOnUiThread {
+                Toast.makeText(context!!, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, errorMessage)
             }
         }
@@ -125,9 +126,10 @@ class DiscoveryFragment : mainFragment() {
     }
 
     fun onConnectionEstablished() {
-        Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
-
-        findNavController().navigate(R.id.action_discoveryFragment_to_svmkFragment)
+        getActivity()?.runOnUiThread {
+            Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_discoveryFragment_to_svmkFragment)
+        }
     }
 
     fun showInvalidTokenDialog() {

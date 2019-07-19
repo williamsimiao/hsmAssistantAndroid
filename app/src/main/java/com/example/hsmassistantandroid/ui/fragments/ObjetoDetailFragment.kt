@@ -24,7 +24,7 @@ import retrofit2.Response
 private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
 class ObjetoDetailFragment : mainFragment() {
-    private val networkManager = NetworkManager()
+    private val networkManager = NetworkManager(context)
     private var tokenString: String? = null
     private var usrNamesStrings = ArrayList<String>()
 
