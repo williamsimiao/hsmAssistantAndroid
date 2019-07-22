@@ -1,5 +1,8 @@
 package com.example.hsmassistantandroid.ui.setUp
 
+import android.content.Context
+import android.net.nsd.NsdManager
+import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -8,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.MIHelper
@@ -25,11 +29,99 @@ private val TAG: String = DiscoveryFragment::class.java.simpleName
 
 class DiscoveryFragment : mainFragment() {
     private var base_url: String? = null
+    private lateinit var mServiceName: String
+    private lateinit var nsdManager: NsdManager
+
+    private val registrationListener = object : NsdManager.RegistrationListener {
+
+        override fun onServiceRegistered(NsdServiceInfo: NsdServiceInfo) {
+            // Save the service name. Android may have changed it in order to
+            // resolve a conflict, so update the name you initially requested
+            // with the name Android actually used.
+            mServiceName = NsdServiceInfo.serviceName
+        }
+
+        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            // Registration failed! Put debugging code here to determine why.
+        }
+
+        override fun onServiceUnregistered(arg0: NsdServiceInfo) {
+            // Service has been unregistered. This only happens when you call
+            // NsdManager.unregisterService() and pass in this listener.
+        }
+
+        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            // Unregistration failed. Put debugging code here to determine why.
+        }
+    }
+
+    fun registerService(port: Int) {
+        // Create the NsdServiceInfo object, and populate it.
+        val serviceInfo = NsdServiceInfo().apply {
+            // The name is subject to change based on conflicts
+            // with other services advertised on the same network.
+            serviceName = "NsdChat"
+            serviceType = "_nsdchat._tcp"
+            setPort(port)
+        }
+
+        nsdManager = getSystemService(requireContext(), NsdManager::class.java) as NsdManager
+        nsdManager.apply {
+            registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
+        }
+    }
+
+
+    // Instantiate a new DiscoveryListener
+    private val discoveryListener = object : NsdManager.DiscoveryListener {
+
+        // Called as soon as service discovery begins.
+        override fun onDiscoveryStarted(regType: String) {
+            Log.d(TAG, "Service discovery started")
+        }
+
+        override fun onServiceFound(service: NsdServiceInfo) {
+            // A service was found! Do something with it.
+            Log.d(TAG, "Service discovery success $service")
+            Log.d(TAG, service.serviceName)
+        }
+
+        override fun onServiceLost(service: NsdServiceInfo) {
+            // When the network service is no longer available.
+            // Internal bookkeeping code goes here.
+            Log.e(TAG, "service lost: $service")
+        }
+
+        override fun onDiscoveryStopped(serviceType: String) {
+            Log.i(TAG, "Discovery stopped: $serviceType")
+        }
+
+        override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
+            Log.e(TAG, "Discovery failed: Error code:$errorCode")
+            nsdManager.stopServiceDiscovery(this)
+        }
+
+        override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
+            Log.e(TAG, "Discovery failed: Error code:$errorCode")
+            nsdManager.stopServiceDiscovery(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         base_url = sharedPreferences.getString("BASE_URL", null)
+        if(base_url != null) {
+
+        }
+//        registerService(3344)
+
+
+//        nsdManager = getSystemService(requireContext(), NsdManager::class.java) as NsdManager
+//
+//        nsdManager.apply {
+//            nsdManager.discoverServices("TEST", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+//        }
     }
 
     override fun onCreateView(
@@ -47,10 +139,6 @@ class DiscoveryFragment : mainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if(base_url != null) {
-
-        }
 
         val hsmWasFound = makeAutoDiscovery()
 
@@ -109,7 +197,9 @@ class DiscoveryFragment : mainFragment() {
 
     fun makeAutoDiscovery(): Boolean {
         loadingProgressBar.show()
-        //TODO: make SLP
+
+
+
         return false
     }
 

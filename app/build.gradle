@@ -47,10 +47,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1"
 
 
-    implementation "org.eclipse.ecf:org.eclipse.ecf.provider.jslp:3.2.200"
-
-
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:run' + 'ner:1.1.0'
