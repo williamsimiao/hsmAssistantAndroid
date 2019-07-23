@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.example.hsmassistantandroid.extensions.hideSoftKeyboard
 
 open class mainFragment: Fragment() {
     var alreadyLoaded: Boolean = false
@@ -16,5 +17,12 @@ open class mainFragment: Fragment() {
         ActivityCompat.invalidateOptionsMenu(activity)
 
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.setOnClickListener {
+            hideSoftKeyboard(requireActivity())
+        }
     }
 }

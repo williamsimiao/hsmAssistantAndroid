@@ -1,6 +1,5 @@
 package com.example.hsmassistantandroid.ui.setUp
 
-import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
@@ -55,24 +54,7 @@ class DiscoveryFragment : mainFragment() {
         }
     }
 
-    fun registerService(port: Int) {
-        // Create the NsdServiceInfo object, and populate it.
-        val serviceInfo = NsdServiceInfo().apply {
-            // The name is subject to change based on conflicts
-            // with other services advertised on the same network.
-            serviceName = "NsdChat"
-            serviceType = "_nsdchat._tcp"
-            setPort(port)
-        }
-
-        nsdManager = getSystemService(requireContext(), NsdManager::class.java) as NsdManager
-        nsdManager.apply {
-            registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
-        }
-    }
-
-
-    // Instantiate a new DiscoveryListener
+//     Instantiate a new DiscoveryListener
     private val discoveryListener = object : NsdManager.DiscoveryListener {
 
         // Called as soon as service discovery begins.
@@ -107,6 +89,21 @@ class DiscoveryFragment : mainFragment() {
         }
     }
 
+    fun registerService(port: Int) {
+        // Create the NsdServiceInfo object, and populate it.
+        val serviceInfo = NsdServiceInfo().apply {
+            // The name is subject to change based on conflicts
+            // with other services advertised on the same network.
+            serviceName = "NsdChat"
+            serviceType = "_nsdchat._tcp"
+            setPort(port)
+        }
+
+        nsdManager = (getSystemService(requireContext(), NsdManager::class.java) as NsdManager).apply {
+            registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -114,7 +111,10 @@ class DiscoveryFragment : mainFragment() {
         if(base_url != null) {
 
         }
-//        registerService(3344)
+
+        registerService(3344)
+
+        nsdManager.discoverServices("_pocket._tcp", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
 
 
 //        nsdManager = getSystemService(requireContext(), NsdManager::class.java) as NsdManager
@@ -130,11 +130,7 @@ class DiscoveryFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_discovery, container, false)
-        view.setOnClickListener {
-            hideSoftKeyboard(requireActivity())
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_discovery, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

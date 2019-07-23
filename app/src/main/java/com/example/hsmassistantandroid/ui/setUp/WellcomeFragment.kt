@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
-import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_wellcome.*
 
@@ -23,11 +22,7 @@ class WellcomeFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_wellcome, container, false)
-        view.setOnClickListener {
-            hideSoftKeyboard(requireActivity())
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_wellcome, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

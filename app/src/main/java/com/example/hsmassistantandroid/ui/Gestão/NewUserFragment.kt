@@ -62,11 +62,7 @@ class NewUserFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_new_user, container, false)
-        view.setOnClickListener {
-            hideSoftKeyboard(requireActivity())
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_new_user, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

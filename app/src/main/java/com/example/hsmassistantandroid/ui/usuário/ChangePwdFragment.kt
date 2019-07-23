@@ -62,11 +62,7 @@ class ChangePwdFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_change_pwd, container, false)
-        view.setOnClickListener {
-            hideSoftKeyboard(requireActivity())
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_change_pwd, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
