@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/navigation_device_setup" app:startDestination="@id/wellcomeFragment">
-    <fragment android:id="@+id/wellcomeFragment"
-              android:name="com.example.hsmassistantandroid.ui.setUp.WellcomeFragment"
-              android:label="WellcomeFragment">
-        <action android:id="@+id/action_wellcomeFragment_to_discoveryFragment"
-                app:destination="@id/discoveryFragment">
-
-        </action>
-    </fragment>
+            android:id="@+id/navigation_device_setup" app:startDestination="@id/discoveryFragment">
     <fragment android:id="@+id/discoveryFragment"
               android:name="com.example.hsmassistantandroid.ui.setUp.DiscoveryFragment"
               android:label="DiscoveryFragment">

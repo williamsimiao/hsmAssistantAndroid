@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.usuário
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -71,7 +72,13 @@ class UserOptions : mainFragment() {
         findNavController().navigate(R.id.action_userOptions_to_hsmOptions)
     }
 
+    @SuppressLint("ApplySharedPref")
     fun didTapConnectNewHSM() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val editor = sharedPreferences.edit()
+        editor.remove("BASE_URL")
+        editor.commit()
+
         val intent = Intent(context, SetupActivity::class.java)
         startActivity(intent)
         requireActivity().finish()

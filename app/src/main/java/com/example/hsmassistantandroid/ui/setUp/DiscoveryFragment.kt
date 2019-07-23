@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.setUp
 
+import android.content.Intent
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import kotlinx.coroutines.Dispatchers
@@ -109,7 +111,9 @@ class DiscoveryFragment : mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         base_url = sharedPreferences.getString("BASE_URL", null)
         if(base_url != null) {
-
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
 
         registerService(3344)
@@ -138,29 +142,31 @@ class DiscoveryFragment : mainFragment() {
 
         val hsmWasFound = makeAutoDiscovery()
 
-        if(hsmWasFound) {
-            //if(devices.count == 1) {
-            //  go to SVK screen
-            //}
-            //else if (devices.count > 1) {
-            //  show all options stacked on recyclerview (height iqual to 3 rows)
-            //}
-        }
-        else {
-            //SHow fields
-            GlobalScope.launch(context = Dispatchers.Main) {
-                delay(2000)
+//        if(hsmWasFound) {
+//            //if(devices.count == 1) {
+//            //  go to SVK screen
+//            //}
+//            //else if (devices.count > 1) {
+//            //  show all options stacked on recyclerview (height iqual to 3 rows)
+//            //}
+//        }
+//        else {
+//            //SHow fields
+//            GlobalScope.launch(context = Dispatchers.Main) {
+//                delay(2000)
+//
+//
+//            }
+//        }
 
-                loadingProgressBar.hide()
-                rightView.visibility = View.VISIBLE
-                leftView.visibility = View.VISIBLE
-                ouTextView.visibility = View.VISIBLE
-                secondTitleTExtView.visibility = View.VISIBLE
-                reTrydiscoveryButton.visibility = View.VISIBLE
-                deviceAddressEditText.visibility = View.VISIBLE
-                connectToButton.visibility = View.VISIBLE
-            }
-        }
+        loadingProgressBar.hide()
+        rightView.visibility = View.VISIBLE
+        leftView.visibility = View.VISIBLE
+        ouTextView.visibility = View.VISIBLE
+        secondTitleTExtView.visibility = View.VISIBLE
+        reTrydiscoveryButton.visibility = View.VISIBLE
+        deviceAddressEditText.visibility = View.VISIBLE
+        connectToButton.visibility = View.VISIBLE
 
         setUpViews()
     }
