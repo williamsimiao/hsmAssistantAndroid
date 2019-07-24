@@ -4,7 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
+import android.widget.Toast
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.network.MIHelper
 
 private val TAG: String = DeviceSelectionActivity::class.java.simpleName
 
@@ -22,5 +25,35 @@ class DeviceSelectionActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_device_selection)
+    }
+
+    fun prepareConnection(address: String) {
+        //TODO: validate address
+
+        val successCallback = {
+            onConnectionEstablished()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            runOnUiThread {
+                Toast.makeText(baseContext, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, errorMessage)
+            }
+        }
+
+        MIHelper.connectToAddress(address, baseContext, successCallback, errorCallback)
+    }
+
+    fun onConnectionEstablished() {
+        runOnUiThread {
+            Toast.makeText(baseContext, "Conectado", Toast.LENGTH_SHORT).show()
+            goToSVMKactivity()
+        }
+    }
+
+    fun goToSVMKactivity() {
+        val intent = Intent(baseContext, SvmkActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

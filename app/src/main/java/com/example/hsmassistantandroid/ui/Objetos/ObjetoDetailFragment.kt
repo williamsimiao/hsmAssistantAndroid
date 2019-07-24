@@ -39,8 +39,6 @@ class ObjetoDetailFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
                 if(response!!.isSuccessful) {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
-
-
                 }
                 else {
                     val message = handleAPIError(this@ObjetoDetailFragment, response.errorBody())

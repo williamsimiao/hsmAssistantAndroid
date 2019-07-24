@@ -1,5 +1,6 @@
 package com.example.hsmassistantandroid.ui.setUp
 
+import android.app.Activity
 import android.content.Intent
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
@@ -11,12 +12,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.extensions.ctx
 import com.example.hsmassistantandroid.network.MIHelper
+import com.example.hsmassistantandroid.ui.Objetos.ObjetosListAdapter
+import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.activities.SvmkActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_devices_search.*
+import kotlinx.android.synthetic.main.item_certificado.view.*
+import kotlinx.android.synthetic.main.item_objetos.view.*
+import java.text.SimpleDateFormat
 
 
 private val TAG: String = DeviceSearchFragment::class.java.simpleName
@@ -25,7 +35,9 @@ class DeviceSearchFragment : mainFragment() {
     private var base_url: String? = null
     private lateinit var mServiceName: String
     private lateinit var nsdManager: NsdManager
-    var devices = arrayOf("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+
+    var devicesList = arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
 
     private val registrationListener = object : NsdManager.RegistrationListener {
 
@@ -60,6 +72,9 @@ class DeviceSearchFragment : mainFragment() {
 
         override fun onServiceFound(service: NsdServiceInfo) {
             // A service was found! Do something with it.
+            loadingProgressBar.hide()
+            reTrydiscoveryButton.visibility = View.VISIBLE
+
             Log.d(TAG, "Service discovery success $service")
             Log.d(TAG, service.serviceName)
         }
@@ -100,71 +115,68 @@ class DeviceSearchFragment : mainFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        registerService(3344)
-
-        doAutoDiscovery()
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        return inflater.inflate(R.layout.fragment_devices_search, container, false)
+        val view = inflater.inflate(R.layout.fragment_devices_search, container, false)
+
+        viewAdapter = DevicesListAdapter(requireActivity(), devicesList)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.devicesList)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+
+        return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerService(3344)
         doAutoDiscovery()
-
-        loadingProgressBar.hide()
-        reTrydiscoveryButton.visibility = View.VISIBLE
 
         setUpViews()
     }
 
     fun setUpViews() {
+        //TODO: remover essas duas linhas
+        loadingProgressBar.hide()
+        reTrydiscoveryButton.visibility = View.VISIBLE
+
         reTrydiscoveryButton.setOnClickListener { Log.d(TAG, "CLICK") }
     }
 
     fun doAutoDiscovery() {
-//        loadingProgressBar.show()
-//        nsdManager.discoverServices("_pocket._tcp", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+        loadingProgressBar.show()
+        nsdManager.discoverServices("_pocket._tcp", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+    }
+}
 
+class DevicesListAdapter(private val activity: Activity, private val devicesAddressList: ArrayList<String>) : RecyclerView.Adapter<DevicesListAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
+        return ViewHolder(view)
     }
 
-    fun prepareConnection(address: String) {
-
-        val successCallback = {
-            onConnectionEstablished()
-        }
-
-        val errorCallback = { errorMessage: String ->
-            getActivity()?.runOnUiThread {
-                Toast.makeText(context!!, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, errorMessage)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                (activity as DeviceSelectionActivity).prepareConnection(holder.itemView.title_label.text.toString())
             }
-        }
+        })
 
-        MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
+        holder.bindObjetos(devicesAddressList[position])
     }
 
-    fun onConnectionEstablished() {
-        getActivity()?.runOnUiThread {
-            Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
-            goToSVMKactivity()
-        }
-    }
+    override fun getItemCount(): Int = devicesAddressList.size
 
-    fun goToSVMKactivity() {
-        val intent = Intent(context, SvmkActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindObjetos(deviceAddress: String) {
+            itemView.title_label.text = deviceAddress
+        }
     }
 }

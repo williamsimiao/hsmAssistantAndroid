@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 import com.example.hsmassistantandroid.ui.activities.SvmkActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import kotlinx.android.synthetic.main.fragment_device_input.*
@@ -52,38 +53,8 @@ class DeviceInputFragment : mainFragment() {
 
         deviceAddressEditText.editText!!.onChange { deviceAddressEditText.error = null }
         connectToButton.setOnClickListener {
-            prepareConnection()
+            val address = deviceAddressEditText.editText!!.text.toString()
+            (requireActivity() as DeviceSelectionActivity).prepareConnection(address)
         }
-    }
-
-    fun prepareConnection() {
-        //TODO: validate address
-        val address = deviceAddressEditText.editText!!.text.toString()
-
-        val successCallback = {
-            onConnectionEstablished()
-        }
-
-        val errorCallback = { errorMessage: String ->
-            getActivity()?.runOnUiThread {
-                Toast.makeText(context!!, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
-                Log.d(TAG, errorMessage)
-            }
-        }
-
-        MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
-    }
-
-    fun onConnectionEstablished() {
-        getActivity()?.runOnUiThread {
-            Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
-            goToSVMKactivity()
-        }
-    }
-
-    fun goToSVMKactivity() {
-        val intent = Intent(context, SvmkActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
     }
 }

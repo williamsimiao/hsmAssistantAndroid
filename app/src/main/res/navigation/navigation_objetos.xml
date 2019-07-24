@@ -18,5 +18,10 @@
               android:label="MainActivity"/>
     <fragment android:id="@+id/objetoDetailFragment"
               android:name="com.example.hsmassistantandroid.ui.Objetos.ObjetoDetailFragment"
-              android:label="ObjetoDetailFragment"/>
+              android:label="ObjetoDetailFragment">
+        <argument
+                android:name="myArg"
+                app:argType="integer"
+                android:defaultValue="0" />
+    </fragment>
 </navigation>
