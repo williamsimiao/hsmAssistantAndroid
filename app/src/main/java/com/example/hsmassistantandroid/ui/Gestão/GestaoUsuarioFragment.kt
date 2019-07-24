@@ -49,7 +49,8 @@ class gestaoUsuarioFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
                 if(response!!.isSuccessful) {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
-
+                    //TODO: tirar essa linha
+                    usrNamesStrings.addAll(arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5", "pocket_example_6", "pocket_example_7", "pocket_example_7", "pocket_example_7", "pocket_example_7", "pocket_example_7", "pocket_example_7" ))
                     gestaousuarioList.layoutManager = LinearLayoutManager(context)
                     viewAdapter = GestaoListAdapter(usrNamesStrings)
                     gestaousuarioList.adapter = viewAdapter
@@ -124,11 +125,11 @@ class GestaoListAdapter(private val itensStringList: ArrayList<String>) : Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                Log.d(TAG, "name:" + itensStringList[position])
-            }
-        })
+//        holder.itemView.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(v: View) {
+//                Log.d(TAG, "name:" + itensStringList[position])
+//            }
+//        })
         holder.bindUsuario(itensStringList[position])
     }
 
