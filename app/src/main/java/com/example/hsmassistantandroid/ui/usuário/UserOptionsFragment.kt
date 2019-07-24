@@ -15,8 +15,7 @@ import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
-import com.example.hsmassistantandroid.ui.activities.SecondActivity
-import com.example.hsmassistantandroid.ui.activities.SetupActivity
+import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_options.*
@@ -79,7 +78,7 @@ class UserOptions : mainFragment() {
         editor.remove("BASE_URL")
         editor.commit()
 
-        val intent = Intent(context, SetupActivity::class.java)
+        val intent = Intent(context, DeviceSelectionActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }

@@ -10,28 +10,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.navigation.fragment.findNavController
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.MIHelper
-import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.activities.MainActivity
+import com.example.hsmassistantandroid.ui.activities.SvmkActivity
 import com.example.hsmassistantandroid.ui.mainFragment
-import kotlinx.android.synthetic.main.fragment_discovery.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_devices_search.*
 
 
-private val TAG: String = DiscoveryFragment::class.java.simpleName
+private val TAG: String = DeviceSearchFragment::class.java.simpleName
 
-
-class DiscoveryFragment : mainFragment() {
+class DeviceSearchFragment : mainFragment() {
     private var base_url: String? = null
     private lateinit var mServiceName: String
     private lateinit var nsdManager: NsdManager
+    var devices = arrayOf("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
 
     private val registrationListener = object : NsdManager.RegistrationListener {
 
@@ -56,7 +50,7 @@ class DiscoveryFragment : mainFragment() {
         }
     }
 
-//     Instantiate a new DiscoveryListener
+    //     Instantiate a new DiscoveryListener
     private val discoveryListener = object : NsdManager.DiscoveryListener {
 
         // Called as soon as service discovery begins.
@@ -108,24 +102,11 @@ class DiscoveryFragment : mainFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        base_url = sharedPreferences.getString("BASE_URL", null)
-        if(base_url != null) {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
 
         registerService(3344)
 
-        nsdManager.discoverServices("_pocket._tcp", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+        doAutoDiscovery()
 
-
-//        nsdManager = getSystemService(requireContext(), NsdManager::class.java) as NsdManager
-//
-//        nsdManager.apply {
-//            nsdManager.discoverServices("TEST", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
-//        }
     }
 
     override fun onCreateView(
@@ -134,54 +115,31 @@ class DiscoveryFragment : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        return inflater.inflate(R.layout.fragment_discovery, container, false)
+        return inflater.inflate(R.layout.fragment_devices_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hsmWasFound = makeAutoDiscovery()
-
-//        if(hsmWasFound) {
-//            //if(devices.count == 1) {
-//            //  go to SVK screen
-//            //}
-//            //else if (devices.count > 1) {
-//            //  show all options stacked on recyclerview (height iqual to 3 rows)
-//            //}
-//        }
-//        else {
-//            //SHow fields
-//            GlobalScope.launch(context = Dispatchers.Main) {
-//                delay(2000)
-//
-//
-//            }
-//        }
+        doAutoDiscovery()
 
         loadingProgressBar.hide()
-        rightView.visibility = View.VISIBLE
-        leftView.visibility = View.VISIBLE
-        ouTextView.visibility = View.VISIBLE
-        secondTitleTExtView.visibility = View.VISIBLE
         reTrydiscoveryButton.visibility = View.VISIBLE
-        deviceAddressEditText.visibility = View.VISIBLE
-        connectToButton.visibility = View.VISIBLE
 
         setUpViews()
     }
 
     fun setUpViews() {
         reTrydiscoveryButton.setOnClickListener { Log.d(TAG, "CLICK") }
-
-        deviceAddressEditText.editText!!.onChange { deviceAddressEditText.error = null }
-        connectToButton.setOnClickListener {
-            prepareConnection()
-        }
     }
 
-    fun prepareConnection() {
-        val address = deviceAddressEditText.editText!!.text.toString()
+    fun doAutoDiscovery() {
+//        loadingProgressBar.show()
+//        nsdManager.discoverServices("_pocket._tcp", NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+
+    }
+
+    fun prepareConnection(address: String) {
 
         val successCallback = {
             onConnectionEstablished()
@@ -197,25 +155,16 @@ class DiscoveryFragment : mainFragment() {
         MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
     }
 
-    fun makeAutoDiscovery(): Boolean {
-        loadingProgressBar.show()
-
-
-
-        return false
-    }
-
     fun onConnectionEstablished() {
         getActivity()?.runOnUiThread {
             Toast.makeText(context!!, "Conectado", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_discoveryFragment_to_svmkFragment)
+            goToSVMKactivity()
         }
     }
 
-    fun showInvalidTokenDialog() {
-        AlertDialog.Builder(requireContext()).setTitle(getString(R.string.invalidTokenDialog_title))
-            .setMessage(getString(R.string.invalidTokenDialog_message))
-            .setPositiveButton(android.R.string.ok) { _, _ -> }
-            .show()
+    fun goToSVMKactivity() {
+        val intent = Intent(context, SvmkActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

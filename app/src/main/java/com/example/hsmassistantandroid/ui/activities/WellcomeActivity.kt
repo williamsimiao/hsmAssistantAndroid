@@ -18,9 +18,7 @@ class WellcomeActivity : AppCompatActivity() {
         val isFirstTime = sharedPreferences.getBoolean("FIRST_TIME", true)
 
         if(base_url != null || !isFirstTime) {
-            val intent = Intent(baseContext, SetupActivity::class.java)
-            startActivity(intent)
-            finish()
+            goToDeviceSelection()
         }
 
         setContentView(R.layout.activity_wellcome)
@@ -35,10 +33,14 @@ class WellcomeActivity : AppCompatActivity() {
         editor.apply()
 
         nextButton.setOnClickListener {
-            val intent = Intent(baseContext, SetupActivity::class.java)
-            startActivity(intent)
-            finish()
+            goToDeviceSelection()
         }
+    }
+
+    fun goToDeviceSelection() {
+        val intent = Intent(baseContext, DeviceSelectionActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
 

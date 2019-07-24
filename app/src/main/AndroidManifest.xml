@@ -30,13 +30,6 @@
         <activity android:name=".ui.activities.MainActivity"
                   android:screenOrientation="portrait"
                   android:configChanges="orientation">
-
-        </activity>
-
-        <activity android:name=".ui.activities.SetupActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="orientation">
-
         </activity>
 
         <activity android:name=".ui.activities.WellcomeActivity"
@@ -46,6 +39,18 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+
+        <activity android:name=".ui.activities.SvmkActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation">
+
+        </activity>
+
+        <activity android:name=".ui.activities.DeviceSelectionActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation">
 
         </activity>
     </application>
