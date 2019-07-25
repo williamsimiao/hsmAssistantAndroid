@@ -26,7 +26,7 @@
             android:id="@+id/leftView"/>
 
     <TextView
-            android:text="Ou"
+            android:text="OU"
             android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
 
     <TextView
-            android:text="Informe o IP do HSM"
+            android:text="Informe o endereço do HSM"
             android:textSize="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -97,6 +97,21 @@ fun validUsr(context: Context?, usrField: TextInputLayout): Boolean {
     return isAlplhanumeric
 }
 
+fun validPwd(context: Context?, pwdField: EditText): Boolean {
+    val input = pwdField.text.toString()
+    if(input.isEmpty()) {
+        return false
+    }
+
+    if(input.length >= minPwdLenght) {
+        return true
+    }
+    else {
+        pwdField.error = context!!.getString(R.string.pwd_too_short)
+        return false
+    }
+}
+
 fun validPwd(context: Context?, pwdField: TextInputLayout): Boolean {
     val input = pwdField.editText!!.text.toString()
     if(input.isEmpty()) {

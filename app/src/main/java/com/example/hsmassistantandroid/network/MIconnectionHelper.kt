@@ -14,7 +14,7 @@ import javax.security.cert.CertificateException
 
 private val TAG: String = MIHelper::class.java.simpleName
 
-object MIHelper {
+object  MIHelper {
     private const val MI_PORT = 3344
     lateinit var myAddress: String
     lateinit var input: Scanner
@@ -89,6 +89,30 @@ object MIHelper {
                 }
             } catch (e: Exception) {
                 Log.d(TAG, "falha2: $e")
+            }
+        }
+    }
+
+    fun connectAndAutenticate(context: Context, key: String, successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        val new_success = {
+
+            successCallback()
+        }
+        connectToAddress(context = context, successCallback = successCallback, errorCallback = errorCallback)
+    }
+
+    fun isServiceStarted(caseFalse: () -> Unit, caseTrue: () -> Unit) {
+        doAsync {
+            try {
+                output.println("MI_SVC_STATUS")
+                val response = input.nextLine()
+                when(response) {
+                    "MI_ACK 00000000 " -> caseFalse()
+                    "MI_ACK 00000001 " -> caseTrue()
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "falha8: $e")
             }
         }
     }

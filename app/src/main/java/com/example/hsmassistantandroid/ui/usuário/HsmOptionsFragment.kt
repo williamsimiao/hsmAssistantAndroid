@@ -1,7 +1,9 @@
 package com.example.hsmassistantandroid.ui.usuário
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
@@ -13,8 +15,11 @@ import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.goToLoginScreen
 import com.example.hsmassistantandroid.extensions.handleAPIError
 import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
+import com.example.hsmassistantandroid.network.MIHelper
+import com.example.hsmassistantandroid.ui.activities.MainActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_hsm_options.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,9 +27,15 @@ import retrofit2.Response
 
 private val TAG: String = HsmOptions::class.java.simpleName
 
+enum class ServiceStatus {
+    Stoped,
+    Started
+}
+
 class HsmOptions : mainFragment() {
     private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
+    private var myServiceStatus = ServiceStatus.Stoped
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +43,7 @@ class HsmOptions : mainFragment() {
         setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+        checkServiceStatus()
     }
 
     override fun onCreateView(
@@ -49,8 +61,73 @@ class HsmOptions : mainFragment() {
     }
 
     fun setUpViews() {
-//        hsmOptions.setOnClickListener { didTapHsmOptions() }
-//        closeButton.setOnClickListener { didTapcloseButton() }
-//        changePwdButton.setOnClickListener { didTapChangePwd() }
+        serviceButton.setOnClickListener { didTapService() }
+        restartButton.setOnClickListener { didTapRestart() }
+        powerButton.setOnClickListener { didTapPower() }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val successCallback = {
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            Log.d(TAG, errorMessage)
+            Unit
+        }
+
+        MIHelper.disconnect(successCallback, errorCallback)
+    }
+
+    private fun didTapPower() {
+        //Power
+    }
+
+    private fun didTapRestart() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun setButtonWithServiceStatus() {
+
+        if(myServiceStatus == ServiceStatus.Stoped) {
+            serviceButton.text = "Carregar"
+        }
+        else {
+            serviceButton.text = "Parar"
+        }
+    }
+
+    private fun checkServiceStatus() {
+        //Check
+        val caseTrue = {
+            myServiceStatus = ServiceStatus.Started
+        }
+
+        val caseFalse = {
+            myServiceStatus = ServiceStatus.Stoped
+            setButtonWithServiceStatus()
+        }
+
+        MIHelper.isServiceStarted(caseTrue, caseFalse)
+    }
+
+    private fun didTapService() {
+
+        //Start
+        //Stop
+        val successCallback = {
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            Log.d(TAG, errorMessage)
+            Unit
+        }
     }
 }

@@ -4,20 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.*
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
-import com.example.hsmassistantandroid.extensions.goToLoginScreen
-import com.example.hsmassistantandroid.extensions.handleAPIError
-import com.example.hsmassistantandroid.extensions.removeTokenFromSecureLocation
+import com.example.hsmassistantandroid.extensions.*
+import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
+import com.example.hsmassistantandroid.ui.activities.SvmkActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_svmk.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +38,30 @@ class UserOptions : mainFragment() {
         setHasOptionsMenu(false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_user_options, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+    }
+
+    fun setUpViews() {
+        connectNewHSM.setOnClickListener { didTapConnectNewHSM() }
+        hsmOptions.setOnClickListener { didTapHsmOptions() }
+        closeButton.setOnClickListener { didTapcloseButton() }
+        changePwdButton.setOnClickListener {
+            findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
+        }
+
     }
 
     fun didTapcloseButton() {
@@ -63,12 +90,10 @@ class UserOptions : mainFragment() {
             .show()
     }
 
-    fun didTapChangePwd() {
-        findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
-    }
-
     fun didTapHsmOptions() {
-        findNavController().navigate(R.id.action_userOptions_to_hsmOptions)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val url = sharedPreferences.getString("BASE_URL", null)
+        prepareConnection(url)
     }
 
     @SuppressLint("ApplySharedPref")
@@ -83,24 +108,77 @@ class UserOptions : mainFragment() {
         requireActivity().finish()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_options, container, false)
+    fun showAutenticationDialog() {
+        val builder = AlertDialog.Builder(context!!)
+        builder.setTitle("Informe a chave de ativação do HSM")
+
+        val view = layoutInflater.inflate(R.layout.dialog_pwd_input, null)
+
+        val pwdEditText = view.findViewById(R.id.categoryEditText) as EditText
+
+        builder.setView(view)
+
+        // set up the ok button
+        builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
+            val key = pwdEditText.text.toString()
+
+            if(validPwd(context, pwdEditText)) {
+
+                val successCallback = {
+                    onAuthenticationCompleted()
+                }
+
+                val errorCallback = { errorMessage: String ->
+                    Log.d(TAG, errorMessage)
+                    Unit
+                }
+
+                MIHelper.autenticateWithKey(key, successCallback, errorCallback)
+                dialog.dismiss()
+
+            }
+        }
+
+        builder.setNegativeButton(android.R.string.cancel) { dialog, p1 ->
+            dialog.cancel()
+        }
+
+        builder.show()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpViews()
+    fun onAuthenticationCompleted() {
+        findNavController().navigate(R.id.action_userOptions_to_hsmOptions)
     }
 
-    fun setUpViews() {
-        connectNewHSM.setOnClickListener { didTapConnectNewHSM() }
-        hsmOptions.setOnClickListener { didTapHsmOptions() }
-        closeButton.setOnClickListener { didTapcloseButton() }
-        changePwdButton.setOnClickListener { didTapChangePwd() }
+    fun prepareConnection(address: String) {
+        //TODO: validate address
+
+        val successCallback = {
+            showAutenticationDialog()
+        }
+
+        val errorCallback = { errorMessage: String ->
+            requireActivity().runOnUiThread {
+                Toast.makeText(context, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, errorMessage)
+            }
+        }
+
+        MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
+    }
+
+    fun onConnectionEstablished() {
+//        val successCallback = {
+//            Log.d(TAG, "deu certo")
+//            showAutenticationDialog()
+//        }
+//
+//        val errorCallback = { errorMessage: String ->
+//            requireActivity().runOnUiThread {
+//                Toast.makeText(context, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
+//                Log.d(TAG, errorMessage)
+//            }
+//        }
+
     }
 }

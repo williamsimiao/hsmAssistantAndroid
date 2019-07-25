@@ -36,8 +36,10 @@ class DeviceSearchFragment : mainFragment() {
     private lateinit var mServiceName: String
     private lateinit var nsdManager: NsdManager
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerView: RecyclerView
+    private var foundHsmOnNetwork = false
 
-    var devicesList = arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
+    var devicesArrayList = arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
 
     private val registrationListener = object : NsdManager.RegistrationListener {
 
@@ -73,6 +75,7 @@ class DeviceSearchFragment : mainFragment() {
         override fun onServiceFound(service: NsdServiceInfo) {
             // A service was found! Do something with it.
             loadingProgressBar.hide()
+            titleTextView.text = "Encontramos HSM(s) na sua rede"
             reTrydiscoveryButton.visibility = View.VISIBLE
 
             Log.d(TAG, "Service discovery success $service")
@@ -123,8 +126,8 @@ class DeviceSearchFragment : mainFragment() {
 
         val view = inflater.inflate(R.layout.fragment_devices_search, container, false)
 
-        viewAdapter = DevicesListAdapter(requireActivity(), devicesList)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.devicesList)
+        viewAdapter = DevicesListAdapter(requireActivity(), devicesArrayList)
+        recyclerView = view.findViewById<RecyclerView>(R.id.devicesRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewAdapter
 
@@ -146,7 +149,12 @@ class DeviceSearchFragment : mainFragment() {
         loadingProgressBar.hide()
         reTrydiscoveryButton.visibility = View.VISIBLE
 
-        reTrydiscoveryButton.setOnClickListener { Log.d(TAG, "CLICK") }
+        reTrydiscoveryButton.setOnClickListener {
+            titleTextView.text = "Buscando HSMs na sua rede"
+            recyclerView.visibility = View.INVISIBLE
+            reTrydiscoveryButton.visibility = View.INVISIBLE
+            loadingProgressBar.show()
+        }
     }
 
     fun doAutoDiscovery() {
@@ -165,7 +173,8 @@ class DevicesListAdapter(private val activity: Activity, private val devicesAddr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                (activity as DeviceSelectionActivity).prepareConnection(holder.itemView.title_label.text.toString())
+                val itemAddress = holder.itemView.title_label.text.toString()
+                (activity as DeviceSelectionActivity).prepareConnection(itemAddress)
             }
         })
 
