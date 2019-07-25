@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.EditText
@@ -109,41 +110,53 @@ class UserOptions : mainFragment() {
     }
 
     fun showAutenticationDialog() {
-        val builder = AlertDialog.Builder(context!!)
-        builder.setTitle("Informe a chave de ativação do HSM")
+        val alert = AlertDialog.Builder(requireContext())
+        var editTextAge:EditText? = null
 
-        val view = layoutInflater.inflate(R.layout.dialog_pwd_input, null)
+        // Builder
+        with (alert) {
+            setTitle("Informe a chave de ativação do HSM")
+//            setMessage("Enter your Age Here!!")
 
-        val pwdEditText = view.findViewById(R.id.categoryEditText) as EditText
+            // Add any  input field here
+            editTextAge = EditText(context)
+            editTextAge!!.hint="12345678"
+            editTextAge!!.inputType = InputType.TYPE_CLASS_NUMBER
 
-        builder.setView(view)
+            setPositiveButton("OK") {
+                    dialog, whichButton ->
+                val hsm_key = editTextAge!!.text.toString()
 
-        // set up the ok button
-        builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
-            val key = pwdEditText.text.toString()
+                if(validPwd(context, editTextAge!!)) {
 
-            if(validPwd(context, pwdEditText)) {
+                    val successCallback = {
+                        requireActivity().runOnUiThread {
+                            onAuthenticationCompleted()
+                        }
+                    }
 
-                val successCallback = {
-                    onAuthenticationCompleted()
+                    val errorCallback = { errorMessage: String ->
+                        Log.d(TAG, errorMessage)
+                        Unit
+                    }
+
+                    MIHelper.autenticateWithKey(hsm_key, successCallback, errorCallback)
+                    dialog.dismiss()
                 }
 
-                val errorCallback = { errorMessage: String ->
-                    Log.d(TAG, errorMessage)
-                    Unit
-                }
 
-                MIHelper.autenticateWithKey(key, successCallback, errorCallback)
+            }
+
+            setNegativeButton("Cancelar") {
+                    dialog, whichButton ->
                 dialog.dismiss()
-
             }
         }
 
-        builder.setNegativeButton(android.R.string.cancel) { dialog, p1 ->
-            dialog.cancel()
-        }
-
-        builder.show()
+        // Dialog
+        val dialog = alert.create()
+        dialog.setView(editTextAge)
+        dialog.show()
     }
 
     fun onAuthenticationCompleted() {
@@ -154,7 +167,9 @@ class UserOptions : mainFragment() {
         //TODO: validate address
 
         val successCallback = {
-            showAutenticationDialog()
+            requireActivity().runOnUiThread {
+                showAutenticationDialog()
+            }
         }
 
         val errorCallback = { errorMessage: String ->
@@ -165,20 +180,5 @@ class UserOptions : mainFragment() {
         }
 
         MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
-    }
-
-    fun onConnectionEstablished() {
-//        val successCallback = {
-//            Log.d(TAG, "deu certo")
-//            showAutenticationDialog()
-//        }
-//
-//        val errorCallback = { errorMessage: String ->
-//            requireActivity().runOnUiThread {
-//                Toast.makeText(context, "Erro ao conectar-se", Toast.LENGTH_SHORT).show()
-//                Log.d(TAG, errorMessage)
-//            }
-//        }
-
     }
 }
