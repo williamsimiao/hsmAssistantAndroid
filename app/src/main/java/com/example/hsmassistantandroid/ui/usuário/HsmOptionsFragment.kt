@@ -70,9 +70,8 @@ class HsmOptions : mainFragment() {
         super.onStop()
 
         val successCallback = {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            Log.d(TAG, "Disconnected")
+            Unit
         }
 
         val errorCallback = { errorMessage: String ->

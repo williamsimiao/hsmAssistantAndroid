@@ -65,12 +65,19 @@ class SvmkActivity : AppCompatActivity() {
     fun onServiceStarted() {
         runOnUiThread {
             Toast.makeText(baseContext, "Servico iniciado", Toast.LENGTH_SHORT).show()
-        }
 
-        val successCallback = {
             val intent = Intent(baseContext, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val successCallback = {
+            Log.d(TAG, "Disconnected")
+            Unit
         }
 
         val errorCallback = { errorMessage: String ->

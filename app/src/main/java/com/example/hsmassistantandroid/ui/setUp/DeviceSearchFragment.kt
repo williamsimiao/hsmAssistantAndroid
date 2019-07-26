@@ -39,7 +39,7 @@ class DeviceSearchFragment : mainFragment() {
     private lateinit var recyclerView: RecyclerView
     private var foundHsmOnNetwork = false
 
-    var devicesArrayList = arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5")
+    private var devicesArrayList = arrayListOf<String>("pocket_example_1", "pocket_example_2", "pocket_example_3", "pocket_example_4", "pocket_example_5", "pocket_example_6", "pocket_example_7")
 
     private val registrationListener = object : NsdManager.RegistrationListener {
 

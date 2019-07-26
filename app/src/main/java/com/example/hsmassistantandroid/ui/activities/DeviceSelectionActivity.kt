@@ -54,6 +54,6 @@ class DeviceSelectionActivity : AppCompatActivity() {
     fun goToSVMKactivity() {
         val intent = Intent(baseContext, SvmkActivity::class.java)
         startActivity(intent)
-        finish()
+//        finish()
     }
 }

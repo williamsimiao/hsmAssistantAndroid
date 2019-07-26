@@ -62,7 +62,6 @@ class UserOptions : mainFragment() {
         changePwdButton.setOnClickListener {
             findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
         }
-
     }
 
     fun didTapcloseButton() {
