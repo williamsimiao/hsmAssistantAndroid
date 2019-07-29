@@ -41,7 +41,8 @@ import retrofit2.Response
 
 private val TAG: String = UserOptions::class.java.simpleName
 
-class UserOptions : mainFragment() {
+class UserOptions : mainFragment(), RecyclerViewClickListener {
+
     private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -63,12 +64,27 @@ class UserOptions : mainFragment() {
 
         val view = inflater.inflate(R.layout.fragment_user_options, container, false)
 
-        val settings = arrayListOf("primeiro", "segundo", "terceiro", "quarto", "quinto")
-        viewAdapter = SettingsListAdapter(settings)
+        val settings = arrayListOf<String>()
+        settings.add(getString(R.string.usr_options_change_hsm))
+        settings.add(getString(R.string.usr_options_hsm_menu))
+        settings.add(getString(R.string.change_pwd))
+        settings.add(getString(R.string.fechar_sessao))
+
+        viewAdapter = SettingsListAdapter(this, settings)
         val recyclerView = view.findViewById<RecyclerView>(R.id.settingsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewAdapter
         return view
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val buttonText = view.item_title.text
+        when(buttonText) {
+            view.context.getString(R.string.usr_options_change_hsm) -> didTapHsmOptions()
+            view.context.getString(R.string.usr_options_hsm_menu) -> didTapConnectNewHSM()
+            view.context.getString(R.string.change_pwd) -> didTapcloseButton()
+            view.context.getString(R.string.fechar_sessao) -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -215,7 +231,7 @@ class UserOptions : mainFragment() {
 }
 
 
-class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : RecyclerView.Adapter<SettingsListAdapter.ViewHolder>() {
+class SettingsListAdapter(private val listener: RecyclerViewClickListener, private val settingsArrayList: ArrayList<String>) : RecyclerView.Adapter<SettingsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.ctx).inflate(R.layout.settings_card, parent, false) //2
@@ -225,12 +241,7 @@ class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : Re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-//                when(v.item_title.text) {
-//                    "1" -> didTapConnectNewHSM()
-//                    "2" -> didTapHsmOptions()
-//                    "3" -> didTapcloseButton()
-//                    "4" -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
-//                }
+                listener.onItemClick(v, position)
             }
         })
 
@@ -244,4 +255,8 @@ class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : Re
             itemView.item_title.text = settingTitle
         }
     }
+}
+
+interface RecyclerViewClickListener {
+    fun onItemClick(view: View, position: Int)
 }

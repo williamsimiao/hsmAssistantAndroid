@@ -70,6 +70,8 @@
     <string name="conectar">Conectar</string>
     <string name="setupSecondTitle">Configuração</string>
     <string name="setUpFirstTitle">HSM pocket</string>
+    <string name="usr_options_change_hsm">Conectar-se a outro HSM</string>
+    <string name="usr_options_hsm_menu">Opções do HSM</string>
 
 
 </resources>
