@@ -1,43 +1,50 @@
 package com.example.hsmassistantandroid.ui.usuário
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.InputType
 import android.util.Log
 import android.view.*
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginStart
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
-import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.network.MIHelper
+import com.example.hsmassistantandroid.ui.Objetos.ObjetosListAdapter
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 import com.example.hsmassistantandroid.ui.activities.SvmkActivity
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_svmk.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
-import kotlinx.android.synthetic.main.item_certificado.view.*
 import kotlinx.android.synthetic.main.settings_card.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 
 private val TAG: String = UserOptions::class.java.simpleName
 
 class UserOptions : mainFragment() {
     private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +60,19 @@ class UserOptions : mainFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_options, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_user_options, container, false)
+
+        val settings = arrayListOf("primeiro", "segundo", "terceiro", "quarto", "quinto")
+        viewAdapter = SettingsListAdapter(settings)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.settingsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewAdapter
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpViews()
-    }
-
-    fun setUpViews() {
-        connectNewHSM.setOnClickListener { didTapConnectNewHSM() }
-        hsmOptions.setOnClickListener { didTapHsmOptions() }
-        closeButton.setOnClickListener { didTapcloseButton() }
-        changePwdButton.setOnClickListener {
-            findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
-        }
     }
 
     fun didTapcloseButton() {
@@ -115,53 +120,74 @@ class UserOptions : mainFragment() {
     }
 
     fun showAutenticationDialog() {
-        val alert = AlertDialog.Builder(requireContext())
-        var editTextAge:EditText? = null
+//        val dialog = Dialog(activity)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setCancelable(true)
+//        dialog.setContentView(R.layout.dialog_svmk_input)
+//
+//        val title = dialog.findViewById(R.id.tvTitle) as TextView
+//        title.text = "Um titulo muito legal"
+//
+//        val textLayout = dialog.findViewById(R.id.tvTitle) as TextView
+//
+//        val yesBtn = dialog.findViewById(R.id.btn_yes) as Button
+//        yesBtn.setOnClickListener {
+//            dialog.dismiss()
+//        }
+//
+//        dialog.show()
 
-        // Builder
-        with (alert) {
-            setTitle("Informe a chave de ativação do HSM")
-//            setMessage("Enter your Age Here!!")
-
-            // Add any  input field here
-            editTextAge = EditText(context)
-            editTextAge!!.hint="12345678"
-            editTextAge!!.inputType = InputType.TYPE_CLASS_NUMBER
-
-            setPositiveButton("OK") {
-                    dialog, whichButton ->
-                val hsm_key = editTextAge!!.text.toString()
-
-                if(validPwd(context, editTextAge!!)) {
-
-                    val successCallback = {
-                        requireActivity().runOnUiThread {
-                            onAuthenticationCompleted()
-                        }
-                    }
-
-                    val errorCallback = { errorMessage: String ->
-                        Log.d(TAG, errorMessage)
-                        Unit
-                    }
-
-                    MIHelper.autenticateWithKey(hsm_key, successCallback, errorCallback)
-                    dialog.dismiss()
-                }
-
-
-            }
-
-            setNegativeButton("Cancelar") {
-                    dialog, whichButton ->
-                dialog.dismiss()
-            }
-        }
-
-        // Dialog
-        val dialog = alert.create()
-        dialog.setView(editTextAge)
-        dialog.show()
+//        try {
+//        val alert = AlertDialog.Builder(requireContext())
+//        var editTextAge: EditText? = null
+//
+//        // Builder
+//        with (alert) {
+//            setTitle("Informe a chave de ativação do HSM")
+////            setMessage("Enter your Age Here!!")
+//
+//            // Add any  input field here
+//            editTextAge = EditText(context)
+//            editTextAge!!.hint="12345678"
+//            editTextAge!!.inputType = InputType.TYPE_NUMBER_VARIATION_PASSWORD
+//            editTextAge!!.highlightColor = ResourcesCompat.getColor(getResources(), R.color.black, null)
+//
+//            val param = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//            param.setMargins(20, 8, 20, 8)
+//            editTextAge!!.layoutParams = param
+//
+//            setPositiveButton("OK") {
+//                    dialog, whichButton ->
+//                val hsm_key = editTextAge!!.text.toString()
+//
+//                if(validPwd(context, editTextAge!!)) {
+//
+//                    val successCallback = {
+//                        requireActivity().runOnUiThread {
+//                            onAuthenticationCompleted()
+//                        }
+//                    }
+//
+//                    val errorCallback = { errorMessage: String ->
+//                        Log.d(TAG, errorMessage)
+//                        Unit
+//                    }
+//
+//                    MIHelper.autenticateWithKey(hsm_key, successCallback, errorCallback)
+//                    dialog.dismiss()
+//                }
+//            }
+//
+//            setNegativeButton("Cancelar") {
+//                    dialog, whichButton ->
+//                dialog.dismiss()
+//            }
+//        }
+//
+//        // Dialog
+//        val dialog = alert.create()
+//        dialog.setView(editTextAge)
+//        dialog.show()
     }
 
     fun onAuthenticationCompleted() {
@@ -188,6 +214,7 @@ class UserOptions : mainFragment() {
     }
 }
 
+
 class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : RecyclerView.Adapter<SettingsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -198,7 +225,12 @@ class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : Re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                Navigation.findNavController(v).navigate(R.id.action_objetosListFragment_to_objetoDetailFragment)
+//                when(v.item_title.text) {
+//                    "1" -> didTapConnectNewHSM()
+//                    "2" -> didTapHsmOptions()
+//                    "3" -> didTapcloseButton()
+//                    "4" -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
+//                }
             }
         })
 
@@ -213,4 +245,3 @@ class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : Re
         }
     }
 }
-
