@@ -36,7 +36,7 @@
     <string name="invalidTokenDialog_title">Credenciais inválidas</string>
     <string name="invalidTokenDialog_message">Faça o login novamente</string>
     <string name="noInternetDialog_title">Erro ao conectar-se</string>
-    <string name="noInternet_message">Verifique sua conecção com a internet e tente novamente</string>
+    <string name="noInternet_message">Verifique sua conexão com a internet e tente novamente</string>
     <string name="password_confirmation">Confirmacao da senha</string>
     <string name="nova_senha">Nova senha</string>
     <string name="alterar_senha">Alterar senha</string>
@@ -72,6 +72,7 @@
     <string name="setUpFirstTitle">HSM pocket</string>
     <string name="usr_options_change_hsm">Conectar-se a outro HSM</string>
     <string name="usr_options_hsm_menu">Opções do HSM</string>
+    <string name="noInternet_title">Sem conexão com a internet.</string>
 
 
 </resources>

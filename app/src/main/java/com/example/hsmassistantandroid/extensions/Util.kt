@@ -1,7 +1,9 @@
 package com.example.hsmassistantandroid.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.text.Editable
@@ -17,7 +19,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import okhttp3.ResponseBody
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
@@ -65,13 +69,32 @@ fun alertAboutConnectionError(view: View?) : Boolean {
 
     val isConnected = isNetworkConnected(view.context)
     val title: String?
+    val message: String?
     if (isConnected == false ) {
-        title = view.context?.getString(R.string.noInternet_message)
+        title = view.context?.getString(R.string.noInternet_title)
+        message = view.context?.getString(R.string.noInternet_message)
+
+        AlertDialog.Builder(view.context)
+            .setTitle(title)
+            .setMessage(message)
+            .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
+            .setPositiveButton(view.context.getString(R.string.yes)) { dialogInterface, i ->
+            }
+            .show()
     }
     else {
         title = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
+        message = "Talvez o serviço do HSM não tenha sido iniciado."
+
+        AlertDialog.Builder(view.context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
+//                goToSetUpScreen()
+            }
+            .show()
     }
-    Snackbar.make(view, title!!, Snackbar.LENGTH_LONG).show()
+
     return isConnected
 }
 
@@ -164,6 +187,18 @@ fun removeTokenFromSecureLocation(activity: Activity) {
 fun goToLoginScreen(fragment: Fragment) {
     fragment.findNavController().navigate(R.id.goto_Login)
     fragment.requireActivity().finish()
+}
+
+@SuppressLint("ApplySharedPref")
+fun goToSetUpScreen(activity: Activity) {
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+    val editor = sharedPreferences.edit()
+    editor.remove("BASE_URL")
+    editor.commit()
+
+    val intent = Intent(activity, DeviceSelectionActivity::class.java)
+    activity.startActivity(intent)
+    activity.finish()
 }
 
 fun hideSoftKeyboard(activity: Activity) {

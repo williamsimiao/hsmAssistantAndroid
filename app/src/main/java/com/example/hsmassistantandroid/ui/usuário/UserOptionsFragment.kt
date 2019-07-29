@@ -84,7 +84,7 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
     override fun onItemClick(view: View, position: Int) {
         val buttonText = view.item_title.text
         when(buttonText) {
-            view.context.getString(R.string.usr_options_change_hsm) -> didTapConnectNewHSM()
+            view.context.getString(R.string.usr_options_change_hsm) -> goToSetUpScreen(requireActivity())
             view.context.getString(R.string.usr_options_hsm_menu) -> didTapHsmOptions()
             view.context.getString(R.string.fechar_sessao) -> didTapcloseButton()
             view.context.getString(R.string.change_pwd) -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
@@ -129,18 +129,6 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val url = sharedPreferences.getString("BASE_URL", null)
         prepareConnection(url)
-    }
-
-    @SuppressLint("ApplySharedPref")
-    fun didTapConnectNewHSM() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val editor = sharedPreferences.edit()
-        editor.remove("BASE_URL")
-        editor.commit()
-
-        val intent = Intent(context, DeviceSelectionActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
     }
 
     fun showAutenticationDialog() {
