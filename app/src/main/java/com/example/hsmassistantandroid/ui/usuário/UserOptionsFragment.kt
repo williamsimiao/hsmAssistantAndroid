@@ -60,9 +60,14 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-
         val view = inflater.inflate(R.layout.fragment_user_options, container, false)
+
+        setUpRecyclerView(view)
+
+        return view
+    }
+
+    fun setUpRecyclerView(view: View) {
 
         val settings = arrayListOf<String>()
         settings.add(getString(R.string.usr_options_change_hsm))
@@ -74,20 +79,23 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
         val recyclerView = view.findViewById<RecyclerView>(R.id.settingsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewAdapter
-        return view
     }
 
     override fun onItemClick(view: View, position: Int) {
         val buttonText = view.item_title.text
         when(buttonText) {
-            view.context.getString(R.string.usr_options_change_hsm) -> didTapHsmOptions()
-            view.context.getString(R.string.usr_options_hsm_menu) -> didTapConnectNewHSM()
-            view.context.getString(R.string.change_pwd) -> didTapcloseButton()
-            view.context.getString(R.string.fechar_sessao) -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
+            view.context.getString(R.string.usr_options_change_hsm) -> didTapConnectNewHSM()
+            view.context.getString(R.string.usr_options_hsm_menu) -> didTapHsmOptions()
+            view.context.getString(R.string.fechar_sessao) -> didTapcloseButton()
+            view.context.getString(R.string.change_pwd) -> findNavController().navigate(R.id.action_userOptions_to_changePwdFragment)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val usrName = sharedPreferences.getString("USER", null)
+        useNameLabel.text = usrName
+
         super.onViewCreated(view, savedInstanceState)
     }
 
