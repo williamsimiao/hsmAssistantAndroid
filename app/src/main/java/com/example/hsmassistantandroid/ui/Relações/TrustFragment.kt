@@ -41,13 +41,13 @@ class TrustFragment: mainFragment() {
         setHasOptionsMenu(true)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-        listTrustRequest()
     }
 
     fun listTrustRequest() {
         val callbackList = object : Callback<ResponseBody5> {
             override fun onFailure(call: Call<ResponseBody5>?, t: Throwable?) {
                 alertAboutConnectionError(view)
+                refresh_layout.isRefreshing = false
             }
 
             override fun onResponse(call: Call<ResponseBody5>?, response: Response<ResponseBody5>?) {
@@ -74,8 +74,8 @@ class TrustFragment: mainFragment() {
                 else {
                     val message = handleAPIError(this@TrustFragment, response.errorBody())
                     Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
-
                 }
+                refresh_layout.isRefreshing = false
             }
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -105,6 +105,9 @@ class TrustFragment: mainFragment() {
     }
 
     fun setUpViews() {
+        refresh_layout.setOnRefreshListener {
+            onOptionReloadClick()
+        }
         val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
         trustList.addItemDecoration(itemDecor)
     }
