@@ -10,11 +10,14 @@ import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody0
+import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
@@ -23,9 +26,12 @@ import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_svmk.*
 import kotlinx.android.synthetic.main.fragment_user_options.*
+import kotlinx.android.synthetic.main.item_certificado.view.*
+import kotlinx.android.synthetic.main.settings_card.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 
 private val TAG: String = UserOptions::class.java.simpleName
 
@@ -181,3 +187,30 @@ class UserOptions : mainFragment() {
         MIHelper.connectToAddress(address, requireContext(), successCallback, errorCallback)
     }
 }
+
+class SettingsListAdapter(private val settingsArrayList: ArrayList<String>) : RecyclerView.Adapter<SettingsListAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.settings_card, parent, false) //2
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                Navigation.findNavController(v).navigate(R.id.action_objetosListFragment_to_objetoDetailFragment)
+            }
+        })
+
+        holder.bindObjetos(settingsArrayList[position])
+    }
+
+    override fun getItemCount(): Int = settingsArrayList.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindObjetos(settingTitle: String) {
+            itemView.item_title.text = settingTitle
+        }
+    }
+}
+
