@@ -44,6 +44,8 @@ class gestaoUsuarioFragment : mainFragment() {
         val callbackList = object : Callback<ResponseBody4> {
             override fun onFailure(call: Call<ResponseBody4>?, t: Throwable?) {
                 alertAboutConnectionError(view)
+                refresh_layout.isRefreshing = false
+
             }
 
             override fun onResponse(call: Call<ResponseBody4>?, response: Response<ResponseBody4>?) {
@@ -60,6 +62,8 @@ class gestaoUsuarioFragment : mainFragment() {
                     val message = handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
                     Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
+                refresh_layout.isRefreshing = false
+
             }
         }
         networkManager.runListUsrs(tokenString!!, callbackList)
@@ -89,6 +93,9 @@ class gestaoUsuarioFragment : mainFragment() {
     }
 
     fun setUpViews() {
+        refresh_layout.setOnRefreshListener {
+            onOptionReloadClick()
+        }
         val itemDecor = DividerItemDecoration(context, ConstraintWidget.VERTICAL)
         gestaousuarioList.addItemDecoration(itemDecor)
     }
