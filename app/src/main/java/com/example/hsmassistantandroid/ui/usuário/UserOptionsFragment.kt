@@ -131,7 +131,7 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
         prepareConnection(url)
     }
 
-    fun showAutenticationDialog() {
+//    fun showAutenticationDialog() {
 //        val dialog = Dialog(activity)
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 //        dialog.setCancelable(true)
@@ -148,7 +148,7 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
 //        }
 //
 //        dialog.show()
-
+//
 //        try {
 //        val alert = AlertDialog.Builder(requireContext())
 //        var editTextAge: EditText? = null
@@ -200,6 +200,54 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
 //        val dialog = alert.create()
 //        dialog.setView(editTextAge)
 //        dialog.show()
+//    }
+
+    fun showAutenticationDialog() {
+        val alert = AlertDialog.Builder(requireContext())
+        var editTextAge:EditText? = null
+
+        // Builder
+        with (alert) {
+            setTitle("Informe a chave de ativação do HSM")
+//            setMessage("Enter your Age Here!!")
+
+            // Add any  input field here
+            editTextAge = EditText(context)
+            editTextAge!!.hint="12345678"
+            editTextAge!!.inputType = InputType.TYPE_CLASS_NUMBER
+
+            setPositiveButton("OK") {
+                    dialog, whichButton ->
+                val hsm_key = editTextAge!!.text.toString()
+
+                if(validPwd(context, editTextAge!!)) {
+
+                    val successCallback = {
+                        requireActivity().runOnUiThread {
+                            onAuthenticationCompleted()
+                        }
+                    }
+
+                    val errorCallback = { errorMessage: String ->
+                        Log.d(TAG, errorMessage)
+                        Unit
+                    }
+
+                    MIHelper.autenticateWithKey(hsm_key, successCallback, errorCallback)
+                    dialog.dismiss()
+                }
+            }
+
+            setNegativeButton("Cancelar") {
+                    dialog, whichButton ->
+                dialog.dismiss()
+            }
+        }
+
+        // Dialog
+        val dialog = alert.create()
+        dialog.setView(editTextAge)
+        dialog.show()
     }
 
     fun onAuthenticationCompleted() {
