@@ -21,7 +21,10 @@ import okhttp3.ResponseBody
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
+import com.example.hsmassistantandroid.ui.usuário.ServiceStatus
+import org.jetbrains.anko.toast
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
@@ -68,31 +71,33 @@ fun alertAboutConnectionError(view: View?) : Boolean {
     }
 
     val isConnected = isNetworkConnected(view.context)
-    val title: String?
-    val message: String?
     if (isConnected == false ) {
-        title = view.context?.getString(R.string.noInternet_title)
-        message = view.context?.getString(R.string.noInternet_message)
-
-        AlertDialog.Builder(view.context)
-            .setTitle(title)
-            .setMessage(message)
-            .setNegativeButton(android.R.string.cancel){dialogInterface, i -> }
-            .setPositiveButton(view.context.getString(R.string.yes)) { dialogInterface, i ->
-            }
-            .show()
+        val message = view.context?.getString(R.string.noInternet_message)
+        Snackbar.make(view, message!!, Snackbar.LENGTH_LONG).show()
     }
     else {
-        title = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
-        message = "Talvez o serviço do HSM não tenha sido iniciado."
+        val caseTrue = {
+            val message = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
+            Snackbar.make(view, message!!, Snackbar.LENGTH_LONG).show()
+        }
 
-        AlertDialog.Builder(view.context)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
-//                goToSetUpScreen()
-            }
-            .show()
+        val caseFalse = {
+            Log.d(TAG, "Service not started")
+
+            val title = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_title)
+            val message = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_message)
+
+            AlertDialog.Builder(view.context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
+//                    goToSetUpScreen()
+                }
+                .show()
+            Unit
+        }
+
+        MIHelper.isServiceStarted(caseTrue, caseFalse)
     }
 
     return isConnected

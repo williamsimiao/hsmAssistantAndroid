@@ -73,6 +73,8 @@
     <string name="usr_options_change_hsm">Conectar-se a outro HSM</string>
     <string name="usr_options_hsm_menu">Opções do HSM</string>
     <string name="noInternet_title">Sem conexão com a internet.</string>
+    <string name="ERR_SERVICE_NOT_STARTED_title">Serviço não iniciado</string>
+    <string name="ERR_SERVICE_NOT_STARTED_message">Inicie o serviço do HSM para entrar com seu usuário.</string>
 
 
 </resources>
