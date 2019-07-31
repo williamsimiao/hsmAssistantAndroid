@@ -45,8 +45,7 @@ class NewUserFragment : mainFragment() {
                     findNavController().navigate(R.id.action_newUserFragment_to_gestaoUsuarioFragment2)
                 }
                 else {
-                    val message = handleAPIError(this@NewUserFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@NewUserFragment, response.errorBody())
                 }
             }
         }

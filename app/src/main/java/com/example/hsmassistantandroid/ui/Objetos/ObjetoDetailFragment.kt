@@ -41,8 +41,7 @@ class ObjetoDetailFragment : mainFragment() {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
                 }
                 else {
-                    val message = handleAPIError(this@ObjetoDetailFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@ObjetoDetailFragment, response.errorBody())
                 }
             }
         }

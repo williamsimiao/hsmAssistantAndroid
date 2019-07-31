@@ -47,8 +47,7 @@ class ChangePwdFragment : mainFragment() {
                     findNavController().navigate(R.id.action_changePwdFragment_to_userOptions)
                 }
                 else {
-                    val message = handleAPIError(this@ChangePwdFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@ChangePwdFragment, response.errorBody())
                 }
             }
         }

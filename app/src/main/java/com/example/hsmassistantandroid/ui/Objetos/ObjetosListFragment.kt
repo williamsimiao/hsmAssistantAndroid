@@ -77,8 +77,7 @@ class ObjetosListFragment : mainFragment() {
                     exportedCertificateCounter += 1
                 }
                 else {
-                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@ObjetosListFragment, response.errorBody())
                 }
 
                 if(certificateCounter == exportedCertificateCounter) {
@@ -110,8 +109,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@ObjetosListFragment, response.errorBody())
                 }
             }
         }
@@ -141,8 +139,7 @@ class ObjetosListFragment : mainFragment() {
                     }
                 }
                 else {
-                    val message = handleAPIError(this@ObjetosListFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@ObjetosListFragment, response.errorBody())
                 }
                 refresh_layout.isRefreshing = false
             }

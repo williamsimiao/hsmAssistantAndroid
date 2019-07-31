@@ -56,8 +56,7 @@ class gestaoUsuarioFragment : mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    val message = handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
                 }
                 refresh_layout.isRefreshing = false
 

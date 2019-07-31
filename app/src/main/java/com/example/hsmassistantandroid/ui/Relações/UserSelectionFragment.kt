@@ -58,8 +58,7 @@ class UserSelectionFragment : mainFragment() {
                     }
                 }
                 else {
-                    val message = handleAPIError(this@UserSelectionFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@UserSelectionFragment, response.errorBody())
                 }
             }
         }

@@ -90,10 +90,7 @@ fun loginWithPreviusCredentials(fragment: Fragment) {
                 editor.apply()
             }
             else {
-                val message = handleAPIError(fragment, response.errorBody())
-                Log.d(TAG, "reLogin error: $message")
-                //TODO: PE01
-                Snackbar.make(fragment.view!!, message!!, Snackbar.LENGTH_LONG).show()
+                handleAPIError(fragment, response.errorBody())
             }
         }
     }

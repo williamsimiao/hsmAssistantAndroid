@@ -71,8 +71,7 @@ class TrustFragment: mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    val message = handleAPIError(this@TrustFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@TrustFragment, response.errorBody())
                 }
                 refresh_layout.isRefreshing = false
             }
@@ -140,8 +139,7 @@ class TrustFragment: mainFragment() {
                             Snackbar.make(view!!, "sessao fechada", Snackbar.LENGTH_LONG).show()
                         }
                         else {
-                            val message = handleAPIError(this@TrustFragment, response.errorBody())
-                            Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                            handleAPIError(this@TrustFragment, response.errorBody())
                         }
                     }
                 }

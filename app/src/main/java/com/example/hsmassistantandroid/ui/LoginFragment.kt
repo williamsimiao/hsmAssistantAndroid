@@ -118,8 +118,7 @@ class LoginFragment : mainFragment() {
                     requireActivity().finish()
                 }
                 else {
-                    val message = handleAPIError(this@LoginFragment, response.errorBody())
-                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                    handleAPIError(this@LoginFragment, response.errorBody())
                 }
             }
         }
