@@ -111,7 +111,7 @@ class HsmOptions : mainFragment() {
             setButtonWithServiceStatus()
         }
 
-        MIHelper.isServiceStarted(caseTrue, caseFalse)
+        MIHelper.isServiceStarted(requireContext() ,caseTrue, caseFalse)
     }
 
     private fun didTapService() {

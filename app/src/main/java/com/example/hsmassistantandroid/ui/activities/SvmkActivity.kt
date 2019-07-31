@@ -3,6 +3,7 @@ package com.example.hsmassistantandroid.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import com.example.hsmassistantandroid.R
@@ -32,6 +33,11 @@ class SvmkActivity : AppCompatActivity() {
         val key = svmkEditText.editText!!.text.toString()
 
         val successCallback = {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
+            val editor = sharedPreferences.edit()
+            editor.putString("INIT_KEY", key)
+            editor.apply()
+
             onAuthenticationCompleted()
         }
 
@@ -59,7 +65,7 @@ class SvmkActivity : AppCompatActivity() {
             Unit
         }
 
-        MIHelper.startService(successCallback, errorCallback)
+        MIHelper.startService(baseContext, successCallback, errorCallback)
     }
 
     fun onServiceStarted() {

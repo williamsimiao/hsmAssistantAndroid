@@ -3,6 +3,7 @@ package com.example.hsmassistantandroid.network
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
 import org.jetbrains.anko.doAsync
 import java.io.PrintWriter
 import java.util.*
@@ -19,6 +20,34 @@ object  MIHelper {
     lateinit var myAddress: String
     lateinit var input: Scanner
     lateinit var output: PrintWriter
+
+    fun serviceStartProcess(key: String ,context: Context, serviceStartSuccess: () -> Unit, serviceStartErrorCallback: (response: String) -> Unit?) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val address = sharedPreferences.getString("BASE_URL", null)
+
+        //AUTENTICATE
+        val successCallback2 = {
+            Log.d(TAG, "Autenticou-se")
+            startService(context, serviceStartSuccess, serviceStartErrorCallback)
+            Unit
+        }
+        val errorCallback2 = { errorMessage: String ->
+            Log.d(TAG, "autentication $errorMessage")
+            Unit
+        }
+
+        //CONNECT
+        val successCallback = {
+            Log.d(TAG, "Conectou-se")
+            autenticateWithKey(key, successCallback2, errorCallback2)
+        }
+        val errorCallback = { errorMessage: String ->
+            Log.d(TAG, errorMessage)
+            Unit
+        }
+
+        connectToAddress(address, context, successCallback, errorCallback)
+    }
 
     fun connectToAddress(address: String = myAddress, context: Context, successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
         //TODO validar address
@@ -101,8 +130,46 @@ object  MIHelper {
         connectToAddress(context = context, successCallback = successCallback, errorCallback = errorCallback)
     }
 
-    fun isServiceStarted(caseFalse: () -> Unit, caseTrue: () -> Unit) {
+    fun isServiceStarted(context: Context , caseFalse: () -> Unit, caseTrue: () -> Unit) {
+
+//        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+//            @Throws(CertificateException::class)
+//            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+//            }
+//
+//            @Throws(CertificateException::class)
+//            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
+//
+//            }
+//
+//            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+//                return arrayOf()
+//            }
+//        })
+//
+//        val sslContext = SSLContext.getInstance("SSL")
+//
+//        doAsync {
+//            try {
+//                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+//
+//                // Create an ssl socket factory with our all-trusting manager
+//                val sslSocketFactory = sslContext.socketFactory
+//
+//                val sslsocket: SSLSocket = sslSocketFactory.createSocket(
+//                    address,
+//                    MI_PORT
+//                ) as SSLSocket
+//                input = Scanner(sslsocket.inputStream)
+//                output = PrintWriter(sslsocket.outputStream, true)
+//            } catch (e: Exception) {
+//                Log.d(TAG, "outra falha12: $e")
+//            }
+//        }
+
+
         doAsync {
+
             try {
                 output.println("MI_SVC_STATUS")
                 val response = input.nextLine()
@@ -117,8 +184,10 @@ object  MIHelper {
         }
     }
 
-    fun startService(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+    fun startService(context: Context , successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+
         doAsync {
+
             try {
                 output.println("MI_SVC_STATUS")
                 val response = input.nextLine()
@@ -164,7 +233,7 @@ object  MIHelper {
                 }
 
             } catch (e: Exception) {
-                Log.d(TAG, "falha3: $e")
+                Log.d(TAG, "falha9: $e")
             }
         }
     }

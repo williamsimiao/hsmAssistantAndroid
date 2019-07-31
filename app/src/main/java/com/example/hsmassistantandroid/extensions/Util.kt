@@ -75,33 +75,95 @@ fun alertAboutConnectionError(view: View?) : Boolean {
         val message = view.context?.getString(R.string.noInternet_message)
         Snackbar.make(view, message!!, Snackbar.LENGTH_LONG).show()
     }
+
     else {
-        val caseTrue = {
-            val message = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
-            Snackbar.make(view, message!!, Snackbar.LENGTH_LONG).show()
+
+        Log.d(TAG, "Maybe Service not started")
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.context)
+        val initKey = sharedPreferences.getString("INIT_KEY", null)
+
+        //Start by it self
+        if(initKey == null) {
+            val successCallback = {
+                Snackbar.make(view, "Serviço iniciado", Snackbar.LENGTH_LONG).show()
+            }
+
+            val errorCallback = { errorMessage: String ->
+                Snackbar.make(view, "Não foi possivel iniciar o serviço", Snackbar.LENGTH_LONG).show()
+                Log.d(TAG, errorMessage)
+                Unit
+            }
+            MIHelper.serviceStartProcess("12345678", view.context, successCallback, errorCallback)
         }
 
-        val caseFalse = {
-            Log.d(TAG, "Service not started")
-
+        //Needs user input
+        else {
             val title = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_title)
             val message = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_message)
 
-            AlertDialog.Builder(view.context)
+            val dialog = AlertDialog.Builder(view.context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
+
+            dialog.setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
+                Log.d(TAG, "Vai para tela adequada")
 //                    goToSetUpScreen()
-                }
-                .show()
-            Unit
+            }
         }
 
-        MIHelper.isServiceStarted(caseTrue, caseFalse)
+
+//        val caseIsStarted = {
+//            Log.d(TAG, "Service is started")
+//            val message = view.context?.getString(R.string.ERR_DESCONHECIDO_message)
+//            Snackbar.make(view, message!!, Snackbar.LENGTH_LONG).show()
+//        }
+//
+//        val caseNotStarted = {
+//            Log.d(TAG, "Service not started")
+//
+//            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.context)
+//            val initKey = sharedPreferences.getString("INIT_KEY", null)
+//
+//            //Start by it self
+//            if(initKey != null) {
+//                val successCallback = {
+//                    Snackbar.make(view, "Serviço iniciado", Snackbar.LENGTH_LONG).show()
+//                }
+//
+//                val errorCallback = { errorMessage: String ->
+//                    Snackbar.make(view, "Não foi possivel iniciar o serviço", Snackbar.LENGTH_LONG).show()
+//                    Log.d(TAG, errorMessage)
+//                    Unit
+//                }
+//
+//                MIHelper.serviceStartProcess(view.context, successCallback, errorCallback)
+//            }
+//
+//            //Needs user input
+//            else {
+//                val title = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_title)
+//                val message = view.context?.getString(R.string.ERR_SERVICE_NOT_STARTED_message)
+//
+//                val dialog = AlertDialog.Builder(view.context)
+//                    .setTitle(title)
+//                    .setMessage(message)
+//
+//                dialog.setPositiveButton("Configurar serviço do HSM") { dialogInterface, i ->
+//                    Log.d(TAG, "Vai para tela adequada")
+////                    goToSetUpScreen()
+//                }
+//            }
+//
+//            Unit
+//        }
+//
+//        MIHelper.isServiceStarted(view.context ,caseIsStarted, caseNotStarted)
     }
 
     return isConnected
 }
+
+
 
 fun EditText.onChange(cb: (String) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {
