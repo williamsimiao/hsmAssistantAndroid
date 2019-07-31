@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hsmassistantandroid.R
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.data.ResponseBody5
-import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
-import com.example.hsmassistantandroid.extensions.ctx
-import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.extensions.*
 import com.example.hsmassistantandroid.ui.mainFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.item_objetos.view.*
@@ -125,7 +124,31 @@ class TrustFragment: mainFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.options_add_user -> onOptionAddUserClick()
+            R.id.options_add_user -> {
+//                onOptionAddUserClick()
+
+                //TODO remover essas linhas
+                val callbackClose = object : Callback<ResponseBody0> {
+                    override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
+                        alertAboutConnectionError(view)
+                        Snackbar.make(view!!, "sessao nao pode ser fechada", Snackbar.LENGTH_LONG).show()
+                    }
+                    override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
+                        if(response?.isSuccessful!!) {
+//                            removeTokenFromSecureLocation(requireActivity())
+                            Log.d(TAG, "sessao fechada")
+                            Snackbar.make(view!!, "sessao fechada", Snackbar.LENGTH_LONG).show()
+                        }
+                        else {
+                            val message = handleAPIError(this@TrustFragment, response.errorBody())
+                            Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
+                        }
+                    }
+                }
+                networkManager.runClose(tokenString!!, callbackClose)
+
+
+            }
 
             R.id.options_reload -> onOptionReloadClick()
 

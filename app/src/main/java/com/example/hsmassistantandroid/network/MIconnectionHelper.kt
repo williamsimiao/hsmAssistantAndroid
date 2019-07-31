@@ -122,52 +122,7 @@ object  MIHelper {
         }
     }
 
-    fun connectAndAutenticate(context: Context, key: String, successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
-        val new_success = {
-
-            successCallback()
-        }
-        connectToAddress(context = context, successCallback = successCallback, errorCallback = errorCallback)
-    }
-
     fun isServiceStarted(context: Context , caseFalse: () -> Unit, caseTrue: () -> Unit) {
-
-//        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-//            @Throws(CertificateException::class)
-//            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-//            }
-//
-//            @Throws(CertificateException::class)
-//            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {
-//
-//            }
-//
-//            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
-//                return arrayOf()
-//            }
-//        })
-//
-//        val sslContext = SSLContext.getInstance("SSL")
-//
-//        doAsync {
-//            try {
-//                sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-//
-//                // Create an ssl socket factory with our all-trusting manager
-//                val sslSocketFactory = sslContext.socketFactory
-//
-//                val sslsocket: SSLSocket = sslSocketFactory.createSocket(
-//                    address,
-//                    MI_PORT
-//                ) as SSLSocket
-//                input = Scanner(sslsocket.inputStream)
-//                output = PrintWriter(sslsocket.outputStream, true)
-//            } catch (e: Exception) {
-//                Log.d(TAG, "outra falha12: $e")
-//            }
-//        }
-
-
         doAsync {
 
             try {

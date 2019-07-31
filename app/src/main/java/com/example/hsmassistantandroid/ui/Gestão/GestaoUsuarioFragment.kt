@@ -28,7 +28,6 @@ private val TAG: String = gestaoUsuarioFragment::class.java.simpleName
 
 class gestaoUsuarioFragment : mainFragment() {
     private lateinit var networkManager: NetworkManager
-    private var tokenString: String? = null
     private var usrNamesStrings = ArrayList<String>()
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
@@ -36,8 +35,6 @@ class gestaoUsuarioFragment : mainFragment() {
         super.onCreate(savedInstanceState)
         networkManager = NetworkManager(context)
         setHasOptionsMenu(true)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        tokenString = sharedPreferences.getString("TOKEN", null)
     }
 
     fun listUsrsRequest() {
@@ -66,6 +63,8 @@ class gestaoUsuarioFragment : mainFragment() {
 
             }
         }
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val tokenString = sharedPreferences.getString("TOKEN", null)
         networkManager.runListUsrs(tokenString!!, callbackList)
     }
 
@@ -127,7 +126,7 @@ class gestaoUsuarioFragment : mainFragment() {
 class GestaoListAdapter(private val itensStringList: ArrayList<String>) : RecyclerView.Adapter<GestaoListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false) //2
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_objetos, parent, false)
         return ViewHolder(view)
     }
 
@@ -144,9 +143,7 @@ class GestaoListAdapter(private val itensStringList: ArrayList<String>) : Recycl
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindUsuario(objeto: String) {
-            with(objeto) {
-                itemView.title_label.text = objeto
-            }
+            itemView.title_label.text = objeto
         }
     }
 }

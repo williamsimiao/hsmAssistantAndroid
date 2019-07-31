@@ -29,6 +29,7 @@ class LoginFragment : mainFragment() {
     private lateinit var networkManager: NetworkManager
     private var tokenString: String? = null
     private var submitedUser: String? = null
+    private var userPwd: String? = null
     // Instantiate a new DiscoveryListener
 
 //    fun slp() {
@@ -103,11 +104,12 @@ class LoginFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
                 if(response?.isSuccessful!!) {
                     tokenString = "HSM " + response?.body()?.token
-                    Log.e("MainActivity", "Autenticado "+tokenString)
+                    Log.e("MainActivity", "Autenticado " + tokenString)
                     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                     val editor = sharedPreferences.edit()
                     editor.putString("TOKEN", tokenString)
                     editor.putString("USER", submitedUser)
+                    editor.putString("PWD", userPwd)
                     editor.apply()
 
                     hideSoftKeyboard(requireActivity())
@@ -122,6 +124,7 @@ class LoginFragment : mainFragment() {
             }
         }
 
+        userPwd = pwdEditText.editText!!.text.toString()
         submitedUser = usrEditText.editText!!.text.toString()
         networkManager.runAuth(submitedUser!!, pwdEditText.editText!!.text.toString(), "", callback)
     }

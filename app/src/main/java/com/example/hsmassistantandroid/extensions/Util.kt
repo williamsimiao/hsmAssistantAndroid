@@ -21,10 +21,17 @@ import okhttp3.ResponseBody
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
+import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.network.MIHelper
+import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
+import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import com.example.hsmassistantandroid.ui.usuário.ServiceStatus
+import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private val minPwdLenght = 8
 private val TAG: String = "Util"
@@ -43,7 +50,8 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
-                goToLoginScreen(fragment)
+                loginWithPreviusCredentials(fragment)
+//                goToLoginScreen(fragment)
             }
         }
         "ERR_INVALID_KEY" -> {
@@ -65,6 +73,39 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
     return message
 }
 
+fun loginWithPreviusCredentials(fragment: Fragment) {
+    val callback = object : Callback<ResponseBody1> {
+        override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+            alertAboutConnectionError(fragment.view)
+        }
+
+        override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            if(response?.isSuccessful!!) {
+                Log.d(TAG, "reLogin is Successful")
+                val tokenString = "HSM " + response?.body()?.token
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+                val editor = sharedPreferences.edit()
+                editor.putString("TOKEN", tokenString)
+                //TODO talvez mudar para commit
+                editor.apply()
+            }
+            else {
+                val message = handleAPIError(fragment, response.errorBody())
+                Log.d(TAG, "reLogin error: $message")
+                //TODO: PE01
+                Snackbar.make(fragment.view!!, message!!, Snackbar.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    val networkManager = NetworkManager(fragment.context)
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+    val user = sharedPreferences.getString("USER", null)
+    val pwd = sharedPreferences.getString("PWD", null)
+
+    networkManager.runAuth(user, pwd, "", callback)
+}
+
 fun alertAboutConnectionError(view: View?) : Boolean {
     if(view == null) {
         return false
@@ -83,7 +124,7 @@ fun alertAboutConnectionError(view: View?) : Boolean {
         val initKey = sharedPreferences.getString("INIT_KEY", null)
 
         //Start by it self
-        if(initKey == null) {
+        if(initKey != null) {
             val successCallback = {
                 Snackbar.make(view, "Serviço iniciado", Snackbar.LENGTH_LONG).show()
             }
