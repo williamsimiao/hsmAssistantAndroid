@@ -36,7 +36,7 @@ import retrofit2.Response
 private val minPwdLenght = 8
 private val TAG: String = "Util"
 
-fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
+fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response: String) -> Unit? = {}) {
     val message: String
 
     val errorStream = error?.byteStream().toString()
@@ -70,7 +70,7 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?): String? {
             Log.d(TAG, mErrorBody.rd)
         }
     }
-    return message
+    callback(message)
 }
 
 fun loginWithPreviusCredentials(fragment: Fragment) {

@@ -84,13 +84,6 @@ class LoginFragment : mainFragment() {
         autenticarButton.setOnClickListener { didTapAutenticar() }
     }
 
-    fun showInvalidTokenDialog() {
-        AlertDialog.Builder(requireContext()).setTitle(getString(R.string.invalidTokenDialog_title))
-            .setMessage(getString(R.string.invalidTokenDialog_message))
-            .setPositiveButton(android.R.string.ok) { _, _ -> }
-            .show()
-    }
-
     fun didTapAutenticar() {
         if(fieldsAreValid(context, arrayOf(usrEditText, pwdEditText)) == false) return
 
@@ -118,7 +111,7 @@ class LoginFragment : mainFragment() {
                     requireActivity().finish()
                 }
                 else {
-                    handleAPIError(this@LoginFragment, response.errorBody())
+                    handleAPIError(this@LoginFragment, response.errorBody()) {}
                 }
             }
         }
@@ -160,10 +153,17 @@ class LoginFragment : mainFragment() {
                     requireActivity().finish()
                 }
                 else {
-                    val message = handleAPIError(this@LoginFragment, response.errorBody())
-                    if(message == getString(R.string.ERR_INVALID_KEY_message) || message == getString(R.string.ERR_ACCESS_DENIED_message)) {
-                        showInvalidTokenDialog()
+                    val callback = { message: String ->
+                        if(message == getString(R.string.ERR_INVALID_KEY_message) || message == getString(R.string.ERR_ACCESS_DENIED_message)) {
+                            AlertDialog.Builder(requireContext()).setTitle(getString(R.string.invalidTokenDialog_title))
+                                .setMessage(getString(R.string.invalidTokenDialog_message))
+                                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                                .show()
+                        }
+
                     }
+                    handleAPIError(this@LoginFragment, response.errorBody(), callback)
+
                 }
                 showLoginFields()
             }
