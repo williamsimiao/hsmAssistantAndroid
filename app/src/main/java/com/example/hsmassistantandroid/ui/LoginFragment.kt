@@ -160,10 +160,8 @@ class LoginFragment : mainFragment() {
                                 .setPositiveButton(android.R.string.ok) { _, _ -> }
                                 .show()
                         }
-
                     }
                     handleAPIError(this@LoginFragment, response.errorBody(), callback)
-
                 }
                 showLoginFields()
             }

@@ -73,10 +73,34 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
     callback(message)
 }
 
+fun handleAPIErrorForRequest(error: ResponseBody?, callback: () -> Unit? = {}) {
+    val message: String
+
+    val errorStream = error?.byteStream().toString()
+    val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
+    val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
+    val mErrorBody = errorBody(rc.toLong(), rd)
+
+    callback()
+
+//    when(mErrorBody.rd) {
+//        "ERR_ACCESS_DENIED" -> {
+//            callback()
+//        }
+//        "ERR_INVALID_KEY" -> {
+//            callback()
+//        }
+//        else -> {
+//            val erro = mErrorBody.rd
+//            Log.d(TAG, "Outro erro: $erro")
+//        }
+//    }
+}
+
 fun loginWithPreviusCredentials(fragment: Fragment) {
     val callback = object : Callback<ResponseBody1> {
         override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
-            alertAboutConnectionError(fragment.view)
+//            alertAboutConnectionError(fragment.view)
         }
 
         override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
@@ -90,7 +114,8 @@ fun loginWithPreviusCredentials(fragment: Fragment) {
                 editor.apply()
             }
             else {
-                handleAPIError(fragment, response.errorBody())
+                Log.d(TAG, "MERSA")
+//                handleAPIError(fragment, response.errorBody())
             }
         }
     }

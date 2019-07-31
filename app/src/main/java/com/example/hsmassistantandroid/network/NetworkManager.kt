@@ -1,8 +1,16 @@
 package com.example.hsmassistantandroid.network
 
 import android.content.Context
+import android.content.Intent
 import android.preference.PreferenceManager
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.*
+import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
+import com.example.hsmassistantandroid.extensions.handleAPIError
+import com.example.hsmassistantandroid.extensions.handleAPIErrorForRequest
+import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -16,6 +24,8 @@ import javax.net.ssl.X509TrustManager
 import javax.security.cert.CertificateException
 import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 
 private val TAG: String = NetworkManager::class.java.simpleName
 
@@ -90,7 +100,7 @@ class NetworkManager {
 
     //USUARIO
 
-    fun runGetAcl(token: String, usr: String, callback: Callback<ResponseBody6>){
+    fun runGetAcl(token: String, usr: String, callback: Callback<ResponseBody6>) {
         val json = JSONObject()
         json.put("usr", usr)
 
@@ -120,8 +130,29 @@ class NetworkManager {
     }
 
     fun runListUsrs(token: String, callback: Callback<ResponseBody4>) {
-        val call = usuarioRouter.listUsrs(token)
-        call.enqueue(callback)
+        val callback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    val call = usuarioRouter.listUsrs(token)
+                    call.enqueue(callback)
+                }
+                else {
+                    Log.d(TAG, "Probe Fail 2")
+
+                    val myCall = {
+                        val call = usuarioRouter.listUsrs(token)
+                        call.enqueue(callback)
+                    }
+
+                    handleAPIErrorForRequest(response.errorBody(), myCall)
+                }
+            }
+        }
+        runProbe(token, callback)
     }
 
     fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
@@ -165,10 +196,34 @@ class NetworkManager {
     }
 
     fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
-        val call = objetosRouter?.listObjs(token)
-        if (call != null) {
-            call.enqueue(callback)
+        val callback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Beleza")
+                    val call = objetosRouter?.listObjs(token)
+                    if (call != null) {
+                        call.enqueue(callback)
+                    }
+                }
+                else {
+                    Log.d(TAG, "Probe Fail 2")
+
+                    val myCall = {
+                        val call = objetosRouter?.listObjs(token)
+                        if (call != null) {
+                            call.enqueue(callback)
+                        }
+                    }
+
+                    handleAPIErrorForRequest(response.errorBody(), myCall)
+                }
+            }
         }
+        runProbe(token, callback)
     }
 
     //SESSAO
