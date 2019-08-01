@@ -79,7 +79,7 @@ class TrustFragment: mainFragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val userName = sharedPreferences.getString("USER", null)
         val op = if(isTrustees!!) 2 else 1
-        networkManager.runListUsrsTrust(tokenString!!, op, userName, callbackList)
+        networkManager.runListUsrsTrust(this@TrustFragment, tokenString!!, op, userName, callbackList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -124,27 +124,7 @@ class TrustFragment: mainFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.options_add_user -> {
-//                onOptionAddUserClick()
-
-                //TODO remover essas linhas
-                val callbackClose = object : Callback<ResponseBody0> {
-                    override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
-                        alertAboutConnectionError(view)
-                        Snackbar.make(view!!, "sessao nao pode ser fechada", Snackbar.LENGTH_LONG).show()
-                    }
-                    override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
-                        if(response?.isSuccessful!!) {
-//                            removeTokenFromSecureLocation(requireActivity())
-                            Log.d(TAG, "sessao fechada")
-                        }
-                        else {
-                            handleAPIError(this@TrustFragment, response.errorBody())
-                        }
-                    }
-                }
-                networkManager.runClose(tokenString!!, callbackClose)
-
-
+                onOptionAddUserClick()
             }
 
             R.id.options_reload -> onOptionReloadClick()

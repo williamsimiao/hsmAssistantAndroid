@@ -173,7 +173,7 @@ class NewPermissionFragment : mainFragment() {
             }
         }
         if(userName == null) return
-        networkManager.runGetAcl(tokenString!!, userName!!, callback)
+        networkManager.runGetAcl(this@NewPermissionFragment, tokenString!!, userName!!, callback)
     }
 
     fun updateAclRequest(newAcl: Int) {
@@ -195,6 +195,6 @@ class NewPermissionFragment : mainFragment() {
         if(userName == null) return
 
         val finalAcl = composeFinalAcl(newAcl)
-        networkManager.runUpdateAcl(tokenString!!, userName!!, finalAcl, callbackUpdate)
+        networkManager.runUpdateAcl(this@NewPermissionFragment, tokenString!!, userName!!, finalAcl, callbackUpdate)
     }
 }

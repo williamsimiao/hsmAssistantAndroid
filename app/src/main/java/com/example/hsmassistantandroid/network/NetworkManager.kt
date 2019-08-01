@@ -99,38 +99,10 @@ class NetworkManager {
         usuarioRouter = retrofit.create(usuarioEndPoint::class.java)
     }
 
-    //USUARIO
+    //**USUARIO**//
 
-    fun runGetAcl(token: String, usr: String, callback: Callback<ResponseBody6>) {
-        val json = JSONObject()
-        json.put("usr", usr)
-
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-        val call = usuarioRouter.getAcl(requestBody, token)
-        call.enqueue(callback)
-    }
-
-    fun runUpdateAcl(token: String, usr: String, acl: Int, callback: Callback<ResponseBody0>) {
-        val json = JSONObject()
-        json.put("usr", usr)
-        json.put("acl", acl)
-
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-        val call = usuarioRouter.updateAcl(requestBody, token)
-        call.enqueue(callback)
-    }
-
-    fun runListUsrsTrust(token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
-        val json = JSONObject()
-        json.put("op", op)
-        json.put("usr", usr)
-
-        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
-        val call = usuarioRouter.listUsersTrust(requestBody, token)
-        call.enqueue(callback)
-    }
-
-    fun runListUsrs(fragment: Fragment, token: String, callback: Callback<ResponseBody4>) {
+    //region getAcl
+    fun runGetAcl(fragment: Fragment, token: String, usr: String, callback: Callback<ResponseBody6>) {
         val probeCallback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 Log.d(TAG, "Probe Fail 1")
@@ -138,17 +110,15 @@ class NetworkManager {
 
             override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
                 if(response?.isSuccessful!!) {
-                    val call = usuarioRouter.listUsrs(token)
-                    call.enqueue(callback)
+                    Log.d(TAG, "Ja esta logado")
+                    getAcl(token, usr, callback)
                 }
                 else {
                     Log.d(TAG, "handleAPIErrorForRequest YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
-
-                        val primaryCall = usuarioRouter.listUsrs(updatedToken)
-                        primaryCall.enqueue(callback)
+                        getAcl(updatedToken, usr, callback)
                     }
                     handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
                 }
@@ -157,7 +127,150 @@ class NetworkManager {
         runProbe(token, probeCallback)
     }
 
-    fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
+    fun getAcl(token: String, usr: String, callback: Callback<ResponseBody6>) {
+        val json = JSONObject()
+        json.put("usr", usr)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.getAcl(requestBody, token)
+        call.enqueue(callback)
+    }
+    //endregion
+
+    //region updateAcl
+    fun runUpdateAcl(fragment: Fragment, token: String, usr: String, acl: Int, callback: Callback<ResponseBody0>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    updateAcl(token, usr, acl, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        updateAcl(updatedToken, usr, acl, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+
+    fun updateAcl(token: String, usr: String, acl: Int, callback: Callback<ResponseBody0>) {
+        val json = JSONObject()
+        json.put("usr", usr)
+        json.put("acl", acl)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val call = usuarioRouter.updateAcl(requestBody, token)
+        call.enqueue(callback)
+    }
+    //endregion
+
+
+
+    //region listUsrTrust
+    fun runListUsrsTrust(fragment: Fragment, token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    listUsrTrust(token, op, usr, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        listUsrTrust(updatedToken, op, usr, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+    fun listUsrTrust(token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
+        val json = JSONObject()
+        json.put("op", op)
+        json.put("usr", usr)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        val primaryCall = usuarioRouter.listUsersTrust(requestBody, token)
+        primaryCall.enqueue(callback)
+    }
+    //endregion
+
+
+    //region listUsr
+    fun runListUsrs(fragment: Fragment, token: String, callback: Callback<ResponseBody4>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    listUsrs(token, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        listUsrs(updatedToken, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+    fun listUsrs(token: String, callback: Callback<ResponseBody4>) {
+        val call = usuarioRouter.listUsrs(token)
+        call.enqueue(callback)
+    }
+    //endregion
+
+    //region createUsr
+    fun runCreateUsr(fragment: Fragment, token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    createUsr(token, usr, pwd, acl, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        createUsr(updatedToken, usr, pwd, acl, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+
+    }
+    fun createUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)
@@ -167,17 +280,71 @@ class NetworkManager {
         val call = usuarioRouter.createUsr(requestBody, token)
         call.enqueue(callback)
     }
+    //endregion
 
-    fun runChangePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
+    //region runChangePwd
+    fun runChangePwd(fragment: Fragment, token: String, newPwd: String, callback: Callback<ResponseBody0>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    changePwd(token, newPwd, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        changePwd(updatedToken, newPwd, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+
+    fun changePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
         val json = JSONObject()
         json.put("pwd", newPwd)
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = usuarioRouter.changePwd(requestBody, token)
         call.enqueue(callback)
     }
+    //endregion
 
     //OBJETOS
-    fun runObjExp(objId: String, token: String, callback: Callback<ResponseBody>) {
+    //region runObjExp
+    fun runObjExp(fragment: Fragment, objId: String, token: String, callback: Callback<ResponseBody>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    objExp(objId, token, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        objExp(objId, updatedToken, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+
+    fun objExp(objId: String, token: String, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("obj", objId)
 
@@ -185,8 +352,36 @@ class NetworkManager {
         val call = objetosRouter.objExp(requestBody, token)
         call.enqueue(callback)
     }
+    //endregion
 
-    fun runGetObjInfo(objId: String, token: String, callback: Callback<ResponseBody7>) {
+
+
+    //region getObjInfo
+    fun runGetObjInfo(fragment: Fragment, objId: String, token: String, callback: Callback<ResponseBody7>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    getObjInfo(objId, token, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        getObjInfo(objId, updatedToken, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+    fun getObjInfo(objId: String, token: String, callback: Callback<ResponseBody7>) {
         val json = JSONObject()
         json.put("obj", objId)
 
@@ -194,35 +389,38 @@ class NetworkManager {
         val call = objetosRouter.getObjInfo(requestBody, token)
         call.enqueue(callback)
     }
+    //endregion
 
-    fun runListObjects(token: String, callback: Callback<ResponseBody2>) {
+    //region ListObjects
+    fun runListObjects(fragment: Fragment, token: String, callback: Callback<ResponseBody2>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    listObjects(token, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        listObjects(updatedToken, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+    fun listObjects(token: String, callback: Callback<ResponseBody2>) {
         val call = objetosRouter?.listObjs(token)
         call.enqueue(callback)
-//        val probeCallback = object : Callback<ResponseBody3> {
-//            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
-//                Log.d(TAG, "Probe Fail 1")
-//            }
-//
-//            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
-//                if(response?.isSuccessful!!) {
-//                    Log.d(TAG, "Beleza")
-//                    val mCall = objetosRouter.listObjs(token)
-//                    mCall.enqueue(callback)
-//                }
-//                else {
-//                    Log.d(TAG, "Probe Fail 2")
-//
-//                    val myCall = {
-//                        val mCall = objetosRouter.listObjs(token)
-//                        mCall.enqueue(callback)
-//                    }
-//
-//                    handleAPIErrorForRequest(response.errorBody(), myCall)
-//                }
-//            }
-//        }
-//        runProbe(token, probeCallback)
     }
+    //endregion
 
     //SESSAO
     fun runClose(token: String, callback: Callback<ResponseBody0>) {

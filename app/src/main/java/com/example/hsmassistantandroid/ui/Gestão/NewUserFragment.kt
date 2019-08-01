@@ -51,7 +51,7 @@ class NewUserFragment : mainFragment() {
         }
         val newUserName = newUsrEditText.editText!!.text.toString()
         val newPassword = newUsrPwdEditText.editText!!.text.toString()
-        networkManager.runCreateUsr(tokenString!!, newUserName, newPassword,
+        networkManager.runCreateUsr(this@NewUserFragment, tokenString!!, newUserName, newPassword,
             newUserDefaultACL, callbackList)
     }
 

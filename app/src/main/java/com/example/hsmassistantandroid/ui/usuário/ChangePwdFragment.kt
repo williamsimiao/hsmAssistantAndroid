@@ -52,7 +52,7 @@ class ChangePwdFragment : mainFragment() {
             }
         }
         val newPwd = newPwdEditText.editText!!.text.toString()
-        networkManager.runChangePwd(tokenString!!, newPwd, callback)
+        networkManager.runChangePwd(this@ChangePwdFragment, tokenString!!, newPwd, callback)
     }
 
     override fun onCreateView(

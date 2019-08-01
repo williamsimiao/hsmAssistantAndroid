@@ -2,6 +2,7 @@ package com.example.hsmassistantandroid.ui.Objetos
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.constraintlayout.solver.widgets.ConstraintWidget.VERTICAL
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hsmassistantandroid.data.ResponseBody0
 import com.example.hsmassistantandroid.data.certificate
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.ctx
@@ -91,7 +93,7 @@ class ObjetosListFragment : mainFragment() {
                 }
             }
         }
-        networkManager.runObjExp(objId, tokenString!!, callbackList)
+        networkManager.runObjExp(this@ObjetosListFragment, objId, tokenString!!, callbackList)
 
     }
 
@@ -113,7 +115,7 @@ class ObjetosListFragment : mainFragment() {
                 }
             }
         }
-        networkManager.runGetObjInfo(objId, tokenString!!, callbackList)
+        networkManager.runGetObjInfo(this@ObjetosListFragment, objId, tokenString!!, callbackList)
 
     }
 
@@ -144,7 +146,7 @@ class ObjetosListFragment : mainFragment() {
                 refresh_layout.isRefreshing = false
             }
         }
-        networkManager.runListObjects(tokenString!!, callbackList)
+        networkManager.runListObjects(this@ObjetosListFragment, tokenString!!, callbackList)
     }
 
     override fun onCreateView(
@@ -178,6 +180,38 @@ class ObjetosListFragment : mainFragment() {
 
         val itemDecor = DividerItemDecoration(context, VERTICAL)
         objetosList.addItemDecoration(itemDecor)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.reload, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.options_reload -> {
+                //TODO: remover essas linhas
+                val callbackClose = object : Callback<ResponseBody0> {
+                    override fun onFailure(call: Call<ResponseBody0>?, t: Throwable?) {
+                        alertAboutConnectionError(view)
+                        Snackbar.make(view!!, "sessao nao pode ser fechada", Snackbar.LENGTH_LONG).show()
+                    }
+                    override fun onResponse(call: Call<ResponseBody0>?, response: Response<ResponseBody0>?) {
+                        if(response?.isSuccessful!!) {
+//                            removeTokenFromSecureLocation(requireActivity())
+                            Log.d(TAG, "sessao fechada")
+                        }
+                        else {
+                            handleAPIError(this@ObjetosListFragment, response.errorBody())
+                        }
+                    }
+                }
+                networkManager.runClose(tokenString!!, callbackClose)
+            }
+
+            else -> Log.d(TAG, "Estranho isso, não existe outro")
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun onOptionReloadClick() {
