@@ -101,7 +101,6 @@ object  MIHelper {
             } catch (e: Exception) {
                 Log.d(TAG, "outra falha1: $e")
             }
-
         }
     }
 
@@ -124,9 +123,25 @@ object  MIHelper {
 
     fun isServiceStarted(context: Context , caseFalse: () -> Unit, caseTrue: () -> Unit) {
         doAsync {
-
             try {
                 output.println("MI_SVC_STATUS")
+                val response = input.nextLine()
+                when(response) {
+                    "MI_ACK 00000000 " -> caseFalse()
+                    "MI_ACK 00000001 " -> caseTrue()
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "falha8: $e")
+            }
+        }
+    }
+
+    fun isFirstBoot(context: Context, caseFalse: () -> Unit, caseTrue: () -> Unit) {
+        doAsync {
+
+            try {
+                output.println("MI_FIRST_BOOT")
                 val response = input.nextLine()
                 when(response) {
                     "MI_ACK 00000000 " -> caseFalse()

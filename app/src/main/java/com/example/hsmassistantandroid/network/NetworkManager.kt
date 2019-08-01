@@ -174,8 +174,6 @@ class NetworkManager {
     }
     //endregion
 
-
-
     //region listUsrTrust
     fun runListUsrsTrust(fragment: Fragment, token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
         val probeCallback = object : Callback<ResponseBody3> {
@@ -211,7 +209,6 @@ class NetworkManager {
         primaryCall.enqueue(callback)
     }
     //endregion
-
 
     //region listUsr
     fun runListUsrs(fragment: Fragment, token: String, callback: Callback<ResponseBody4>) {
@@ -354,8 +351,6 @@ class NetworkManager {
     }
     //endregion
 
-
-
     //region getObjInfo
     fun runGetObjInfo(fragment: Fragment, objId: String, token: String, callback: Callback<ResponseBody7>) {
         val probeCallback = object : Callback<ResponseBody3> {
@@ -391,7 +386,7 @@ class NetworkManager {
     }
     //endregion
 
-    //region ListObjects
+    //region listObjects
     fun runListObjects(fragment: Fragment, token: String, callback: Callback<ResponseBody2>) {
         val probeCallback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {

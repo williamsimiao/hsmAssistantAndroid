@@ -20,10 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
-
 private val TAG: String = LoginFragment::class.java.simpleName
-
 
 class LoginFragment : mainFragment() {
     private lateinit var networkManager: NetworkManager
@@ -52,7 +49,6 @@ class LoginFragment : mainFragment() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         tokenString = sharedPreferences.getString("TOKEN", null)
-
     }
 
     override fun onCreateView(
@@ -60,7 +56,6 @@ class LoginFragment : mainFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -69,7 +64,14 @@ class LoginFragment : mainFragment() {
         if(tokenString != null) {
             //Então fez logout logo não deve mostrar que o token expirou
             hideLoginFields()
-            probeRequest()
+
+            val empity = { nothing: String ->
+                val intent = Intent(context, SecondActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+            loginWithPreviusCredentialsAndMakeRequest(this@LoginFragment, empity)
+//            probeRequest()
         }
 
         setUpViews()

@@ -50,7 +50,7 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
-//                goToLoginScreen(fragment)
+                goToLoginScreen(fragment)
             }
         }
         "ERR_INVALID_KEY" -> {
@@ -315,8 +315,10 @@ fun removeTokenFromSecureLocation(activity: Activity) {
 }
 
 fun goToLoginScreen(fragment: Fragment) {
+    val fragmentActivity = fragment.requireActivity()
+    removeTokenFromSecureLocation(fragmentActivity)
     fragment.findNavController().navigate(R.id.goto_Login)
-    fragment.requireActivity().finish()
+    fragmentActivity.finish()
 }
 
 @SuppressLint("ApplySharedPref")
