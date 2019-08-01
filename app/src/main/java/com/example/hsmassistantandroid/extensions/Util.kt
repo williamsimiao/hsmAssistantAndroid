@@ -72,8 +72,7 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
     callback(message)
 }
 
-fun handleAPIErrorForRequest(context: Context?, error: ResponseBody?, makeRequest: (updatedToken: String) -> Unit? = {}) {
-    val message: String
+fun handleAPIErrorForRequest(fragment: Fragment, error: ResponseBody?, makeRequest: (updatedToken: String) -> Unit? = {}) {
 
     val errorStream = error?.byteStream().toString()
     val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
@@ -82,10 +81,10 @@ fun handleAPIErrorForRequest(context: Context?, error: ResponseBody?, makeReques
 
     when(mErrorBody.rd) {
         "ERR_ACCESS_DENIED" -> {
-            loginWithPreviusCredentialsAndMakeRequest(context, makeRequest)
+            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest)
         }
         "ERR_INVALID_KEY" -> {
-            loginWithPreviusCredentialsAndMakeRequest(context, makeRequest)
+            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest)
         }
         else -> {
             val erro = mErrorBody.rd
@@ -94,7 +93,9 @@ fun handleAPIErrorForRequest(context: Context?, error: ResponseBody?, makeReques
     }
 }
 
-fun loginWithPreviusCredentialsAndMakeRequest(context: Context?, makeRequest: (updatedToken: String) -> Unit?) {
+fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (updatedToken: String) -> Unit?) {
+    val fragmentContext = fragment.context
+
     val callback = object : Callback<ResponseBody1> {
         override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
 //            alertAboutConnectionError(fragment.view)
@@ -104,10 +105,9 @@ fun loginWithPreviusCredentialsAndMakeRequest(context: Context?, makeRequest: (u
             if(response?.isSuccessful!!) {
                 Log.d(TAG, "reLogin is Successful")
                 val tokenString = "HSM " + response?.body()?.token
-                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragmentContext)
                 val editor = sharedPreferences.edit()
                 editor.putString("TOKEN", tokenString)
-                //TODO talvez mudar para commit
                 editor.apply()
 
                 Log.d(TAG, "Doidera")
@@ -115,14 +115,13 @@ fun loginWithPreviusCredentialsAndMakeRequest(context: Context?, makeRequest: (u
                 makeRequest(tokenString)
             }
             else {
-                Log.d(TAG, "MERSA")
-//                handleAPIError(fragment, response.errorBody())
+                handleAPIError(fragment, response.errorBody())
             }
         }
     }
 
-    val networkManager = NetworkManager(context)
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val networkManager = NetworkManager(fragmentContext)
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragmentContext)
     val user = sharedPreferences.getString("USER", null)
     val pwd = sharedPreferences.getString("PWD", null)
 

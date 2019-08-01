@@ -45,7 +45,7 @@ class ObjetoDetailFragment : mainFragment() {
                 }
             }
         }
-        networkManager.runListUsrs(context, tokenString!!, callbackList)
+        networkManager.runListUsrs(this@ObjetoDetailFragment, tokenString!!, callbackList)
     }
 
     override fun onCreateView(

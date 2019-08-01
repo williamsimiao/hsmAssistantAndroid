@@ -62,7 +62,7 @@ class UserSelectionFragment : mainFragment() {
                 }
             }
         }
-        networkManager.runListUsrs(context, tokenString!!, callbackList)
+        networkManager.runListUsrs(this@UserSelectionFragment, tokenString!!, callbackList)
     }
 
     override fun onCreateView(

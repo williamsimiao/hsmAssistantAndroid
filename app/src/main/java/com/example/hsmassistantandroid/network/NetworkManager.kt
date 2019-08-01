@@ -5,6 +5,7 @@ import android.content.Intent
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.*
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
@@ -129,7 +130,7 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runListUsrs(context: Context?, token: String, callback: Callback<ResponseBody4>) {
+    fun runListUsrs(fragment: Fragment, token: String, callback: Callback<ResponseBody4>) {
         val probeCallback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 Log.d(TAG, "Probe Fail 1")
@@ -143,13 +144,13 @@ class NetworkManager {
                 else {
                     Log.d(TAG, "handleAPIErrorForRequest YES")
 
-                    val myCall = { updatedToken: String ->
+                    val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
 
                         val primaryCall = usuarioRouter.listUsrs(updatedToken)
                         primaryCall.enqueue(callback)
                     }
-                    handleAPIErrorForRequest(context, response.errorBody(), myCall)
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
                 }
             }
         }

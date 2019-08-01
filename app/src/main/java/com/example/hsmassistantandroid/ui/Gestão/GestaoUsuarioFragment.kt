@@ -65,7 +65,7 @@ class gestaoUsuarioFragment : mainFragment() {
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val tokenString = sharedPreferences.getString("TOKEN", null)
-        networkManager.runListUsrs(context, tokenString!!, callbackList)
+        networkManager.runListUsrs(this@gestaoUsuarioFragment, tokenString!!, callbackList)
     }
 
     override fun onCreateView(
