@@ -144,7 +144,7 @@ class ObjetosListFragment : mainFragment() {
                 refresh_layout.isRefreshing = false
             }
         }
-        networkManager. runListObjetcs(tokenString!!, callbackList)
+        networkManager.runListObjects(tokenString!!, callbackList)
     }
 
     override fun onCreateView(

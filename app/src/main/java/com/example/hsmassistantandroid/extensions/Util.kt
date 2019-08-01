@@ -50,7 +50,6 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
         "ERR_ACCESS_DENIED" -> {
             message = activity.getString(R.string.ERR_ACCESS_DENIED_message)
             if(activity !is MainActivity) {
-                loginWithPreviusCredentials(fragment)
 //                goToLoginScreen(fragment)
             }
         }
@@ -73,7 +72,7 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
     callback(message)
 }
 
-fun handleAPIErrorForRequest(error: ResponseBody?, callback: () -> Unit? = {}) {
+fun handleAPIErrorForRequest(context: Context?, error: ResponseBody?, makeRequest: (updatedToken: String) -> Unit? = {}) {
     val message: String
 
     val errorStream = error?.byteStream().toString()
@@ -81,23 +80,21 @@ fun handleAPIErrorForRequest(error: ResponseBody?, callback: () -> Unit? = {}) {
     val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
     val mErrorBody = errorBody(rc.toLong(), rd)
 
-    callback()
-
-//    when(mErrorBody.rd) {
-//        "ERR_ACCESS_DENIED" -> {
-//            callback()
-//        }
-//        "ERR_INVALID_KEY" -> {
-//            callback()
-//        }
-//        else -> {
-//            val erro = mErrorBody.rd
-//            Log.d(TAG, "Outro erro: $erro")
-//        }
-//    }
+    when(mErrorBody.rd) {
+        "ERR_ACCESS_DENIED" -> {
+            loginWithPreviusCredentialsAndMakeRequest(context, makeRequest)
+        }
+        "ERR_INVALID_KEY" -> {
+            loginWithPreviusCredentialsAndMakeRequest(context, makeRequest)
+        }
+        else -> {
+            val erro = mErrorBody.rd
+            Log.d(TAG, "Outro erro: $erro")
+        }
+    }
 }
 
-fun loginWithPreviusCredentials(fragment: Fragment) {
+fun loginWithPreviusCredentialsAndMakeRequest(context: Context?, makeRequest: (updatedToken: String) -> Unit?) {
     val callback = object : Callback<ResponseBody1> {
         override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
 //            alertAboutConnectionError(fragment.view)
@@ -107,11 +104,15 @@ fun loginWithPreviusCredentials(fragment: Fragment) {
             if(response?.isSuccessful!!) {
                 Log.d(TAG, "reLogin is Successful")
                 val tokenString = "HSM " + response?.body()?.token
-                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                 val editor = sharedPreferences.edit()
                 editor.putString("TOKEN", tokenString)
                 //TODO talvez mudar para commit
                 editor.apply()
+
+                Log.d(TAG, "Doidera")
+                //Calling the actual request
+                makeRequest(tokenString)
             }
             else {
                 Log.d(TAG, "MERSA")
@@ -120,8 +121,8 @@ fun loginWithPreviusCredentials(fragment: Fragment) {
         }
     }
 
-    val networkManager = NetworkManager(fragment.context)
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+    val networkManager = NetworkManager(context)
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     val user = sharedPreferences.getString("USER", null)
     val pwd = sharedPreferences.getString("PWD", null)
 

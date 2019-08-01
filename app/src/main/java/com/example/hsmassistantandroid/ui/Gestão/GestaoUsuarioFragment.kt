@@ -56,6 +56,7 @@ class gestaoUsuarioFragment : mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
+                    Log.d(TAG, "não deu bom")
                     handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
                 }
                 refresh_layout.isRefreshing = false
@@ -64,7 +65,7 @@ class gestaoUsuarioFragment : mainFragment() {
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val tokenString = sharedPreferences.getString("TOKEN", null)
-        networkManager.runListUsrs(tokenString!!, callbackList)
+        networkManager.runListUsrs(context, tokenString!!, callbackList)
     }
 
     override fun onCreateView(

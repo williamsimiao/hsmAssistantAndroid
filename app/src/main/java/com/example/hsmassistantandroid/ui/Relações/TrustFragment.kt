@@ -136,7 +136,6 @@ class TrustFragment: mainFragment() {
                         if(response?.isSuccessful!!) {
 //                            removeTokenFromSecureLocation(requireActivity())
                             Log.d(TAG, "sessao fechada")
-                            Snackbar.make(view!!, "sessao fechada", Snackbar.LENGTH_LONG).show()
                         }
                         else {
                             handleAPIError(this@TrustFragment, response.errorBody())

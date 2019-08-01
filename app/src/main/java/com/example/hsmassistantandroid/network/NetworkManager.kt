@@ -129,8 +129,8 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runListUsrs(token: String, callback: Callback<ResponseBody4>) {
-        val callback = object : Callback<ResponseBody3> {
+    fun runListUsrs(context: Context?, token: String, callback: Callback<ResponseBody4>) {
+        val probeCallback = object : Callback<ResponseBody3> {
             override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
                 Log.d(TAG, "Probe Fail 1")
             }
@@ -141,18 +141,19 @@ class NetworkManager {
                     call.enqueue(callback)
                 }
                 else {
-                    Log.d(TAG, "Probe Fail 2")
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
 
-                    val myCall = {
-                        val call = usuarioRouter.listUsrs(token)
-                        call.enqueue(callback)
+                    val myCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+
+                        val primaryCall = usuarioRouter.listUsrs(updatedToken)
+                        primaryCall.enqueue(callback)
                     }
-
-                    handleAPIErrorForRequest(response.errorBody(), myCall)
+                    handleAPIErrorForRequest(context, response.errorBody(), myCall)
                 }
             }
         }
-        runProbe(token, callback)
+        runProbe(token, probeCallback)
     }
 
     fun runCreateUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
@@ -166,7 +167,6 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-
     fun runChangePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
         val json = JSONObject()
         json.put("pwd", newPwd)
@@ -176,7 +176,6 @@ class NetworkManager {
     }
 
     //OBJETOS
-
     fun runObjExp(objId: String, token: String, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("obj", objId)
@@ -195,35 +194,33 @@ class NetworkManager {
         call.enqueue(callback)
     }
 
-    fun runListObjetcs(token: String, callback: Callback<ResponseBody2>) {
-        val callback = object : Callback<ResponseBody3> {
-            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
-                Log.d(TAG, "Probe Fail 1")
-            }
-
-            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
-                if(response?.isSuccessful!!) {
-                    Log.d(TAG, "Beleza")
-                    val call = objetosRouter?.listObjs(token)
-                    if (call != null) {
-                        call.enqueue(callback)
-                    }
-                }
-                else {
-                    Log.d(TAG, "Probe Fail 2")
-
-                    val myCall = {
-                        val call = objetosRouter?.listObjs(token)
-                        if (call != null) {
-                            call.enqueue(callback)
-                        }
-                    }
-
-                    handleAPIErrorForRequest(response.errorBody(), myCall)
-                }
-            }
-        }
-        runProbe(token, callback)
+    fun runListObjects(token: String, callback: Callback<ResponseBody2>) {
+        val call = objetosRouter?.listObjs(token)
+        call.enqueue(callback)
+//        val probeCallback = object : Callback<ResponseBody3> {
+//            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+//                Log.d(TAG, "Probe Fail 1")
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+//                if(response?.isSuccessful!!) {
+//                    Log.d(TAG, "Beleza")
+//                    val mCall = objetosRouter.listObjs(token)
+//                    mCall.enqueue(callback)
+//                }
+//                else {
+//                    Log.d(TAG, "Probe Fail 2")
+//
+//                    val myCall = {
+//                        val mCall = objetosRouter.listObjs(token)
+//                        mCall.enqueue(callback)
+//                    }
+//
+//                    handleAPIErrorForRequest(response.errorBody(), myCall)
+//                }
+//            }
+//        }
+//        runProbe(token, probeCallback)
     }
 
     //SESSAO
@@ -244,6 +241,7 @@ class NetworkManager {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)
+//        json.put("otp", otp)
 
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = sessaoRouter.auth(requestBody)
