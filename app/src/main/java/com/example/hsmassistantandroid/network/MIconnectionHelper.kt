@@ -235,4 +235,21 @@ object  MIHelper {
             }
         }
     }
+
+    fun getSerialNmmber(successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {
+        doAsync {
+            try {
+                output.println("MI_HW_PROFILE")
+                val response = input.nextLine()
+                if(response == "MI_ACK 00000000 ") {
+                    successCallback()
+                }
+                else {
+                    errorCallback(response)
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, "falha: $e")
+            }
+        }
+    }
 }
