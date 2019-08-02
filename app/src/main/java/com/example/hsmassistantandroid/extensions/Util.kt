@@ -35,6 +35,8 @@ import retrofit2.Response
 
 private val minPwdLenght = 8
 private val minACL = 80
+private val defaultPartitionName = "pocketpuk"
+private val defaultPartitionPwd = "pukpocketdn"
 private val TAG: String = "Util"
 
 fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response: String) -> Unit? = {}) {
@@ -129,7 +131,7 @@ fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (
     networkManager.runAuth(user, pwd, "", callback)
 }
 
-fun firstBootConfiguration(fragment: Fragment, initKey: String, serialNumber: String) {
+fun firstBootConfiguration(fragment: Fragment, initKey: String) {
     val netManager = NetworkManager(fragment.context)
 
     //Logout
@@ -176,7 +178,7 @@ fun firstBootConfiguration(fragment: Fragment, initKey: String, serialNumber: St
                 val token = sharedPreferences.getString("TOKEN", null)
 
 
-                netManager.runCreateObj(fragment, token, initKey, )
+//                netManager.runCreateObj(fragment, token, )
             }
             else {
                 Log.d(TAG, "Erro 2 ao criar nova particao no firstboot")
@@ -196,7 +198,7 @@ fun firstBootConfiguration(fragment: Fragment, initKey: String, serialNumber: St
                 val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
                 val editor = sharedPreferences.edit()
                 editor.putString("TOKEN", tokenString)
-                netManager.runCreateUsr(fragment, tokenString, serialNumber, "12345678", minACL, partitionCallback)
+                netManager.runCreateUsr(fragment, tokenString, defaultPartitionName, "12345678", minACL, partitionCallback)
             }
             else {
                 Log.d(TAG, "Erro 2 ao logar como master no firstboot")

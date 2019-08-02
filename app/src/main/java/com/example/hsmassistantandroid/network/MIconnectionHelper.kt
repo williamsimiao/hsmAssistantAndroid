@@ -137,6 +137,20 @@ object  MIHelper {
         }
     }
 
+    fun isFirstBootProcess(address: String, context: Context, caseFalse: () -> Unit, caseTrue: () -> Unit) {
+        //CONNECT
+        val successCallback = {
+            Log.d(TAG, "Conectou-se")
+            isFirstBoot(caseFalse, caseTrue)
+        }
+        val errorCallback = { errorMessage: String ->
+            Log.d(TAG, errorMessage)
+            Unit
+        }
+
+        connectToAddress(address, context, successCallback, errorCallback)
+    }
+
     fun isFirstBoot(caseFalse: () -> Unit, caseTrue: () -> Unit) {
         doAsync {
             try {
@@ -151,20 +165,6 @@ object  MIHelper {
                 Log.d(TAG, "falha8: $e")
             }
         }
-    }
-
-    fun isFirstBootProcess(address: String, context: Context, caseFalse: () -> Unit, caseTrue: () -> Unit) {
-        //CONNECT
-        val successCallback = {
-            Log.d(TAG, "Conectou-se")
-            isFirstBoot(caseFalse, caseTrue)
-        }
-        val errorCallback = { errorMessage: String ->
-            Log.d(TAG, errorMessage)
-            Unit
-        }
-
-        connectToAddress(address, context, successCallback, errorCallback)
     }
 
     fun startService(context: Context , successCallback: () -> Unit, errorCallback: (response: String) -> Unit?) {

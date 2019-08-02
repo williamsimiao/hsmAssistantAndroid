@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.ResponseBody1
 import com.example.hsmassistantandroid.extensions.*
@@ -87,8 +88,9 @@ class SvmkActivity : AppCompatActivity() {
 
     fun finishSetUp() {
         if(isFirstBoot) {
-
-
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
+            val initKey = sharedPreferences.getString("INI_KEY", null)
+//            firstBootConfiguration(this, initKey)
         }
 
         val intent = Intent(baseContext, MainActivity::class.java)
