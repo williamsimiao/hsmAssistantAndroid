@@ -19,4 +19,7 @@ interface objetosEndPoint {
     @Headers("Content-type:application/json")
     fun objExp(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody>
 
+    @POST("create_key")
+    @Headers("Content-type:application/json")
+    fun creteObj(@Body request: RequestBody, @Header("Authorization") token: String?): Call<ResponseBody>
 }

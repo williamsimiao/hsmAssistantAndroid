@@ -34,6 +34,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private val minPwdLenght = 8
+private val minACL = 80
 private val TAG: String = "Util"
 
 fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response: String) -> Unit? = {}) {
@@ -126,6 +127,86 @@ fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (
     val pwd = sharedPreferences.getString("PWD", null)
 
     networkManager.runAuth(user, pwd, "", callback)
+}
+
+fun firstBootConfiguration(fragment: Fragment, initKey: String, serialNumber: String) {
+    val netManager = NetworkManager(fragment.context)
+
+    //Logout
+    val logoutCallback = object : Callback<ResponseBody1> {
+        override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+            Log.d(TAG, "Erro realizar logout no firstboot")
+        }
+
+        override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            if(response?.isSuccessful!!) {
+
+            }
+            else {
+                Log.d(TAG, "Erro 2 realizar logout no firstboot")
+            }
+        }
+    }
+
+    //KEY
+    val createKeyCallback = object : Callback<ResponseBody1> {
+        override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+            Log.d(TAG, "Erro ao criar nova chave no firstboot")
+        }
+
+        override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            if(response?.isSuccessful!!) {
+
+            }
+            else {
+                Log.d(TAG, "Erro 2 ao criar nova chave no firstboot")
+            }
+        }
+    }
+
+    //Partition
+    val partitionCallback = object : Callback<ResponseBody> {
+        override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+            Log.d(TAG, "Erro ao criar nova particao no firstboot")
+        }
+
+        override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+            if(response?.isSuccessful!!) {
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+                val token = sharedPreferences.getString("TOKEN", null)
+
+
+                netManager.runCreateObj(fragment, token, initKey, )
+            }
+            else {
+                Log.d(TAG, "Erro 2 ao criar nova particao no firstboot")
+            }
+        }
+    }
+
+    //Login
+    val callback = object : Callback<ResponseBody1> {
+        override fun onFailure(call: Call<ResponseBody1>?, t: Throwable?) {
+            Log.d(TAG, "Erro ao logar como master no firstboot")
+        }
+
+        override fun onResponse(call: Call<ResponseBody1>?, response: Response<ResponseBody1>?) {
+            if(response?.isSuccessful!!) {
+                val tokenString = "HSM " + response?.body()?.token
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.context)
+                val editor = sharedPreferences.edit()
+                editor.putString("TOKEN", tokenString)
+                netManager.runCreateUsr(fragment, tokenString, serialNumber, "12345678", minACL, partitionCallback)
+            }
+            else {
+                Log.d(TAG, "Erro 2 ao logar como master no firstboot")
+            }
+        }
+    }
+
+    netManager.runAuth("master", "12345678", "", callback)
+    //salvar svmk nessa paricao
+
 }
 
 fun alertAboutConnectionError(view: View?) : Boolean {

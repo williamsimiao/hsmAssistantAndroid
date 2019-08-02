@@ -199,7 +199,7 @@ class NetworkManager {
         }
         runProbe(token, probeCallback)
     }
-    fun listUsrTrust(token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
+    private fun listUsrTrust(token: String, op: Int, usr: String, callback: Callback<ResponseBody5>) {
         val json = JSONObject()
         json.put("op", op)
         json.put("usr", usr)
@@ -235,7 +235,7 @@ class NetworkManager {
         }
         runProbe(token, probeCallback)
     }
-    fun listUsrs(token: String, callback: Callback<ResponseBody4>) {
+    private fun listUsrs(token: String, callback: Callback<ResponseBody4>) {
         val call = usuarioRouter.listUsrs(token)
         call.enqueue(callback)
     }
@@ -267,7 +267,7 @@ class NetworkManager {
         runProbe(token, probeCallback)
 
     }
-    fun createUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
+    private fun createUsr(token: String, usr: String, pwd: String, acl: Int, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)
@@ -305,7 +305,7 @@ class NetworkManager {
         runProbe(token, probeCallback)
     }
 
-    fun changePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
+    private fun changePwd(token: String, newPwd: String, callback: Callback<ResponseBody0>) {
         val json = JSONObject()
         json.put("pwd", newPwd)
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
@@ -341,7 +341,7 @@ class NetworkManager {
         runProbe(token, probeCallback)
     }
 
-    fun objExp(objId: String, token: String, callback: Callback<ResponseBody>) {
+    private fun objExp(objId: String, token: String, callback: Callback<ResponseBody>) {
         val json = JSONObject()
         json.put("obj", objId)
 
@@ -376,7 +376,7 @@ class NetworkManager {
         }
         runProbe(token, probeCallback)
     }
-    fun getObjInfo(objId: String, token: String, callback: Callback<ResponseBody7>) {
+    private fun getObjInfo(objId: String, token: String, callback: Callback<ResponseBody7>) {
         val json = JSONObject()
         json.put("obj", objId)
 
@@ -413,6 +413,45 @@ class NetworkManager {
     }
     fun listObjects(token: String, callback: Callback<ResponseBody2>) {
         val call = objetosRouter?.listObjs(token)
+        call.enqueue(callback)
+    }
+    //endregion
+
+    //region createObj
+    fun runCreateObj(fragment: Fragment, token: String, obj: String, type: String, attr: String, callback: Callback<ResponseBody>) {
+        val probeCallback = object : Callback<ResponseBody3> {
+            override fun onFailure(call: Call<ResponseBody3>?, t: Throwable?) {
+                Log.d(TAG, "Probe Fail 1")
+            }
+
+            override fun onResponse(call: Call<ResponseBody3>?, response: Response<ResponseBody3>?) {
+                if(response?.isSuccessful!!) {
+                    Log.d(TAG, "Ja esta logado")
+                    createObj(token, obj, type, attr, callback)
+                }
+                else {
+                    Log.d(TAG, "handleAPIErrorForRequest YES")
+
+                    val primaryCall = { updatedToken: String ->
+                        Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
+                        createObj(token, obj, type, attr, callback)
+                    }
+                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                }
+            }
+        }
+        runProbe(token, probeCallback)
+    }
+    fun createObj(token: String, obj: String, type: String, attr: String, callback: Callback<ResponseBody>) {
+        val json = JSONObject()
+        json.put("obj", obj)
+        json.put("type", type)
+        json.put("attr", attr)
+
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
+
+
+        val call = objetosRouter?.creteObj(requestBody, token)
         call.enqueue(callback)
     }
     //endregion

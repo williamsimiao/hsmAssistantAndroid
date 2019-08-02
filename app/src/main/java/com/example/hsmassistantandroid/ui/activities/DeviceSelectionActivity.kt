@@ -31,7 +31,7 @@ class DeviceSelectionActivity : AppCompatActivity() {
         //TODO: validate address
 
         val successCallback = {
-            onConnectionEstablished()
+            onConnectionEstablished(address)
         }
 
         val errorCallback = { errorMessage: String ->
@@ -44,16 +44,16 @@ class DeviceSelectionActivity : AppCompatActivity() {
         MIHelper.connectToAddress(address, baseContext, successCallback, errorCallback)
     }
 
-    fun onConnectionEstablished() {
+    fun onConnectionEstablished(address: String) {
         runOnUiThread {
             Toast.makeText(baseContext, "Conectado", Toast.LENGTH_SHORT).show()
-            goToSVMKactivity()
+            goToSVMKactivity(address)
         }
     }
 
-    fun goToSVMKactivity() {
+    fun goToSVMKactivity(address: String) {
         val intent = Intent(baseContext, SvmkActivity::class.java)
+        intent.putExtra("TEMP_ADDRESS", address)
         startActivity(intent)
-//        finish()
     }
 }
