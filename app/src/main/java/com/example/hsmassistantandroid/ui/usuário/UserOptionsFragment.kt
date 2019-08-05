@@ -110,7 +110,8 @@ class UserOptions : mainFragment(), RecyclerViewClickListener {
                     goToLoginScreen(this@UserOptions)
                 }
                 else {
-                    handleAPIError(this@UserOptions, response.errorBody())
+                    val message = handleAPIError(this@UserOptions, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

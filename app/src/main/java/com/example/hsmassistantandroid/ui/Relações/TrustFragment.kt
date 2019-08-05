@@ -71,7 +71,8 @@ class TrustFragment: mainFragment() {
                     alreadyLoaded = true
                 }
                 else {
-                    handleAPIError(this@TrustFragment, response.errorBody())
+                    val message = handleAPIError(this@TrustFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
                 refresh_layout.isRefreshing = false
             }

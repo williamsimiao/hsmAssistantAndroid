@@ -66,12 +66,18 @@ class LoginFragment : mainFragment() {
         if(tokenString != null) {
             //Então fez logout logo não deve mostrar que o token expirou
 
-            val empity = { nothing: String ->
+            val caseSuccess = { _: String ->
                 val intent = Intent(context, SecondActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
             }
-            loginWithPreviusCredentialsAndMakeRequest(this@LoginFragment, empity)
+
+            val caseFail = { errorMessage: String ->
+                removeTokenFromSecureLocation(requireActivity())
+                showLoginFields()
+                Snackbar.make(view, errorMessage!!, Snackbar.LENGTH_LONG).show()
+            }
+            loginWithPreviusCredentialsAndMakeRequest(this@LoginFragment, caseSuccess, caseFail)
         }
         else {
             showLoginFields()
@@ -116,7 +122,8 @@ class LoginFragment : mainFragment() {
                     requireActivity().finish()
                 }
                 else {
-                    handleAPIError(this@LoginFragment, response.errorBody()) {}
+                    val message = handleAPIError(this@LoginFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
@@ -168,7 +175,8 @@ class LoginFragment : mainFragment() {
                                 .show()
                         }
                     }
-                    handleAPIError(this@LoginFragment, response.errorBody(), callback)
+                    val message = handleAPIError(this@LoginFragment, response.errorBody(), callback)
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
                 showLoginFields()
             }

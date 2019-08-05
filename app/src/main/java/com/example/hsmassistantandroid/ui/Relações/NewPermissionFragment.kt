@@ -168,7 +168,8 @@ class NewPermissionFragment : mainFragment() {
                     }
                 }
                 else {
-                    handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    val message = handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }
@@ -188,7 +189,8 @@ class NewPermissionFragment : mainFragment() {
 
                 }
                 else {
-                    handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    val message = handleAPIError(this@NewPermissionFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

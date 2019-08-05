@@ -14,7 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 private val TAG: String = ObjetoDetailFragment::class.java.simpleName
 
 class ObjetoDetailFragment : mainFragment() {
@@ -41,7 +40,8 @@ class ObjetoDetailFragment : mainFragment() {
                     usrNamesStrings = ArrayList(response.body()!!.usr)
                 }
                 else {
-                    handleAPIError(this@ObjetoDetailFragment, response.errorBody())
+                    val message = handleAPIError(this@ObjetoDetailFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

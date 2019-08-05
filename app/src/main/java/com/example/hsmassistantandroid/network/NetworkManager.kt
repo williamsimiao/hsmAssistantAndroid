@@ -10,7 +10,7 @@ import com.example.hsmassistantandroid.R
 import com.example.hsmassistantandroid.data.*
 import com.example.hsmassistantandroid.extensions.alertAboutConnectionError
 import com.example.hsmassistantandroid.extensions.handleAPIError
-import com.example.hsmassistantandroid.extensions.handleAPIErrorForRequest
+import com.example.hsmassistantandroid.extensions.handleAPIErrorForProbe
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -114,13 +114,13 @@ class NetworkManager {
                     getAcl(token, usr, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         getAcl(updatedToken, usr, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -150,13 +150,13 @@ class NetworkManager {
                     updateAcl(token, usr, acl, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         updateAcl(updatedToken, usr, acl, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -187,13 +187,13 @@ class NetworkManager {
                     listUsrTrust(token, op, usr, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         listUsrTrust(updatedToken, op, usr, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -223,13 +223,13 @@ class NetworkManager {
                     listUsrs(token, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         listUsrs(updatedToken, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -254,13 +254,13 @@ class NetworkManager {
                     createUsr(token, usr, pwd, acl, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         createUsr(updatedToken, usr, pwd, acl, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -292,13 +292,13 @@ class NetworkManager {
                     changePwd(token, newPwd, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         changePwd(updatedToken, newPwd, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -328,13 +328,13 @@ class NetworkManager {
                     objExp(objId, token, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         objExp(objId, updatedToken, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -364,13 +364,13 @@ class NetworkManager {
                     getObjInfo(objId, token, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         getObjInfo(objId, updatedToken, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -399,13 +399,13 @@ class NetworkManager {
                     listObjects(token, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         listObjects(updatedToken, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }
@@ -430,13 +430,13 @@ class NetworkManager {
                     createObj(token, obj, type, attr, callback)
                 }
                 else {
-                    Log.d(TAG, "handleAPIErrorForRequest YES")
+                    Log.d(TAG, "handleAPIErrorForProbe YES")
 
                     val primaryCall = { updatedToken: String ->
                         Log.d(TAG, "Vai chamar o callback primario: token $updatedToken")
                         createObj(token, obj, type, attr, callback)
                     }
-                    handleAPIErrorForRequest(fragment, response.errorBody(), primaryCall)
+                    handleAPIErrorForProbe(fragment, response.errorBody(), primaryCall)
                 }
             }
         }

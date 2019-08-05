@@ -57,7 +57,8 @@ class gestaoUsuarioFragment : mainFragment() {
                 }
                 else {
                     Log.d(TAG, "não deu bom")
-                    handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
+                    val message = handleAPIError(this@gestaoUsuarioFragment, response.errorBody())
+                    Snackbar.make(view!!, message!!, Snackbar.LENGTH_LONG).show()
                 }
                 refresh_layout.isRefreshing = false
 

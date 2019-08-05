@@ -26,6 +26,7 @@ import com.example.hsmassistantandroid.network.MIHelper
 import com.example.hsmassistantandroid.network.NetworkManager
 import com.example.hsmassistantandroid.ui.activities.DeviceSelectionActivity
 import com.example.hsmassistantandroid.ui.activities.SecondActivity
+import com.example.hsmassistantandroid.ui.mainFragment
 import com.example.hsmassistantandroid.ui.usuário.ServiceStatus
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.toast
@@ -39,13 +40,16 @@ private val defaultPartitionName = "pocketpuk"
 private val defaultPartitionPwd = "pukpocketdn"
 private val TAG: String = "Util"
 
-fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response: String) -> Unit? = {}) {
-    val message: String
-
+fun decodeErroBody(error: ResponseBody?): errorBody {
     val errorStream = error?.byteStream().toString()
     val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
     val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
-    val mErrorBody = errorBody(rc.toLong(), rd)
+    return errorBody(rc.toLong(), rd)
+}
+
+fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response: String) -> Unit? = {}) : String {
+    val message: String
+    val mErrorBody = decodeErroBody(error)
 
     val activity = fragment.requireActivity()
 
@@ -73,21 +77,29 @@ fun handleAPIError(fragment: Fragment, error: ResponseBody?, callback: (response
         }
     }
     callback(message)
+    return message
 }
 
-fun handleAPIErrorForRequest(fragment: Fragment, error: ResponseBody?, makeRequest: (updatedToken: String) -> Unit? = {}) {
+fun handleAPIErrorForProbe(fragment: Fragment, error: ResponseBody?, makeRequest: (updatedToken: String) -> Unit? = {}) {
 
     val errorStream = error?.byteStream().toString()
     val rc = errorStream.substringAfter("\"rc\": ").substringBefore(",")
     val rd = errorStream.substringAfter("\"rd\":  \"").substringBefore("\"")
     val mErrorBody = errorBody(rc.toLong(), rd)
 
+    //TODO: apagar esse explicacao
+    // quando o login automatico falhar vai executar isso
+    val authErrorCallback = { message: String ->
+        Snackbar.make(fragment.view!!, message!!, Snackbar.LENGTH_LONG).show()
+        goToLoginScreen(fragment)
+    }
+
     when(mErrorBody.rd) {
         "ERR_ACCESS_DENIED" -> {
-            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest)
+            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest, authErrorCallback)
         }
         "ERR_INVALID_KEY" -> {
-            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest)
+            loginWithPreviusCredentialsAndMakeRequest(fragment, makeRequest, authErrorCallback)
         }
         else -> {
             val erro = mErrorBody.rd
@@ -96,7 +108,7 @@ fun handleAPIErrorForRequest(fragment: Fragment, error: ResponseBody?, makeReque
     }
 }
 
-fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (updatedToken: String) -> Unit?) {
+fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (updatedToken: String) -> Unit?, authErrorCallback: (message: String) -> Unit?) {
     val fragmentContext = fragment.context
 
     val callback = object : Callback<ResponseBody1> {
@@ -118,7 +130,18 @@ fun loginWithPreviusCredentialsAndMakeRequest(fragment: Fragment, makeRequest: (
                 makeRequest(tokenString)
             }
             else {
-                handleAPIError(fragment, response.errorBody())
+                val message: String
+                val error = decodeErroBody(response.errorBody())
+                when(error.rd) {
+                    "ERR_ACCESS_DENIED" -> message = fragmentContext!!.getString(R.string.ERR_ACCESS_DENIED_message)
+                    "ERR_INVALID_KEY" -> message = fragmentContext!!.getString(R.string.ERR_INVALID_KEY_message)
+                    "ERR_INVALID_PAYLOAD" -> message = fragmentContext!!.getString(R.string.ERR_INVALID_PAYLOAD_message)
+                    "ERR_USR_NOT_FOUND" -> message = fragmentContext!!.getString(R.string.ERR_USR_NOT_FOUND_message)
+                    "ERR_USR_ALREADY_EXISTS" -> message =
+                        fragmentContext!!.getString(R.string.ERR_USR_ALREADY_EXISTS_message)
+                    else -> message = fragmentContext!!.getString(R.string.ERR_DESCONHECIDO_message)
+                }
+                authErrorCallback(message)
             }
         }
     }
