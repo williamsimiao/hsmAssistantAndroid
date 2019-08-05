@@ -474,7 +474,9 @@ class NetworkManager {
         val json = JSONObject()
         json.put("usr", usr)
         json.put("pwd", pwd)
-//        json.put("otp", otp)
+        if (otp != "") {
+            json.put("otp", otp)
+        }
 
         val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json"), json.toString())
         val call = sessaoRouter.auth(requestBody)

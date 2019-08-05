@@ -61,9 +61,10 @@ class LoginFragment : mainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideLoginFields()
+
         if(tokenString != null) {
             //Então fez logout logo não deve mostrar que o token expirou
-            hideLoginFields()
 
             val empity = { nothing: String ->
                 val intent = Intent(context, SecondActivity::class.java)
@@ -71,7 +72,9 @@ class LoginFragment : mainFragment() {
                 requireActivity().finish()
             }
             loginWithPreviusCredentialsAndMakeRequest(this@LoginFragment, empity)
-//            probeRequest()
+        }
+        else {
+            showLoginFields()
         }
 
         setUpViews()
@@ -125,6 +128,7 @@ class LoginFragment : mainFragment() {
 
     fun hideLoginFields() {
         loadingProgressBar.show()
+        logo_image.visibility = View.INVISIBLE
         usrEditText.visibility = View.INVISIBLE
         pwdEditText.visibility = View.INVISIBLE
         otpEditText.visibility = View.INVISIBLE
@@ -134,6 +138,7 @@ class LoginFragment : mainFragment() {
     fun showLoginFields() {
         loadingProgressBar.hide()
 
+        logo_image.visibility = View.VISIBLE
         usrEditText.visibility = View.VISIBLE
         pwdEditText.visibility = View.VISIBLE
         otpEditText.visibility = View.VISIBLE

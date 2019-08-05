@@ -61,6 +61,8 @@ class ObjetosListFragment : mainFragment() {
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                 if(response?.isSuccessful!!) {
+                    noContentLabel_objetos.visibility = View.GONE
+
                     val certificateData =
                         response?.body()?.bytes()
                     val cert = X509Certificate.getInstance(certificateData)
@@ -132,10 +134,6 @@ class ObjetosListFragment : mainFragment() {
             override fun onResponse(call: Call<ResponseBody2>?, response: Response<ResponseBody2>?) {
                 if(response?.isSuccessful!!) {
                     objetosStrings = response?.body()?.obj!!.toTypedArray()
-
-                    if(objetosStrings.count() == 0) { noContentLabel_objetos.visibility = View.VISIBLE }
-                    else { noContentLabel_objetos.visibility = View.GONE }
-
                     for(objId: String in objetosStrings) {
                         detailsRequest(objId)
                     }
