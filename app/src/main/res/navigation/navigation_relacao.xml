@@ -5,7 +5,7 @@
             app:startDestination="@+id/relacaoFragment">
 
     <fragment android:id="@+id/relacaoFragment"
-              android:name="com.example.hsmassistantandroid.ui.Relações.relacaoFragment"
+              android:name="com.dinamonetworks.hsmassistantandroid.ui.Relações.relacaoFragment"
               android:label="@string/screenTitle_relacoes"
               tools:layout="@layout/relacao_fragment">
         <action android:id="@+id/action_relacaoFragment_to_newPermissionFragment"
@@ -23,7 +23,7 @@
     </fragment>
 
     <fragment android:id="@+id/newPermissionFragment"
-              android:name="com.example.hsmassistantandroid.ui.Relações.NewPermissionFragment"
+              android:name="com.dinamonetworks.hsmassistantandroid.ui.Relações.NewPermissionFragment"
               android:label="@string/screenTitle_permissao">
         <action android:id="@+id/action_newPermissionFragment_to_relacaoFragment"
                 app:destination="@id/relacaoFragment"
@@ -36,7 +36,7 @@
     </fragment>
 
     <fragment android:id="@+id/userSelectionFragment"
-              android:name="com.example.hsmassistantandroid.ui.Relações.UserSelectionFragment"
+              android:name="com.dinamonetworks.hsmassistantandroid.ui.Relações.UserSelectionFragment"
               android:label="@string/screenTitle_userSelection">
         <action android:id="@+id/goto_Login" app:destination="@id/mainActivity3" app:popUpTo="@+id/mainActivity3"/>
         <action android:id="@+id/action_userSelectionFragment_to_newPermissionFragment"
@@ -45,6 +45,6 @@
         />
     </fragment>
 
-    <activity android:id="@+id/mainActivity3" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
+    <activity android:id="@+id/mainActivity3" android:name="com.dinamonetworks.hsmassistantandroid.ui.activities.MainActivity"
               android:label="MainActivity"/>
 </navigation>

@@ -5,7 +5,7 @@
             app:startDestination="@id/objetosListFragment">
 
     <fragment android:id="@+id/objetosListFragment"
-              android:name="com.example.hsmassistantandroid.ui.Objetos.ObjetosListFragment"
+              android:name="com.dinamonetworks.hsmassistantandroid.ui.Objetos.ObjetosListFragment"
               android:label="@string/screenTitle_certificados"
               tools:layout="@layout/fragment_objetos_list">
         <action android:id="@+id/goto_Login" app:destination="@id/mainActivity2" app:popUpTo="@+id/mainActivity2"
@@ -14,10 +14,10 @@
         <action android:id="@+id/action_objetosListFragment_to_objetoDetailFragment"
                 app:destination="@id/objetoDetailFragment"/>
     </fragment>
-    <activity android:id="@+id/mainActivity2" android:name="com.example.hsmassistantandroid.ui.activities.MainActivity"
+    <activity android:id="@+id/mainActivity2" android:name="com.dinamonetworks.hsmassistantandroid.ui.activities.MainActivity"
               android:label="MainActivity"/>
     <fragment android:id="@+id/objetoDetailFragment"
-              android:name="com.example.hsmassistantandroid.ui.Objetos.ObjetoDetailFragment"
+              android:name="com.dinamonetworks.hsmassistantandroid.ui.Objetos.ObjetoDetailFragment"
               android:label="ObjetoDetailFragment">
         <argument
                 android:name="myArg"

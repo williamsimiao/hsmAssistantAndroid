@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context="ui.activities.SecondActivity">
 
-    <fragment class="com.example.hsmassistantandroid.ui.LoginFragment"
+    <fragment class="com.dinamonetworks.hsmassistantandroid.ui.LoginFragment"
               android:id="@+id/container_fragment"
               android:layout_width="match_parent"
               android:layout_height="match_parent" />

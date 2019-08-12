@@ -6,13 +6,13 @@
               android:orientation="vertical"
               tools:context="ui.activities.DeviceSelectionActivity">
 
-    <fragment class="com.example.hsmassistantandroid.ui.setUp.DeviceSearchFragment"
+    <fragment class="com.dinamonetworks.hsmassistantandroid.ui.setUp.DeviceSearchFragment"
               android:id="@+id/top_container_fragment"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight="50"/>
 
-    <fragment class="com.example.hsmassistantandroid.ui.setUp.DeviceInputFragment"
+    <fragment class="com.dinamonetworks.hsmassistantandroid.ui.setUp.DeviceInputFragment"
               android:id="@+id/bottom_container_fragment"
               android:layout_width="match_parent"
               android:layout_height="0dp"
