@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "884268850374",
+    "firebase_url": "https://hsmproject-cc4ba.firebaseio.com",
+    "project_id": "hsmproject-cc4ba",
+    "storage_bucket": "hsmproject-cc4ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884268850374:android:1b496b1a0461f114",
+        "android_client_info": {
+          "package_name": "com.dinamonetworks.hsmassistantandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884268850374-6m41teg32evfbrgavv8d5anab9plqjmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY8gt_lkoi6AO6dnRFjAwT_3fRKrKDknk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884268850374-6m41teg32evfbrgavv8d5anab9plqjmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
